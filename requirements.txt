@@ -1,1 +1,20 @@
+# Starting point based on the "Recommended Libraries" section of the project brief.
+# Add to this as the team decides what the pipeline actually needs.
+# Install:  pip install -r requirements.txt
 
+# Data wrangling
+pandas
+numpy
+
+# Loading the dataset / working with open-source LLMs
+datasets
+huggingface_hub
+transformers
+
+# Baseline zero-shot / few-shot comparisons
+anthropic
+openai
+python-dotenv     # loads API keys from .env
+
+# Functional correctness scoring
+pytest

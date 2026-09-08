@@ -1,1 +1,62 @@
+# ---- Secrets ----
+.env
+.env.*
+!.env.example
+*.key
+credentials.json
 
+# ---- Data ----
+# Datasets are downloaded, not committed. See data/README.md.
+data/**
+!data/**/
+!data/README.md
+!data/**/.gitkeep
+
+# ---- Model / experiment outputs ----
+results/**
+!results/**/
+!results/README.md
+!results/**/.gitkeep
+*.ckpt
+*.pt
+*.pkl
+*.joblib
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+profile_default/
+ipython_config.py
+
+# ---- Caches / tooling ----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+htmlcov/
+.coverage
+.coverage.*
+
+# ---- Editors ----
+.vscode/
+.idea/
+*.swp
+*~
+
+# ---- OS ----
+.DS_Store
+.DS_Store?
+Thumbs.db
+desktop.ini
