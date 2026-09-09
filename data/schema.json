@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Anote Coding Task Record",
+  "description": "Schema for a single dataset record built from a Terminal-Bench / Harbor task.",
+  "type": "object",
+  "required": [
+    "task_id",
+    "instruction",
+    "metadata",
+    "solution",
+    "test_script"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "Unique identifier for the task, matching its name in the source repo"
+    },
+    "instruction": {
+      "type": "string",
+      "description": "The task prompt, copied verbatim from the task's instruction.md."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Descriptive info about the task, copied from task.toml [metadata].",
+      "required": ["author_name", "difficulty", "category", "tags"],
+      "properties": {
+        "author_name": {
+          "type": "string",
+          "description": "Original task author, copied from task.toml."
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": ["easy", "medium", "hard"],
+          "description": "Difficulty label as given in task.toml. Normalize to these 3 values even if source uses different casing/wording."
+        },
+        "category": {
+          "type": "string",
+          "description": "Task category as given in task.toml (e.g. 'debugging', 'question-answering'). Copy as-is; normalize spelling/casing across tasks as a team."
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Keyword tags from task.toml, copied as an array."
+        }
+      }
+    },
+    "solution": {
+      "type": "string",
+      "description": "Reference/oracle solution, copied verbatim from the task's solve.sh (or solution.sh)."
+    },
+    "test_script": {
+      "type": "string",
+      "description": "Raw verifier script, copied verbatim from the task's test.sh (or test_outputs.py)."
+    }
+  }
+}
