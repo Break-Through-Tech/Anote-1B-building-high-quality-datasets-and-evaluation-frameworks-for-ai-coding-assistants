@@ -11,7 +11,7 @@
 
 | Name | GitHub Handle | Pronouns |
 |------|---------------|----------|
-| Luke Wang | | He/Him |
+| Luke Wang | [@KingSkyrock](https://github.com/KingSkyrock)| He/Him |
 | Brandon Romero | [@romero-brandon](https://github.com/romero-brandon) | He/Him |
 | Sabad Modi | [@SabadModi](https://github.com/SabadModi) | He/Him |
 | Sophia Zhang | [@sophia-z-23](https://github.com/sophia-z-23) | She/Her |
