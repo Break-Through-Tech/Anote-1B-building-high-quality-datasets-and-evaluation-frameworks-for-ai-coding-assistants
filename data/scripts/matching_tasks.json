@@ -1,0 +1,647 @@
+{
+  "debugging": [
+    "batched-eval-parity",
+    "biped-contact-dynamics",
+    "medical-claims-processing",
+    "mvcc-lsm-compaction",
+    "pretrain-shard-corruption",
+    "vpp-loss-divergence"
+  ],
+  "code_generation": [
+    "layout-config-recreation",
+    "layout-config-recreation2",
+    "rs-archive-clone",
+    "sglang-qwen-burst"
+  ],
+  "unmatched": [
+    {
+      "task": "atrx-vep-crispr",
+      "category": "Science",
+      "tags": [
+        "genomics",
+        "ensembl-vep",
+        "hgvs",
+        "spcas9"
+      ]
+    },
+    {
+      "task": "bun-sourcemap-leak",
+      "category": "Software",
+      "tags": [
+        "bun",
+        "source-maps",
+        "release-security"
+      ]
+    },
+    {
+      "task": "cad-model",
+      "category": "Hardware",
+      "tags": [
+        "cad",
+        "mechanical-engineering",
+        "3d-modeling"
+      ]
+    },
+    {
+      "task": "cargo-flight-dispatch",
+      "category": "Operations",
+      "tags": [
+        "aviation",
+        "python",
+        "flight-planning",
+        "weight-balance",
+        "fuel-planning"
+      ]
+    },
+    {
+      "task": "coq-block-bound",
+      "category": "Science",
+      "tags": [
+        "coq",
+        "theorem-proving",
+        "formal-mathematics",
+        "combinatorics",
+        "imo"
+      ]
+    },
+    {
+      "task": "ctr-optimization",
+      "category": "Operations",
+      "tags": [
+        "advertising",
+        "optimization",
+        "fraud-detection",
+        "exploration-exploitation"
+      ]
+    },
+    {
+      "task": "cumulative-layout-shift",
+      "category": "Software",
+      "tags": [
+        "layout-shift",
+        "next.js",
+        "performance",
+        "multi-container"
+      ]
+    },
+    {
+      "task": "data-anonymization",
+      "category": "Software",
+      "tags": [
+        "python",
+        "data processing",
+        "privacy",
+        "anonymization",
+        "csv",
+        "databases"
+      ]
+    },
+    {
+      "task": "distributed-dedup",
+      "category": "Software",
+      "tags": [
+        "spark",
+        "scala",
+        "distributed_systems",
+        "deduplication",
+        "minhash",
+        "lsh",
+        "connected_components",
+        "performance",
+        "data_engineering"
+      ]
+    },
+    {
+      "task": "embedding-drift-monitor",
+      "category": "ML",
+      "tags": [
+        "python",
+        "numpy",
+        "scipy",
+        "drift-detection",
+        "ml-monitoring",
+        "statistics"
+      ]
+    },
+    {
+      "task": "fin-saccr-rwa",
+      "category": "Operations",
+      "tags": [
+        "sa-ccr",
+        "bcbs-279",
+        "counterparty-credit-risk"
+      ]
+    },
+    {
+      "task": "foodstuff-beta-activity",
+      "category": "Science",
+      "tags": [
+        "chemistry",
+        "radiochemistry",
+        "liquid_scintillation_counting"
+      ]
+    },
+    {
+      "task": "formal-crypto",
+      "category": "Security",
+      "tags": [
+        "cryptanalysis",
+        "formal methods"
+      ]
+    },
+    {
+      "task": "fp8-rmsnorm-gemm",
+      "category": "ML",
+      "tags": [
+        "cuda",
+        "gpu",
+        "performance-engineering",
+        "fp8",
+        "kernel-optimization"
+      ]
+    },
+    {
+      "task": "freecad-impeller",
+      "category": "Hardware",
+      "tags": [
+        "cad",
+        "freecad",
+        "parametric",
+        "geometry",
+        "python",
+        "impeller"
+      ]
+    },
+    {
+      "task": "freecad-platform-drawing",
+      "category": "Hardware",
+      "tags": [
+        "cad",
+        "freecad",
+        "parametric",
+        "geometry",
+        "python",
+        "drawing",
+        "vision"
+      ]
+    },
+    {
+      "task": "freecad-spring-clip",
+      "category": "Hardware",
+      "tags": [
+        "cad",
+        "freecad",
+        "parametric",
+        "geometry",
+        "python",
+        "spring_clip"
+      ]
+    },
+    {
+      "task": "freight-dispatch-shift",
+      "category": "Operations",
+      "tags": [
+        "dispatch",
+        "logistics",
+        "stateful-cli",
+        "planning",
+        "driver-hours",
+        "dangerous-goods",
+        "optimization"
+      ]
+    },
+    {
+      "task": "glycan-ms2-elucidation",
+      "category": "Science",
+      "tags": [
+        "mass-spectrometry",
+        "glycomics",
+        "tandem-ms",
+        "structural-elucidation"
+      ]
+    },
+    {
+      "task": "gsea-proteomics",
+      "category": "Science",
+      "tags": [
+        "proteomics",
+        "GSEA",
+        "mass-spectrometry",
+        "differential-expression",
+        "TMT"
+      ]
+    },
+    {
+      "task": "heat-pump-warranty",
+      "category": "Operations",
+      "tags": [
+        "warranty",
+        "heat-pumps",
+        "after-sales",
+        "asset-lineage",
+        "ocr",
+        "manufacturing",
+        "compliance",
+        "domain-reasoning"
+      ]
+    },
+    {
+      "task": "hof-topology-interpenetration",
+      "category": "Science",
+      "tags": [
+        "crystallography",
+        "supramolecular-chemistry",
+        "topology",
+        "hydrogen-bonding",
+        "interpenetration"
+      ]
+    },
+    {
+      "task": "html-js-filter",
+      "category": "Security",
+      "tags": [
+        "xss",
+        "html-sanitization",
+        "web-security"
+      ]
+    },
+    {
+      "task": "interleaved-vigenere",
+      "category": "Security",
+      "tags": [
+        "cryptography",
+        "cryptanalysis",
+        "vigenere",
+        "autokey-cipher",
+        "python",
+        "security",
+        "cli"
+      ]
+    },
+    {
+      "task": "intrastat-meldung",
+      "category": "Operations",
+      "tags": [
+        "intrastat",
+        "german-compliance",
+        "statistical-filing",
+        "multi-service",
+        "workflow",
+        "api",
+        "erp"
+      ]
+    },
+    {
+      "task": "jax-speedrun-gpu",
+      "category": "ML",
+      "tags": [
+        "jax",
+        "gpu",
+        "pretraining",
+        "llm",
+        "transformer",
+        "h100",
+        "optimization"
+      ]
+    },
+    {
+      "task": "ks-solver-cpp",
+      "category": "Science",
+      "tags": [
+        "pde",
+        "cpp",
+        "bessel-functions",
+        "spectral-methods",
+        "numerical-analysis",
+        "kuramoto-sivashinsky"
+      ]
+    },
+    {
+      "task": "kv-live-surgery",
+      "category": "Software",
+      "tags": [
+        "networking",
+        "performance",
+        "live-surgery",
+        "c",
+        "linux",
+        "ptrace"
+      ]
+    },
+    {
+      "task": "lake-temp-glm",
+      "category": "Science",
+      "tags": [
+        "scientific-computing",
+        "time-series",
+        "process-modeling",
+        "pytorch"
+      ]
+    },
+    {
+      "task": "legacy-utility-triage",
+      "category": "Operations",
+      "tags": [
+        "computer-use",
+        "legacy-gui",
+        "utility-billing",
+        "meter-data",
+        "tariffs",
+        "vnc",
+        "domain-reasoning"
+      ]
+    },
+    {
+      "task": "live-database-cutover",
+      "category": "Software",
+      "tags": [
+        "databases",
+        "sql",
+        "migration",
+        "zero-downtime",
+        "live-system",
+        "cdc",
+        "binlog",
+        "postgresql",
+        "mysql"
+      ]
+    },
+    {
+      "task": "math-eval-grader",
+      "category": "ML",
+      "tags": [
+        "llm-eval",
+        "sympy",
+        "symbolic-math",
+        "grader",
+        "benchmark-construction"
+      ]
+    },
+    {
+      "task": "mp-checkpoint-consolidation",
+      "category": "ML",
+      "tags": [
+        "distributed-training",
+        "checkpoint-conversion",
+        "tensor-parallelism",
+        "pipeline-parallelism",
+        "mixture-of-experts",
+        "megatron"
+      ]
+    },
+    {
+      "task": "music-harmony",
+      "category": "Media",
+      "tags": [
+        "satb",
+        "harmony",
+        "voice-leading"
+      ]
+    },
+    {
+      "task": "nextjs-performance",
+      "category": "Software",
+      "tags": [
+        "nextjs",
+        "performance",
+        "react",
+        "frontend"
+      ]
+    },
+    {
+      "task": "ontology-kg-querying",
+      "category": "Software",
+      "tags": [
+        "rdf",
+        "owl",
+        "sparql",
+        "knowledge-graphs",
+        "reasoning",
+        "data-integration"
+      ]
+    },
+    {
+      "task": "payments-pipeline-fix",
+      "category": "Software",
+      "tags": [
+        "kafka",
+        "distributed-systems",
+        "cold-start",
+        "state",
+        "latency"
+      ]
+    },
+    {
+      "task": "photonic-waveguide-routing",
+      "category": "Software",
+      "tags": [
+        "routing",
+        "pathfinding",
+        "geometry",
+        "optimization",
+        "spatial-reasoning"
+      ]
+    },
+    {
+      "task": "production-planning",
+      "category": "Operations",
+      "tags": [
+        "production planning",
+        "data engineering",
+        "ERP",
+        "MES",
+        "WMS"
+      ]
+    },
+    {
+      "task": "protein-autointerp-disulfide",
+      "category": "Science",
+      "tags": [
+        "bioinformatics",
+        "protein-structure",
+        "feature-interpretation"
+      ]
+    },
+    {
+      "task": "react-lead-form",
+      "category": "Software",
+      "tags": [
+        "react",
+        "typescript",
+        "forms",
+        "validation",
+        "crm"
+      ]
+    },
+    {
+      "task": "retro-console-soc",
+      "category": "Hardware",
+      "tags": [
+        "verilog",
+        "cpu",
+        "retro-console",
+        "digital-design",
+        "system-on-chip"
+      ]
+    },
+    {
+      "task": "risk-scorer-replay",
+      "category": "ML",
+      "tags": [
+        "model-risk",
+        "ml-platform",
+        "black-box-parity",
+        "offline-evaluation",
+        "audit-provenance"
+      ]
+    },
+    {
+      "task": "roy-polymorph-cn",
+      "category": "Science",
+      "tags": [
+        "cheminformatics",
+        "spectroscopy",
+        "data-analysis",
+        "physical-chemistry"
+      ]
+    },
+    {
+      "task": "satb-audio-transcription",
+      "category": "Media",
+      "tags": [
+        "music",
+        "audio-transcription",
+        "AMT",
+        "MusicXML",
+        "SATB",
+        "chorale"
+      ]
+    },
+    {
+      "task": "session-window-debug",
+      "category": "Software",
+      "tags": [
+        "stream-processing",
+        "session-windows",
+        "watermarks",
+        "event-time",
+        "aggregation"
+      ]
+    },
+    {
+      "task": "shadow-relay",
+      "category": "Security",
+      "tags": [
+        "forensics",
+        "reverse-engineering",
+        "cryptography",
+        "network-analysis",
+        "virtual-machine",
+        "custom-protocol"
+      ]
+    },
+    {
+      "task": "sound-change-cascade",
+      "category": "Science",
+      "tags": [
+        "phonology",
+        "inverse-problem",
+        "rule-induction",
+        "string-rewriting",
+        "historical-linguistics"
+      ]
+    },
+    {
+      "task": "takens-embedding-lean",
+      "category": "Science",
+      "tags": [
+        "lean4",
+        "mathematics",
+        "theorem-proving",
+        "formal-verification"
+      ]
+    },
+    {
+      "task": "telecom-entity-resolution",
+      "category": "Software",
+      "tags": [
+        "administrative-data",
+        "panel-construction",
+        "applied-microeconomics",
+        "household-consumption",
+        "data-linkage",
+        "entity-resolution"
+      ]
+    },
+    {
+      "task": "uefi-bootkit",
+      "category": "Security",
+      "tags": [
+        "firmware",
+        "uefi",
+        "bootkit",
+        "qemu",
+        "incident-response",
+        "x86_64"
+      ]
+    },
+    {
+      "task": "vba-userform-port",
+      "category": "Software",
+      "tags": [
+        "vba",
+        "excel",
+        "userform",
+        "migration",
+        "react",
+        "fastapi",
+        "sqlite",
+        "playwright",
+        "legacy-modernization"
+      ]
+    },
+    {
+      "task": "vf2-speedup-networkx",
+      "category": "Software",
+      "tags": [
+        "graph-algorithms",
+        "optimization",
+        "compiled-extensions",
+        "python"
+      ]
+    },
+    {
+      "task": "vllm-deepseek-streaming",
+      "category": "ML",
+      "tags": [
+        "vllm",
+        "streaming",
+        "deepseek-r1",
+        "reasoning-model"
+      ]
+    },
+    {
+      "task": "wal-recovery-ordering",
+      "category": "Software",
+      "tags": [
+        "python",
+        "wal",
+        "recovery",
+        "concurrency",
+        "storage-engine"
+      ]
+    },
+    {
+      "task": "wdm-design",
+      "category": "Science",
+      "tags": [
+        "photonics",
+        "inverse-design",
+        "meep",
+        "fdtd",
+        "topology-optimization",
+        "wdm"
+      ]
+    }
+  ]
+}
