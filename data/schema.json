@@ -1,56 +1,71 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Anote Coding Task Record",
-  "description": "Schema for a single dataset record built from a Terminal-Bench / Harbor task.",
+  "description": "Schema for a single dataset record built from a Terminal-Bench v4.0.0 task by src/build_dataset.py.",
   "type": "object",
   "required": [
     "task_id",
     "instruction",
     "metadata",
+    "solution_language",
     "solution",
-    "test_script"
+    "tests"
   ],
   "properties": {
     "task_id": {
       "type": "string",
-      "description": "Unique identifier for the task, matching its name in the source repo"
+      "description": "Unique identifier for the task, matching its folder name in the source repo."
     },
     "instruction": {
       "type": "string",
-      "description": "The task prompt, copied verbatim from the task's instruction.md."
+      "description": "The task prompt from instruction.md, with the harbor-canary comment removed."
     },
     "metadata": {
       "type": "object",
-      "description": "Descriptive info about the task, copied from task.toml [metadata].",
+      "description": "Descriptive info about the task, from task.toml [metadata].",
       "required": ["author_name", "difficulty", "category", "tags"],
       "properties": {
         "author_name": {
           "type": "string",
-          "description": "Original task author, copied from task.toml."
+          "description": "Original task author."
         },
         "difficulty": {
-          "type": "string",
-          "enum": ["easy", "medium", "hard"],
-          "description": "Difficulty label as given in task.toml. Normalize to these 3 values even if source uses different casing/wording."
+          "type": ["string", "null"],
+          "enum": ["easy", "medium", "hard", null],
+          "description": "Terminal-Bench v4 has no difficulty label, so this is derived from expert_time_estimate_hours: <=2h easy, <=6h medium, else hard. These cutoffs are our choice."
         },
         "category": {
           "type": "string",
-          "description": "Task category as given in task.toml (e.g. 'debugging', 'question-answering'). Copy as-is; normalize spelling/casing across tasks as a team."
+          "description": "Task category, e.g. 'Software', 'ML', 'Security'."
+        },
+        "subcategory": {
+          "type": "string",
+          "description": "Task subcategory, e.g. 'Algorithms', 'AppSec'."
         },
         "tags": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Keyword tags from task.toml, copied as an array."
+          "description": "Keyword tags."
+        },
+        "expert_time_estimate_hours": {
+          "type": ["number", "null"],
+          "description": "How long the task author estimates an expert would take."
         }
       }
     },
-    "solution": {
-      "type": "string",
-      "description": "Reference/oracle solution, copied verbatim from the task's solve.sh (or solution.sh)."
+    "solution_language": {
+      "type": ["string", "null"],
+      "description": "Main language of the reference solution (the one with the most code), e.g. 'python'."
     },
-    "test_script": {
-      "type": "string",
-      "description": "Raw verifier script, copied verbatim from the task's test.sh (or test_outputs.py)."
+    "solution": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "The reference solution as {file path: contents}. Only the files solve.sh runs or copies in (falls back to all code files under solution/ if it names none). This is what model outputs get scored against."
+    },
+    "tests": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "The task's test code as {file path: contents}, from tests/ (test.sh launcher excluded). Not run by us since evaluation is static, kept as context."
     }
   }
 }
