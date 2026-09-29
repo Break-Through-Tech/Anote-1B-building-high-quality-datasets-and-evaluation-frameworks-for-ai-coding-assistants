@@ -60,3 +60,6 @@ htmlcov/
 .DS_Store?
 Thumbs.db
 desktop.ini
+
+# nested git clones of the raw benchmark (see data/README.md)
+data/raw/*/
