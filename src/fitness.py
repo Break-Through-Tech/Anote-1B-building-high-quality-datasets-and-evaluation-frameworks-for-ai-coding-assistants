@@ -27,11 +27,14 @@ import re
 import subprocess
 import sys
 import tempfile
+import random
 import tomllib
 import urllib.request
+import urllib.error
 from enum import StrEnum
 from pathlib import Path
 from typing import NamedTuple
+from ollama import chat
 
 # terminal-bench task folders
 DEFAULT_TASKS_DIR = Path(__file__).parents[1] / "data/raw/terminal-bench/tasks"
@@ -44,6 +47,7 @@ CANARY_RE = re.compile(r"<!--[^>]*harbor-canary[^>]*-->\s*", re.IGNORECASE)
 _CANARY_LINE_RE = re.compile(
     r"^.*(harbor-canary|BENCHMARK DATA SHOULD NEVER).*\n?", re.MULTILINE
 )
+
 
 
 # enum for what went wrong in a run. empty means all fine
@@ -90,16 +94,34 @@ _OLLAMA = "http://localhost:11434/api/chat"
 # ollama defaults to 4k ctx under 24GB vram, way too small for whole files.
 # 16k fits fully on an 8GB gpu
 # too small for batched-eval-parity so should be skipped locally
-_NUM_CTX = 16384
+_NUM_CTX = 8192
 # max output tokens. w/o this a model can loop until ctx is full (not good).
 # cut off output = bad json
-_NUM_PREDICT = 8192
+_NUM_PREDICT = 4096
 
 # only fixed text added to the prompt because schema enforces
 # this should be neutral and not bias the model to any particular style of code.
-_FORMAT = "Reply with the full new contents of each file you change."
+_FORMAT = """
+Reply with the full new contents of each file you change.
 
+Only include modified files.
+Every returned Python file must be complete and syntactically valid.
 
+IMPORTANT RULES FOR STRINGS:
+- Never put a literal newline inside a single-quoted or double-quoted Python string.
+- For multiline SQL, use adjacent quoted strings, one per line.
+- Each SQL statement must end with a semicolon.
+- Do not use triple-quoted strings.
+
+Example of valid Python:
+
+con.executescript(
+    "CREATE TABLE users (id INTEGER);"
+    "CREATE TABLE logs (id INTEGER);"
+)
+
+Return only the required JSON structure.
+"""
 # reply shape
 def _schema(paths):
     file = {
@@ -140,8 +162,14 @@ def _ask(model, system, user, fmt):
     req = urllib.request.Request(
         _OLLAMA, json.dumps(body).encode(), {"Content-Type": "application/json"}
     )
-    with urllib.request.urlopen(req) as r:
-        return json.load(r)["message"]["content"]
+    try:
+        with urllib.request.urlopen(req) as r:
+            return json.load(r)["message"]["content"]
+    except urllib.error.HTTPError as e:
+        error_message = e.read().decode("utf-8", errors="replace")
+        raise RuntimeError(
+            f"Ollama request failed (HTTP {e.code}): {error_message}"
+        ) from e
 
 
 # {container path: host path} for .py files under the copied artifacts
@@ -187,8 +215,11 @@ def _apply_reply(reply, files):
             continue
         try:
             ast.parse(code)
-        except SyntaxError:
+        except SyntaxError as e:
+            print(f"{path}: line {e.lineno}: {e.msg}\n{code}", file=sys.stderr)
             problems.append(Problem(Status.SYNTAX_ERROR, path))
+
+        files[path].write_text(code, encoding="utf-8", newline="\n")
         files[path].write_text(code, encoding="utf-8", newline="\n")
     return problems
 
@@ -326,6 +357,104 @@ def _score(results, base):
         return 0.0
     return sum(bool(results.get(t)) for t in base.to_fix) / len(base.to_fix)
 
+def mutate(genome, mutation_rate, model): # mutate random letters
+    if random.random() >= mutation_rate:
+        return genome
+    # construct mutation instruction
+    mutation_instruction = f"""
+    You are mutating a system prompt for a coding assistant. 
+
+    You are to make EXACTLY one change that will improve the model's performance on the tasks provided.
+
+    Perserve only the original purpose. 
+    Return ONLY the modified prompt
+
+    Original prompt:
+    {genome}
+    """
+    body = chat(
+        model= model,
+        stream=False,
+        messages=[
+            {"role": "user", "content": mutation_instruction},
+        ],
+    )
+    return body.message.content.strip()
+
+def crossover(parent_a, parent_b, model):
+    # Construct an instruction containing both parents
+    instruction = f"""
+    You are performing a crossover operation for a system prompt for a coding assistant. 
+
+    The prompt shuld retain its original intent.
+
+    You are to combine the information from both parent prompts to create a new child prompt.
+
+    Parent A:
+    {parent_a}
+
+    Parent B:
+    {parent_b}
+
+    Return ONLY the new child prompt.
+    """
+    # Send both parents to the LLM
+    body = chat(
+            model= model,
+            stream=False,
+            messages=[
+                {"role": "user", "content": instruction},
+            ],
+        )
+    # Extract the generated child prompt
+    child_prompt = body.message.content.strip()
+    # Return the child prompt
+    return child_prompt
+
+
+def run_evolution(tasks, mu, lambda_, generations, mutation_rate, model, seed,  plus=True,):
+    #initial prompts (genome)
+    initial_prompts = [
+        "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+        "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+        "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+        "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct."
+    ]
+    parents = initial_prompts[:mu]
+
+    random.seed(seed)
+    if mu != len(parents):
+        raise ValueError("mu must be equal to the number of initial parents.")
+    if not plus and lambda_ < mu:
+        raise ValueError("lambda_ must be at least mu when plus is False.")
+    scores = {}
+    for parent in parents:
+        scores[parent] = fitness(parent, tasks, model)[0]
+    # generate children
+    for generation in range(generations):
+        children = []
+        for _ in range(lambda_):
+            parent_a = random.choice(parents)
+            parent_b = random.choice(parents)
+            child = crossover(parent_a, parent_b, model)
+            child = mutate(child, mutation_rate, model)
+            children.append(child)
+        # skip over repeats
+        for child in children:
+            if child not in scores:
+                scores[child] = fitness(child, tasks, model)[0]
+        pool = parents + children if plus else children
+        # select best mu parents for next gen
+        parents = sorted(
+            pool, 
+            key=lambda genome: scores[genome], 
+            reverse=True)[:mu]
+    best_prompt = max(scores, key=scores.get)
+    return best_prompt, scores[best_prompt]
+    
+        
+   
+
 
 #------------------------------------------------------------------------------#
 # Fitness evaluation function for our evolutionary algorithm
@@ -355,7 +484,53 @@ def fitness(
 
 # for testing
 if __name__ == "__main__":
+    best_prompt, best_score = run_evolution(
+    tasks=["risk-scorer-replay"],
+    mu=2,
+    lambda_=1,
+    generations=2,
+    mutation_rate=0.5,
+    model="qwen2.5-coder:7b",
+    seed=42,
+    plus=True
+    )
+
+    print("\nBest Prompt:", best_prompt)
+    print("Best Score:", best_score)
+    raise SystemExit()
+
+    
+    genome = "You are an expert software engineer. Solve coding problems carefully"
+    mutated = mutate(
+        genome = genome,
+        mutation_rate=1.0,
+        model="qwen2.5-coder:7b"
+    )
+    print(f"Original: {genome}")
+    print(f"Mutated: {mutated}")
+
+    #initial prompts (genome)
+    initial_prompts = [
+        "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+        "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+        "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+        "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct."
+    ]
+
+    parentA = initial_prompts[0]
+    parentB = initial_prompts[1]
+    child = crossover(
+        parent_a=parentA,
+        parent_b=parentB,
+        model="qwen2.5-coder:7b"
+    )
+    print(f"ParentA: {parentA}")
+    print(f"ParentB: {parentB}")
+    print(f"Child: {child}")
+
     parser = argparse.ArgumentParser()
+
+
 
     # task folder names under --tasks-dir
     parser.add_argument("tasks", nargs="+")
