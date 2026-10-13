@@ -1,3 +1,8 @@
+"""
+OLD CODE: this was meant for static eval. we have fitness.py now. need to decide
+whether to remove this or if this is useful for some other purpose.
+"""
+
 """reads each terminal-bench task folder and saves it as one clean record. output file has one task per line"""
 
 import argparse
