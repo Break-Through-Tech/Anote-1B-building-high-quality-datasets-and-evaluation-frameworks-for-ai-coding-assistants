@@ -40,6 +40,11 @@ DEFAULT_TASKS_DIR = Path(__file__).parents[1] / "data/raw/terminal-bench/tasks"
 # this is removed before sending the prompt to the model
 CANARY_RE = re.compile(r"<!--[^>]*harbor-canary[^>]*-->\s*", re.IGNORECASE)
 
+# also strip
+_CANARY_LINE_RE = re.compile(
+    r"^.*(harbor-canary|BENCHMARK DATA SHOULD NEVER).*\n?", re.MULTILINE
+)
+
 
 # enum for what went wrong in a run. empty means all fine
 class Status(StrEnum):
@@ -150,11 +155,24 @@ def _code_files(artifacts):
     return dict(sorted(files.items()))
 
 
+# json-mode - model drops the indent of a def/class right after an
+# indented decorator. a decorator always shares its def's indent, so copy it
+def _fix_decorator_indent(code):
+    lines = code.split("\n")
+    for i in range(1, len(lines)):
+        prev = lines[i - 1]
+        indent = prev[: len(prev) - len(prev.lstrip())]
+        is_def = lines[i].startswith(("def ", "async def ", "class "))
+        if indent and prev.lstrip().startswith("@") and is_def:
+            lines[i] = indent + lines[i]
+    return "\n".join(lines)
+
+
 # writes model's files over the shown ones. returns problems
 def _apply_reply(reply, files):
     try:
         changes = [
-            (c["path"], c["full_file_content"])
+            (c["path"], _fix_decorator_indent(c["full_file_content"]))
             for c in json.loads(reply)["files"]
         ]
     except (json.JSONDecodeError, KeyError, TypeError):
@@ -229,7 +247,9 @@ def _ask_and_apply(task_dir, prompt, model, artifacts):
     raw = (task_dir / "instruction.md").read_text(encoding="utf-8")
     instruction = CANARY_RE.sub("", raw).strip()
     shown = "\n\n".join(
-        f"### {path}\n```python\n{host.read_text(encoding='utf-8')}\n```"
+        "### {}\n```python\n{}\n```".format(
+            path, _CANARY_LINE_RE.sub("", host.read_text(encoding="utf-8"))
+        )
         for path, host in files.items()
     )
     user = f"{instruction}\n\n{shown}\n\n{_FORMAT}"
