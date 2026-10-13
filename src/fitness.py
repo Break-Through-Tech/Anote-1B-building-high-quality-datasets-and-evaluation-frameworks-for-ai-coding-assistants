@@ -1,0 +1,365 @@
+"""fitness function for the EA. for each task:
+
+1. build the task's docker images
+2. start the task container, copy its code out
+3. send the model the prompt, the task, and the code
+4. write the files the model sends back
+5. put the code in a test container, run the task's tests
+6. score = share of the tests the original buggy code failed that now pass.
+   0 if a test that used to pass now fails, or the tests didn't run.
+   partial credit system is different from the original terminal bench binary!!!
+   (we figure out which tests used to pass/fail by
+    running the tests once on the untouched code)
+
+fitness = average score over all tasks.
+
+the Status enum class, Problem enum class, and fitness function are meant to be
+the public facing API of this file. Our EA will use the fitness function and
+we can use Status and Problem to make decisions about what broken code means for
+our algorithm.
+"""
+
+import argparse
+import ast
+import functools
+import json
+import re
+import subprocess
+import sys
+import tempfile
+import tomllib
+import urllib.request
+from enum import StrEnum
+from pathlib import Path
+from typing import NamedTuple
+
+# terminal-bench task folders
+DEFAULT_TASKS_DIR = Path(__file__).parents[1] / "data/raw/terminal-bench/tasks"
+
+# "do not train on this" marker at the top of each instruction.md
+# this is removed before sending the prompt to the model
+CANARY_RE = re.compile(r"<!--[^>]*harbor-canary[^>]*-->\s*", re.IGNORECASE)
+
+
+# enum for what went wrong in a run. empty means all fine
+class Status(StrEnum):
+    BAD_JSON = "bad json"           # usually output got cut off
+    NO_FILES = "no files"
+    UNKNOWN_PATH = "unknown path"
+    SYNTAX_ERROR = "syntax error"
+    TIMEOUT = "tests timed out"
+    NO_RESULTS = "no test results"  # anti-cheat check failed or crash
+
+
+# one thing that went wrong. path is the related file (if any)
+class Problem(NamedTuple):
+    status: Status
+    path: str = ""
+
+
+# one task's outcome for a prompt
+class TaskResult(NamedTuple):
+    score: float
+    problems: list[Problem]  # empty = ran fine
+    tests: dict[str, bool]   # {test name: passed?}. empty = tests didn't run
+
+
+# what to do to the code before testing it
+class _Mode(StrEnum):
+    NORMAL = "normal"    # run the model
+    PERFECT = "perfect"  # run the reference solution
+    NOTHING = "nothing"  # leave the buggy code as is
+
+
+# tests the untouched code fails / passes
+class _Baseline(NamedTuple):
+    to_fix: frozenset[str]
+    keep: frozenset[str]
+
+
+def _format_problems(problems):
+    return ", ".join(f"{p.status} {p.path}".strip() for p in problems) or "ok"
+
+
+_OLLAMA = "http://localhost:11434/api/chat"
+# ollama defaults to 4k ctx under 24GB vram, way too small for whole files.
+# 16k fits fully on an 8GB gpu
+# too small for batched-eval-parity so should be skipped locally
+_NUM_CTX = 16384
+# max output tokens. w/o this a model can loop until ctx is full (not good).
+# cut off output = bad json
+_NUM_PREDICT = 8192
+
+# only fixed text added to the prompt because schema enforces
+# this should be neutral and not bias the model to any particular style of code.
+_FORMAT = "Reply with the full new contents of each file you change."
+
+
+# reply shape
+def _schema(paths):
+    file = {
+        "type": "object",
+        "required": ["path", "full_file_content"],
+        "properties": {
+            "path": {"enum": paths},
+            "full_file_content": {"type": "string"},
+        },
+    }
+    return {
+        "type": "object",
+        "required": ["files"],
+        "properties": {"files": {"type": "array", "items": file}},
+    }
+
+
+# runs a docker command and returns its stdout
+def _docker(*args):
+    out = subprocess.run(
+        ["docker", *args], check=True, capture_output=True, text=True
+    )
+    return out.stdout.strip()
+
+
+# prompts ollama
+def _ask(model, system, user, fmt):
+    body = {
+        "model": model,
+        "stream": False,
+        "format": fmt,
+        "options": {"num_ctx": _NUM_CTX, "num_predict": _NUM_PREDICT},
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+    }
+    req = urllib.request.Request(
+        _OLLAMA, json.dumps(body).encode(), {"Content-Type": "application/json"}
+    )
+    with urllib.request.urlopen(req) as r:
+        return json.load(r)["message"]["content"]
+
+
+# {container path: host path} for .py files under the copied artifacts
+def _code_files(artifacts):
+    files = {}
+    for artifact, local in artifacts.items():
+        for host in local.rglob("*.py"):
+            if host.is_file():
+                rel = host.relative_to(local).as_posix()
+                files[artifact.rstrip("/") + "/" + rel] = host
+    return dict(sorted(files.items()))
+
+
+# writes model's files over the shown ones. returns problems
+def _apply_reply(reply, files):
+    try:
+        changes = [
+            (c["path"], c["full_file_content"])
+            for c in json.loads(reply)["files"]
+        ]
+    except (json.JSONDecodeError, KeyError, TypeError):
+        return [Problem(Status.BAD_JSON)]
+    if not changes:
+        return [Problem(Status.NO_FILES)]
+    problems = []
+    for path, code in changes:
+        # backup for the schema enum, model can't write elsewhere
+        if path not in files:
+            problems.append(Problem(Status.UNKNOWN_PATH, path))
+            continue
+        try:
+            ast.parse(code)
+        except SyntaxError:
+            problems.append(Problem(Status.SYNTAX_ERROR, path))
+        files[path].write_text(code, encoding="utf-8", newline="\n")
+    return problems
+
+
+# reads task.toml. raises on tasks we can't run
+def _load_config(task_dir):
+    cfg = tomllib.loads((task_dir / "task.toml").read_text(encoding="utf-8"))
+    compose = task_dir / "environment" / "docker-compose.yaml"
+    if cfg.get("environment", {}).get("gpus") or compose.exists():
+        raise ValueError(
+            f"{task_dir.name}: needs gpu or docker-compose, not supported"
+        )
+    return cfg
+
+
+# builds the task and test images if missing, returns their names.
+# skips existing ones bc docker build hits docker hub every time, even cached,
+# so a network blip would crash the EA. delete the images to rebuild
+def _build_images(task_dir):
+    task_img, test_img = f"tb-env-{task_dir.name}", f"tb-test-{task_dir.name}"
+    for img, context in ((task_img, "environment"), (test_img, "tests")):
+        exists = subprocess.run(
+            ["docker", "image", "inspect", img], capture_output=True
+        )
+        if exists.returncode != 0:
+            _docker("build", "-q", "-t", img, task_dir / context)
+    return task_img, test_img
+
+
+# runs the reference solve.sh in the container
+def _run_solution(container, task_dir):
+    _docker("cp", task_dir / "solution", f"{container}:/solution")
+    _docker("exec", container, "bash", "/solution/solve.sh")
+
+
+# copies artifact dirs out into tmp. returns {container path: host dir}
+def _copy_out(container, artifact_paths, tmp):
+    artifacts = {
+        path: Path(tmp) / str(i) for i, path in enumerate(artifact_paths)
+    }
+    for path, local in artifacts.items():
+        _docker("cp", f"{container}:{path.rstrip('/')}/.", local)
+    return artifacts
+
+
+# copies artifact dirs from the host into the container
+def _copy_in(container, artifacts):
+    for path, local in artifacts.items():
+        _docker("exec", container, "mkdir", "-p", path)
+        _docker("cp", f"{local}/.", f"{container}:{path}")
+
+
+# shows the model the task and code, writes its reply. returns problems
+def _ask_and_apply(task_dir, prompt, model, artifacts):
+    files = _code_files(artifacts)
+    raw = (task_dir / "instruction.md").read_text(encoding="utf-8")
+    instruction = CANARY_RE.sub("", raw).strip()
+    shown = "\n\n".join(
+        f"### {path}\n```python\n{host.read_text(encoding='utf-8')}\n```"
+        for path, host in files.items()
+    )
+    user = f"{instruction}\n\n{shown}\n\n{_FORMAT}"
+    reply = _ask(model, prompt, user, _schema(list(files)))
+    return _apply_reply(reply, files)
+
+
+# runs the tests. returns ({test name: passed}, problems)
+def _run_tests(verifier, cfg):
+    timeout = cfg.get("verifier", {}).get("timeout_sec", 600)
+    try:
+        subprocess.run(
+            ["docker", "exec", verifier, "bash", "/tests/test.sh"],
+            capture_output=True,
+            timeout=timeout,
+        )
+    except subprocess.TimeoutExpired:
+        return {}, [Problem(Status.TIMEOUT)]
+    # per-test results, pytest writes these
+    out = subprocess.run(
+        ["docker", "exec", verifier, "cat", "/logs/verifier/ctrf.json"],
+        capture_output=True,
+        text=True,
+    )
+    try:
+        tests = json.loads(out.stdout)["results"]["tests"]
+    except (json.JSONDecodeError, KeyError):
+        return {}, [Problem(Status.NO_RESULTS)]
+    return {t["name"]: t["status"] == "passed" for t in tests}, []
+
+
+def _run_task(task_dir, prompt, model, mode=_Mode.NORMAL):
+    task_dir = Path(task_dir)
+    cfg = _load_config(task_dir)
+    task_img, test_img = _build_images(task_dir)
+
+    task_container = verifier = None
+    problems = []
+    try:
+        task_container = _docker("run", "-d", task_img, "sleep", "infinity")
+        if mode == _Mode.PERFECT:
+            _run_solution(task_container, task_dir)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            artifacts = _copy_out(task_container, cfg["artifacts"], tmp)
+            if mode == _Mode.NORMAL:
+                problems = _ask_and_apply(task_dir, prompt, model, artifacts)
+            verifier = _docker("run", "-d", test_img, "sleep", "infinity")
+            _copy_in(verifier, artifacts)
+
+        results, test_problems = _run_tests(verifier, cfg)
+        return results, problems + test_problems
+    finally:
+        for c in (task_container, verifier):
+            if c:
+                subprocess.run(["docker", "rm", "-f", c], capture_output=True)
+
+
+# what tests pass/fail without any code changes. runs once per task and cached
+@functools.cache
+def _baseline(task_dir):
+    results, problems = _run_task(task_dir, "", "", _Mode.NOTHING)
+    to_fix = frozenset(t for t, ok in results.items() if not ok)
+    if not to_fix:
+        why = _format_problems(problems)
+        raise RuntimeError(f"{task_dir}: untouched code fails no tests ({why})")
+    keep = frozenset(t for t, ok in results.items() if ok)
+    return _Baseline(to_fix, keep)
+
+
+# share of to_fix now passing. 0 if a keep test broke or no results
+def _score(results, base):
+    if not results or not all(results.get(t) for t in base.keep):
+        return 0.0
+    return sum(bool(results.get(t)) for t in base.to_fix) / len(base.to_fix)
+
+
+#------------------------------------------------------------------------------#
+# Fitness evaluation function for our evolutionary algorithm
+# Returns the mean score of prompt over tasks,
+# Also returns {task: TaskResult} (per-task score, problems, test results)
+# this second return value might be useful for some mutation experiments
+# if we only want to find the fitness score then only use first return value:
+#     `score, _ = fitness(prompt, tasks, model)`
+def fitness(
+    prompt: str,
+    tasks: list[str],
+    model: str,
+    tasks_dir: str | Path = DEFAULT_TASKS_DIR,
+) -> tuple[float, dict[str, TaskResult]]:
+    by_task = {}
+    for t in tasks:
+        task_dir = Path(tasks_dir) / t
+        tests, problems = _run_task(task_dir, prompt, model)
+        if problems:
+            print(f"{t}: {_format_problems(problems)}", file=sys.stderr)
+        score = _score(tests, _baseline(task_dir))
+        by_task[t] = TaskResult(score, problems, tests)
+    mean = sum(r.score for r in by_task.values()) / len(tasks)
+    return mean, by_task
+
+#------------------------------------------------------------------------------#
+
+# for testing
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+
+    # task folder names under --tasks-dir
+    parser.add_argument("tasks", nargs="+")
+
+    # what is to be evolved. this default one is for testing
+    parser.add_argument("--prompt", default="Do the coding.")
+
+    # ollama model tag
+    parser.add_argument("--model", default="qwen2.5-coder:7b")
+
+    # see _Mode
+    parser.add_argument(
+        "--mode", type=_Mode, choices=list(_Mode), default=_Mode.NORMAL
+    )
+
+    # where the task folders are
+    parser.add_argument("--tasks-dir", type=Path, default=DEFAULT_TASKS_DIR)
+
+    args = parser.parse_args()
+
+    for t in args.tasks:
+        task_dir = Path(args.tasks_dir) / t
+        results, problems = _run_task(
+            task_dir, args.prompt, args.model, args.mode
+        )
+        score = _score(results, _baseline(task_dir))
+        print(t, score, _format_problems(problems))
