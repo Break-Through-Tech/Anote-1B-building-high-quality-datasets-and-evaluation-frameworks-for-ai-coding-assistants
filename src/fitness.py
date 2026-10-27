@@ -2,7 +2,7 @@
 
 1. build the task's docker images
 2. start the task container, copy its code out
-3. send the model the prompt, the task, and the code
+3. send the model the prompt, the task, the tests the code fails, and the code
 4. write the files the model sends back
 5. put the code in a test container, run the task's tests
 6. score = share of the tests the original buggy code failed that now pass.
@@ -80,10 +80,11 @@ class _Mode(StrEnum):
     NOTHING = "nothing"  # leave the buggy code as is
 
 
-# tests the untouched code fails / passes
+# tests the untouched code fails / passes, and what the failures said
 class _Baseline(NamedTuple):
     to_fix: frozenset[str]
     keep: frozenset[str]
+    errors: dict[str, str]  # {to_fix test: its error}
 
 
 def _format_problems(problems):
@@ -96,47 +97,24 @@ _OLLAMA = "http://localhost:11434/api/chat"
 # too small for batched-eval-parity so should be skipped locally
 _NUM_CTX = 8192
 # max output tokens. w/o this a model can loop until ctx is full (not good).
-# cut off output = bad json
+# cut off output = no files
 _NUM_PREDICT = 4096
+# greedy + fixed seed so the same prompt always gets the same score. with
+# ollama's default temperature (0.8) one sample per task is too noisy for the
+# EA to rank prompts by
+_TEMPERATURE = 0
+_SEED = 0
 
-# only fixed text added to the prompt because schema enforces
+# only fixed text added to the prompt.
 # this should be neutral and not bias the model to any particular style of code.
+# fenced code, not json mode: in json the model has to escape every quote and
+# newline of a whole file, and a 7b model gets that wrong often enough that
+# syntax errors hide whether it found the bug
 _FORMAT = """
-Reply with the full new contents of each file you change.
-
-Only include modified files.
-Every returned Python file must be complete and syntactically valid.
-
-IMPORTANT RULES FOR STRINGS:
-- Never put a literal newline inside a single-quoted or double-quoted Python string.
-- For multiline SQL, use adjacent quoted strings, one per line.
-- Each SQL statement must end with a semicolon.
-- Do not use triple-quoted strings.
-
-Example of valid Python:
-
-con.executescript(
-    "CREATE TABLE users (id INTEGER);"
-    "CREATE TABLE logs (id INTEGER);"
-)
-
-Return only the required JSON structure.
+Reply format: you may reason first. Then, for each file you change, write a line
+`### <path>` with the exact path shown above, followed by the complete new
+contents of that file in a ```python fenced code block. Only include files you change.
 """
-# reply shape
-def _schema(paths):
-    file = {
-        "type": "object",
-        "required": ["path", "full_file_content"],
-        "properties": {
-            "path": {"enum": paths},
-            "full_file_content": {"type": "string"},
-        },
-    }
-    return {
-        "type": "object",
-        "required": ["files"],
-        "properties": {"files": {"type": "array", "items": file}},
-    }
 
 
 # runs a docker command and returns its stdout
@@ -148,12 +126,16 @@ def _docker(*args):
 
 
 # prompts ollama
-def _ask(model, system, user, fmt):
+def _ask(model, system, user):
     body = {
         "model": model,
         "stream": False,
-        "format": fmt,
-        "options": {"num_ctx": _NUM_CTX, "num_predict": _NUM_PREDICT},
+        "options": {
+            "num_ctx": _NUM_CTX,
+            "num_predict": _NUM_PREDICT,
+            "temperature": _TEMPERATURE,
+            "seed": _SEED,
+        },
         "messages": [
             {"role": "system", "content": system},
             {"role": "user", "content": user},
@@ -163,7 +145,8 @@ def _ask(model, system, user, fmt):
         _OLLAMA, json.dumps(body).encode(), {"Content-Type": "application/json"}
     )
     try:
-        with urllib.request.urlopen(req) as r:
+        # a stuck request would hang the EA forever
+        with urllib.request.urlopen(req, timeout=1200) as r:
             return json.load(r)["message"]["content"]
     except urllib.error.HTTPError as e:
         error_message = e.read().decode("utf-8", errors="replace")
@@ -183,43 +166,42 @@ def _code_files(artifacts):
     return dict(sorted(files.items()))
 
 
-# json-mode - model drops the indent of a def/class right after an
-# indented decorator. a decorator always shares its def's indent, so copy it
-def _fix_decorator_indent(code):
-    lines = code.split("\n")
-    for i in range(1, len(lines)):
-        prev = lines[i - 1]
-        indent = prev[: len(prev) - len(prev.lstrip())]
-        is_def = lines[i].startswith(("def ", "async def ", "class "))
-        if indent and prev.lstrip().startswith("@") and is_def:
-            lines[i] = indent + lines[i]
-    return "\n".join(lines)
+_FENCE_RE = re.compile(r"^```[^\n]*\n(.*?)^```", re.MULTILINE | re.DOTALL)
+
+
+# [(path, code)] for each fenced block in the reply. the path is a shown one
+# either in a comment on the block's first line, or the last one mentioned in
+# the text since the previous block. models put the `### path` line in both
+def _parse_reply(reply, paths):
+    changes, prev_end = [], 0
+    for m in _FENCE_RE.finditer(reply):
+        code = m.group(1)
+        first, _, rest = code.partition("\n")
+        inside = [p for p in paths if p in first]
+        if inside and first.lstrip().startswith("#"):
+            path, code = max(inside, key=len), rest
+        else:
+            before = reply[prev_end : m.start()]
+            seen = [(before.rfind(p), len(p), p) for p in paths if p in before]
+            path = max(seen)[2] if seen else None
+        prev_end = m.end()
+        if path:
+            changes.append((path, code))
+    return changes
 
 
 # writes model's files over the shown ones. returns problems
 def _apply_reply(reply, files):
-    try:
-        changes = [
-            (c["path"], _fix_decorator_indent(c["full_file_content"]))
-            for c in json.loads(reply)["files"]
-        ]
-    except (json.JSONDecodeError, KeyError, TypeError):
-        return [Problem(Status.BAD_JSON)]
+    changes = _parse_reply(reply, list(files))
     if not changes:
         return [Problem(Status.NO_FILES)]
     problems = []
     for path, code in changes:
-        # backup for the schema enum, model can't write elsewhere
-        if path not in files:
-            problems.append(Problem(Status.UNKNOWN_PATH, path))
-            continue
         try:
             ast.parse(code)
         except SyntaxError as e:
             print(f"{path}: line {e.lineno}: {e.msg}\n{code}", file=sys.stderr)
             problems.append(Problem(Status.SYNTAX_ERROR, path))
-
-        files[path].write_text(code, encoding="utf-8", newline="\n")
         files[path].write_text(code, encoding="utf-8", newline="\n")
     return problems
 
@@ -272,23 +254,35 @@ def _copy_in(container, artifacts):
         _docker("cp", f"{local}/.", f"{container}:{path}")
 
 
-# shows the model the task and code, writes its reply. returns problems
+# the tests the untouched code fails, shown to the model like a ci log.
+# without them the model has to guess which part of the code is broken
+def _failure_report(errors):
+    lines = ["The test suite currently reports these failures:", ""]
+    for name, error in list(errors.items())[:8]:
+        # tracebacks can be huge, keep the start of each
+        lines += [f"- {name}", "  " + " ".join(error.split())[:600]]
+    return "\n".join(lines)
+
+
+# shows the model the task, failing tests and code, writes its reply.
+# returns problems
 def _ask_and_apply(task_dir, prompt, model, artifacts):
     files = _code_files(artifacts)
     raw = (task_dir / "instruction.md").read_text(encoding="utf-8")
     instruction = CANARY_RE.sub("", raw).strip()
+    report = _failure_report(_baseline(task_dir).errors)
     shown = "\n\n".join(
         "### {}\n```python\n{}\n```".format(
             path, _CANARY_LINE_RE.sub("", host.read_text(encoding="utf-8"))
         )
         for path, host in files.items()
     )
-    user = f"{instruction}\n\n{shown}\n\n{_FORMAT}"
-    reply = _ask(model, prompt, user, _schema(list(files)))
+    user = f"{instruction}\n\n{report}\n\n{shown}\n\n{_FORMAT}"
+    reply = _ask(model, prompt, user)
     return _apply_reply(reply, files)
 
 
-# runs the tests. returns ({test name: passed}, problems)
+# runs the tests. returns ({test name: passed}, problems, {failed test: error})
 def _run_tests(verifier, cfg):
     timeout = cfg.get("verifier", {}).get("timeout_sec", 600)
     try:
@@ -298,7 +292,7 @@ def _run_tests(verifier, cfg):
             timeout=timeout,
         )
     except subprocess.TimeoutExpired:
-        return {}, [Problem(Status.TIMEOUT)]
+        return {}, [Problem(Status.TIMEOUT)], {}
     # per-test results, pytest writes these
     out = subprocess.run(
         ["docker", "exec", verifier, "cat", "/logs/verifier/ctrf.json"],
@@ -308,8 +302,15 @@ def _run_tests(verifier, cfg):
     try:
         tests = json.loads(out.stdout)["results"]["tests"]
     except (json.JSONDecodeError, KeyError):
-        return {}, [Problem(Status.NO_RESULTS)]
-    return {t["name"]: t["status"] == "passed" for t in tests}, []
+        return {}, [Problem(Status.NO_RESULTS)], {}
+    results = {t["name"]: t["status"] == "passed" for t in tests}
+    # the traceback says where it failed, the message often says nothing
+    errors = {
+        t["name"]: t.get("trace") or t.get("message") or ""
+        for t in tests
+        if t["status"] != "passed"
+    }
+    return results, [], errors
 
 
 def _run_task(task_dir, prompt, model, mode=_Mode.NORMAL):
@@ -331,8 +332,8 @@ def _run_task(task_dir, prompt, model, mode=_Mode.NORMAL):
             verifier = _docker("run", "-d", test_img, "sleep", "infinity")
             _copy_in(verifier, artifacts)
 
-        results, test_problems = _run_tests(verifier, cfg)
-        return results, problems + test_problems
+        results, test_problems, errors = _run_tests(verifier, cfg)
+        return results, problems + test_problems, errors
     finally:
         for c in (task_container, verifier):
             if c:
@@ -342,13 +343,13 @@ def _run_task(task_dir, prompt, model, mode=_Mode.NORMAL):
 # what tests pass/fail without any code changes. runs once per task and cached
 @functools.cache
 def _baseline(task_dir):
-    results, problems = _run_task(task_dir, "", "", _Mode.NOTHING)
+    results, problems, errors = _run_task(task_dir, "", "", _Mode.NOTHING)
     to_fix = frozenset(t for t, ok in results.items() if not ok)
     if not to_fix:
         why = _format_problems(problems)
         raise RuntimeError(f"{task_dir}: untouched code fails no tests ({why})")
     keep = frozenset(t for t, ok in results.items() if ok)
-    return _Baseline(to_fix, keep)
+    return _Baseline(to_fix, keep, errors)
 
 
 # share of to_fix now passing. 0 if a keep test broke or no results
@@ -425,6 +426,8 @@ def run_evolution(tasks, mu, lambda_, generations, mutation_rate, model, seed,  
     random.seed(seed)
     if mu != len(parents):
         raise ValueError("mu must be equal to the number of initial parents.")
+    if mu < 2:
+        raise ValueError("crossover needs mu of at least 2.")
     if not plus and lambda_ < mu:
         raise ValueError("lambda_ must be at least mu when plus is False.")
     scores = {}
@@ -434,8 +437,9 @@ def run_evolution(tasks, mu, lambda_, generations, mutation_rate, model, seed,  
     for generation in range(generations):
         children = []
         for _ in range(lambda_):
-            parent_a = random.choice(parents)
-            parent_b = random.choice(parents)
+            # two different parents. a prompt crossed with itself is just
+            # a paraphrase of it
+            parent_a, parent_b = random.sample(parents, 2)
             child = crossover(parent_a, parent_b, model)
             child = mutate(child, mutation_rate, model)
             children.append(child)
@@ -472,7 +476,7 @@ def fitness(
     by_task = {}
     for t in tasks:
         task_dir = Path(tasks_dir) / t
-        tests, problems = _run_task(task_dir, prompt, model)
+        tests, problems, _ = _run_task(task_dir, prompt, model)
         if problems:
             print(f"{t}: {_format_problems(problems)}", file=sys.stderr)
         score = _score(tests, _baseline(task_dir))
@@ -553,7 +557,7 @@ if __name__ == "__main__":
 
     for t in args.tasks:
         task_dir = Path(args.tasks_dir) / t
-        results, problems = _run_task(
+        results, problems, _ = _run_task(
             task_dir, args.prompt, args.model, args.mode
         )
         score = _score(results, _baseline(task_dir))
