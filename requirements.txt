@@ -16,5 +16,8 @@ anthropic
 openai
 python-dotenv     # loads API keys from .env
 
+# Local models for the EA (solver + mutator, src/promptevo/models.py)
+ollama
+
 # Functional correctness scoring
 pytest
