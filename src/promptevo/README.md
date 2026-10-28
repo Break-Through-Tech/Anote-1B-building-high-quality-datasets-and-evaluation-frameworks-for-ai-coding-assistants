@@ -224,3 +224,31 @@ DATASETS = {
 and pass `--dataset apps`. Scoring and the lexicase stuff all work off the
 result, so you don't have to touch anything else. `TerminalBench` in
 `datasets/terminal_bench/dataset.py` is a working one to look at.
+
+## Classes
+
+Indented ones are subclasses of the one above them.
+
+- `Evolution` (`evolution.py`) runs the loop
+- `EvolutionConfig` (`evolution.py`) holds mu, lambda, generations and so on
+- `RunLog` (`evolution.py`) writes the JSONL log
+- `Evaluator` (`evaluation.py`) scores a prompt with a dataset, solver and signal
+- `Signal` (`evaluation.py`) is partial or binary credit
+- `Selector` (`selection.py`) picks parents
+  - `UniformSelector`
+  - `LexicaseSelector`
+- `Operators` (`operators.py`) makes new prompts
+  - `LLMOperators` asks the mutator model to do mutate and crossover
+- `Feedback` (`operators.py`) is how much the mutator is told
+- `OllamaModel` (`models.py`) is one Ollama model, used for the solver and the
+  mutator
+- `Evaluation`, `Individual` (`types.py`) are a scored prompt and a prompt in
+  the population
+- `Dataset` (`datasets/base.py`) is a set of items to score prompts on
+  - `TerminalBench` (`datasets/terminal_bench/dataset.py`)
+- `ItemResult` (`datasets/base.py`) is one item's tests, all of them count
+  - `RepairResult` only counts the tests the bug breaks
+
+Inside `datasets/terminal_bench/` there's also `Task` (one task folder),
+`Container` (a Docker container), `BugInjector`, and the small types `Mode`,
+`Status`, `Problem`, `RunResult` and `Baseline`.

@@ -17,7 +17,8 @@ tasks. Preserve the original purpose.
 Original prompt:
 {prompt}
 
-Return the modified prompt inside a ``` fenced code block."""
+Return only the text of the modified prompt, not JSON or a diff, inside a ```
+fenced code block."""
 
 _CROSSOVER = """\
 You are performing a crossover operation on two system prompts for a coding
@@ -30,7 +31,8 @@ Parent A:
 Parent B:
 {b}
 
-Return the new child prompt inside a ``` fenced code block."""
+Return only the text of the new child prompt, not JSON or a diff, inside a ```
+fenced code block."""
 
 # a fence only counts at the start of a line, so a prompt that mentions
 # ```python mid-sentence doesn't end the block early
@@ -76,12 +78,14 @@ class LLMOperators(Operators):
     def crossover(self, a, b):
         return self._ask(_CROSSOVER.format(a=a, b=b))
 
-    # the prompt inside the reply's fence. "" if there isn't one, the ea then
-    # keeps the parent
+    # the prompt inside the reply's fence. small models often skip the fence
+    # or write the prompt on the ``` line, so then it's the whole reply minus
+    # the backticks
     def _ask(self, text):
         reply = self.model.chat(text, seed=self._rng.randrange(2**31))
         fenced = _FENCE_RE.search(reply)
-        return fenced.group(1).strip() if fenced else ""
+        inside = fenced.group(1).strip() if fenced else ""
+        return inside or reply.replace("```", "").strip()
 
 
 def _describe(evaluation, feedback):
