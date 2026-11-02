@@ -81,6 +81,7 @@ def _parse_args():
 def _held_out(args, model, evolution, best, log):
     # always partial here, same metric no matter which signal trained it
     dataset = DATASETS[args.dataset](args.held_out, args.data_dir)
+    print(dataset)
     tester = Evaluator(dataset, model, Signal.PARTIAL)
     prompts = test_prompts(best, evolution.seeds)
     scores = score_test_set(tester, prompts)
