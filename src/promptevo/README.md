@@ -17,7 +17,7 @@ that writes new prompts. They can be the same Ollama model or different ones.
 
 The evolutionary run:
 
-1. Score every seed prompt (`SEED_PROMPTS` in `__main__.py`) on the train
+1. Score every seed prompt (`SEED_PROMPTS` in `experiment.py`) on the train
    items and keep the best mu of them. That's the starting population.
 2. Each generation makes lambda children. For each child the `Selector` picks
    two parents, the mutator combines them (crossover), and with probability
@@ -25,8 +25,8 @@ The evolutionary run:
 3. Score the children.
 4. Keep the best mu prompts out of parents + children (plus selection), or out
    of the children only with `--comma`.
-5. After the last generation, print the best prompt and score it on the
-   test set.
+5. After the last generation, print the best prompt, pick one on the
+   validation set if there is one, and score them on the test set.
 
 ## Running it
 
@@ -49,34 +49,44 @@ python -m promptevo risk-scorer-replay--bug01 risk-scorer-replay--bug02 \
 Positional arguments are the train items. For Terminal-Bench those are task
 folder names under `--data-dir`.
 
-## Train and test sets
+## Train, validation and test sets
 
-Same idea as a train/test split in ML. The positional items are the train
-set, the only scores the EA ever sees. `--held-out` items are the test set,
-scored once at the end. The output looks like this (made-up numbers)
+Same idea as a train/validation/test split in ML. The positional items are
+the train set, the only scores the EA ever sees. `--held-out` items are the
+test set, scored once at the end.
+
+`--validation` is optional. The prompt with the best train score is often
+just the one that fit those particular items, so with a validation set the
+final population and the seeds get scored on it and the best one there is
+the `val pick`. If a seed wins, the generations didn't find anything better.
+
+The output looks like this (made-up numbers)
 
 ```
 test set (partial credit):
   evolved    0.420
+  val pick   0.401
   best seed  0.367
   no prompt  0.242
   seed 0     0.313
   ...
 ```
 
-`best seed` is the seed with the highest train score, which is what you'd get
-with 0 generations. So `evolved` vs `best seed` is what the generations added
-on top of picking a seed. `no prompt` is the solver with no system prompt at
-all. The seeds and these comparisons are in `experiment.py`.
+`evolved` is the best train score. `best seed` is the seed with the highest
+train score, which is what you'd get with 0 generations. So `evolved` or
+`val pick` vs `best seed` is what the generations added on top of picking a
+seed. `no prompt` is the solver with no system prompt at all. The seeds and
+these comparisons are in `experiment.py`.
 
-The test set is always scored with partial credit so runs trained with
-different `--signal`s are comparable. Keep the two sets separate, and for
+Validation and test are always scored with partial credit so runs trained
+with different `--signal`s are comparable. Keep the sets separate, and for
 bug-injected variants take them from different original tasks.
 
 ## Flags
 
 | flag | default | what it does |
 |---|---|---|
+| `--validation` | none | picks the final prompt, see above |
 | `--held-out` | none | the test set, scored only at the end |
 | `--dataset` | `terminal-bench` | which entry of `DATASETS` to use |
 | `--data-dir` | the dataset's own | folder with the items |
@@ -96,9 +106,10 @@ bug-injected variants take them from different original tasks.
 A run scores up to `seeds + lambda * generations` prompts, each on every
 train item, so it gets slow quickly.
 
-Runs are reproducible, the same `--seed` gives the same run. The solver runs
-at temperature 0, and the mutator runs at 0.8 with a new seed for every call
-drawn from `--seed`.
+The same `--seed` gives the same run. The solver runs at temperature 0, and
+the mutator runs at 0.8 with a new seed for every call drawn from `--seed`.
+Scores can still move by 0.01 to 0.03 after Ollama restarts, so compare
+prompts scored in the same session.
 
 ## Scoring
 
@@ -131,7 +142,7 @@ binary is closer to how benchmarks usually report results.
 
 ## The run log
 
-Every run writes a JSONL file, one JSON object per line, with three kinds of
+Every run writes a JSONL file, one JSON object per line, with four kinds of
 lines.
 
 ```json
@@ -139,16 +150,30 @@ lines.
  "cases": {"task::test_a": 1.0}, "feedback": "...", "crashed": false}
 {"event": "generation", "generation": 1,
  "survivors": [{"prompt": "...", "score": 0.5}]}
+{"event": "validation", "results": [{"prompt": "...", "score": 0.44}]}
 {"event": "test", "results": {"evolved": {"prompt": "...", "score": 0.42}}}
 ```
 
 `scored` is written once per unique prompt, `generation` once per generation
-with the prompts that survived it. Generation 0 is the seeds. `test` is the
-test set at the end.
+with the prompts that survived it. Generation 0 is the seeds. `validation`
+and `test` come at the end.
+
+## HumanEval
+
+`HumanEval` (`--dataset humaneval`) is HumanEvalFix from
+`bigcode/humanevalpack`, 164 Python functions with a human-written bug.
+Items are task ids like `Python/0`. The data downloads to
+`data/raw/humanevalpack` on the first run, and every assert runs in a
+`python:3.12-slim` container with no network.
+
+```bash
+python -m promptevo Python/0 Python/1 --held-out Python/2 Python/3 \
+    --dataset humaneval
+```
 
 ## Terminal-Bench
 
-`TerminalBench` is the one dataset so far. Each item is a Terminal-Bench task
+Each `TerminalBench` item is a Terminal-Bench task
 folder (from `data/raw/terminal-bench/tasks` by default), run in Docker. It
 runs the tests once on the untouched code to find which ones the bug breaks,
 and returns a `RepairResult` per task.
@@ -222,8 +247,8 @@ DATASETS = {
 ```
 
 and pass `--dataset apps`. Scoring and the lexicase stuff all work off the
-result, so you don't have to touch anything else. `TerminalBench` in
-`datasets/terminal_bench/dataset.py` is a working one to look at.
+result, so you don't have to touch anything else. `HumanEval` in
+`datasets/human_eval/dataset.py` is a short working one to look at.
 
 ## Classes
 
@@ -245,6 +270,7 @@ Indented ones are subclasses of the one above them.
 - `Evaluation`, `Individual` (`types.py`) are a scored prompt and a prompt in
   the population
 - `Dataset` (`datasets/base.py`) is a set of items to score prompts on
+  - `HumanEval` (`datasets/human_eval/dataset.py`)
   - `TerminalBench` (`datasets/terminal_bench/dataset.py`)
 - `ItemResult` (`datasets/base.py`) is one item's tests, all of them count
   - `RepairResult` only counts the tests the bug breaks
