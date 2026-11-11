@@ -1,55 +1,75 @@
-from datasets import load_dataset
-from promptevo.datasets.base import Dataset
-from datasets import load_from_disk
+"""HumanEvalFix (Python) from bigcode/humanevalpack as a Dataset.
+
+Items are task ids like "Python/0". Each one is a HumanEval function with a
+human-written bug. The solver sees the instruction and the buggy code, never
+the tests, and the tests run in Docker (sandbox.py).
+"""
+
 import ast
+from pathlib import Path
+
+from datasets import load_dataset, load_from_disk
+
+from promptevo.datasets.base import Dataset, RepairResult
+from promptevo.datasets.human_eval.sandbox import run_jobs
 from promptevo.models import OllamaModel
-from promptevo.datasets.base import RepairResult
+
+# gitignored, so the download isn't committed
+DATA_DIR = Path(__file__).parents[4] / "data/raw/humanevalpack"
 
 
 class HumanEval(Dataset):
-    def __init__(self, items, data_dir=None):
-        ds = load_dataset("bigcode/humanevalpack", "python")["test"]
-        ds.save_to_disk("src/promptevo/datasets/humanevalpack")
-        self.items = load_from_disk("src/promptevo/datasets/humanevalpack")
+    """humanevalfix items by task id."""
 
-    # extract asserts from the field through ast tree
+    def __init__(self, items, data_dir=None):
+        path = Path(data_dir or DATA_DIR)
+        # download once, later runs load from disk
+        if not path.exists():
+            ds = load_dataset("bigcode/humanevalpack", "python")["test"]
+            ds.save_to_disk(path)
+        rows = {row["task_id"]: row for row in load_from_disk(path)}
+        self.items = [rows[item] for item in items]
+
+    # extract asserts from the field through ast tree. top-level statements
+    # of check() only, so an assert inside a loop keeps its loop. setup
+    # lines (imports, test inputs) go in front of the next assert
     def split_asserts(self, code):
         tree = ast.parse(code)
         asserts = []
 
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Assert):
-                asserts.append(ast.get_source_segment(code, node))
+        check = next(
+            node for node in tree.body
+            if isinstance(node, ast.FunctionDef) and node.name == "check"
+        )
+        setup = ""
+        for node in check.body:
+            if any(isinstance(n, ast.Assert) for n in ast.walk(node)):
+                asserts.append(setup + ast.unparse(node))
+                setup = ""
+            else:
+                setup += ast.unparse(node) + "\n"
         return asserts
-    # identify passing cases
-    def passing_cases(self, assertions, code, entry_point):
-        namespace={}
-        exec(code, namespace)
-        namespace["candidate"] = namespace[entry_point]
-        passing = {}
-        for assertion in assertions:
-            try:
-                exec(assertion, namespace)
-                passing[assertion] = True
-            except Exception:
-                passing[assertion] = False
-        return passing
 
+    # identify passing cases. jobs is {key: (assertions, code, entry_point)},
+    # all run together in docker (sandbox.py has the exec part)
+    def passing_cases(self, jobs):
+        return run_jobs(jobs)
 
-                
     def run(self, prompt: str, solver: OllamaModel) -> dict[str, RepairResult]:
         results = {}
+        jobs = {}
 
-        randomints = [5, 100, 32, 70]
-        for item in self.items.select(randomints):
+        for item in self.items:
             buggy_code = item["prompt"] + item["buggy_solution"]
 
             code = solver.chat(
-            item["instruction"]
-            + "\n\nHere is the buggy code:\n"
-            + buggy_code
-            + "\n\nReturn only the complete corrected Python function. No explanations or markdown fences. Make sure to close proper resources.",
-            system=prompt
+                item["instruction"]
+                + "\n\nHere is the buggy code:\n"
+                + buggy_code
+                + "\n\nReturn only the complete corrected Python function. "
+                "No explanations or markdown fences. "
+                "Make sure to close proper resources.",
+                system=prompt,
             )
             code = code.strip()
 
@@ -59,22 +79,35 @@ class HumanEval(Dataset):
                 if code.startswith("python"):
                     code = code[len("python"):]
                 code = code.strip()
-            #evaluate asserts
+            # models often drop imports like `from typing import List`
+            code = _imports(item) + code
+
+            # evaluate asserts
             asserts = self.split_asserts(item["test"])
+            entry = item["entry_point"]
+            jobs[item["task_id"], "original"] = (asserts, buggy_code, entry)
+            jobs[item["task_id"], "repaired"] = (asserts, code, entry)
 
-            original_results = self.passing_cases(asserts, buggy_code, item["entry_point"])
+        outcomes = self.passing_cases(jobs)
+        for item in self.items:
+            original_results, _ = outcomes[item["task_id"], "original"]
+            repaired_passing, error = outcomes[item["task_id"], "repaired"]
 
-            repaired_passing = self.passing_cases(asserts, code, item["entry_point"])
-
-            
             results[item["task_id"]] = RepairResult(
                 tests=repaired_passing,
-                to_fix = frozenset(
+                problems=[f"crashed ({error})"] if error else [],
+                to_fix=frozenset(
                     a for a, passed in original_results.items() if not passed
                 ),
-                passing = frozenset(
+                passing=frozenset(
                     a for a, passed in original_results.items() if passed
-                )
-            
+                ),
             )
         return results
+
+
+# the declaration's import lines
+def _imports(item):
+    lines = item["declaration"].splitlines()
+    kept = [line for line in lines if line.startswith(("import ", "from "))]
+    return "\n".join(kept) + "\n\n"

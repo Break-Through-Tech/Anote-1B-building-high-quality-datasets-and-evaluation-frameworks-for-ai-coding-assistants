@@ -15,15 +15,32 @@ SEED_PROMPTS = [
 ]
 
 
+def pick_by_validation(
+    validator: Evaluator, prompts: list[str]
+) -> tuple[str, dict[str, float]]:
+    """scores each prompt on the validation set. returns the best one and
+    {prompt: validation score}."""
+    scores = {}
+    for prompt in prompts:
+        if prompt not in scores:
+            scores[prompt] = validator.evaluate(prompt).score
+    # ties go to the earlier prompt
+    return max(scores, key=scores.get), scores
+
+
 def test_prompts(
-    best: Individual, seeds: list[Individual]
+    best: Individual,
+    seeds: list[Individual],
+    picked: str | None = None,
 ) -> dict[str, str]:
     """{name: prompt} to score on the test set. evolved vs the best seed
     shows what the generations added on top of picking a seed."""
     # highest train score, ties go to the earlier seed
     best_seed = max(seeds, key=lambda ind: ind.evaluation.score)
-    prompts = {
-        "evolved": best.prompt,
+    prompts = {"evolved": best.prompt}
+    if picked is not None:
+        prompts["val pick"] = picked
+    prompts |= {
         "best seed": best_seed.prompt,
         # empty system message, ollama then adds no default one either
         "no prompt": "",

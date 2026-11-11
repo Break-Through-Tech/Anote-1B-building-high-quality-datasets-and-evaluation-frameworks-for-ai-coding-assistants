@@ -1,7 +1,6 @@
 """Mutate and crossover. Feedback controls what the mutator sees."""
 
 import random
-import re
 from abc import ABC, abstractmethod
 from enum import StrEnum
 
@@ -33,10 +32,6 @@ Parent B:
 
 Return only the text of the new child prompt, not JSON or a diff. Do not include explanations,
 formatting instructions, or Markdown code fences."""
-
-# a fence only counts at the start of a line, so a prompt that mentions
-# ```python mid-sentence doesn't end the block early
-_FENCE_RE = re.compile(r"^```[^\n]*\n(.*?)^```", re.MULTILINE | re.DOTALL)
 
 
 class Operators(ABC):
@@ -78,17 +73,11 @@ class LLMOperators(Operators):
     def crossover(self, a, b):
         return self._ask(_CROSSOVER.format(a=a, b=b))
 
-    # the prompt inside the reply's fence. small models often skip the fence
-    # or write the prompt on the ``` line, so then it's the whole reply minus
-    # the backticks
+    # the templates ask for the bare prompt, so the reply is the prompt.
+    # small models often ignore a request for a fenced block
     def _ask(self, text):
         reply = self.model.chat(text, seed=self._rng.randrange(2**31))
         return reply.strip()
-        
-        # fenced = _FENCE_RE.search(reply)
-        # inside = fenced.group(1).strip() if fenced else ""
-        # return inside or reply.replace("```", "").strip()
-        #return reply.replace("```", "").strip()
 
 
 def _describe(evaluation, feedback):

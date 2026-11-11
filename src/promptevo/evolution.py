@@ -62,6 +62,15 @@ class RunLog:
             ],
         })
 
+    def validation(self, scores: dict[str, float]):
+        self._write({
+            "event": "validation",
+            "results": [
+                {"prompt": prompt, "score": score}
+                for prompt, score in scores.items()
+            ],
+        })
+
     def test(self, prompts: dict[str, str], scores: dict[str, float]):
         self._write({
             "event": "test",

@@ -5,8 +5,10 @@
 
 1. Score the seeds on the train items, keep the best mu
 2. Evolve (evolution.py)
-3. Score the best prompt, the best seed, no prompt and every seed on the
-   held-out items (the test set)
+3. With --validation, score the final population and the seeds on the
+   validation items and pick the best
+4. Score the best prompt, the validation pick, the best seed, no prompt and
+   every seed on the held-out items (the test set)
 """
 
 import argparse
@@ -16,7 +18,12 @@ from pathlib import Path
 from promptevo.datasets import DATASETS
 from promptevo.evaluation import Evaluator, Signal
 from promptevo.evolution import Evolution, EvolutionConfig, RunLog
-from promptevo.experiment import SEED_PROMPTS, score_test_set, test_prompts
+from promptevo.experiment import (
+    SEED_PROMPTS,
+    pick_by_validation,
+    score_test_set,
+    test_prompts,
+)
 from promptevo.models import mutator, solver
 from promptevo.operators import Feedback, LLMOperators
 from promptevo.selection import LexicaseSelector, UniformSelector
@@ -34,6 +41,7 @@ def _parse_args():
 
     # train items
     parser.add_argument("items", nargs="+")
+    parser.add_argument("--validation", nargs="*", default=[])
     parser.add_argument("--held-out", nargs="*", default=[])
     parser.add_argument(
         "--dataset",
@@ -78,12 +86,24 @@ def _parse_args():
     return parser.parse_args()
 
 
-def _held_out(args, model, evolution, best, log):
+# best of the final population and the seeds on the validation items. the
+# best train score is often just the best fit to the train items
+def _validation(args, model, evolution, population, log):
+    dataset = DATASETS[args.dataset](args.validation, args.data_dir)
+    validator = Evaluator(dataset, model, Signal.PARTIAL)
+    candidates = [ind.prompt for ind in population + evolution.seeds]
+    picked, scores = pick_by_validation(validator, candidates)
+    log.validation(scores)
+    print(f"\nvalidation pick (validation score {scores[picked]:.3f}):")
+    print(picked)
+    return picked
+
+
+def _held_out(args, model, evolution, best, picked, log):
     # always partial here, same metric no matter which signal trained it
     dataset = DATASETS[args.dataset](args.held_out, args.data_dir)
-    print(dataset)
     tester = Evaluator(dataset, model, Signal.PARTIAL)
-    prompts = test_prompts(best, evolution.seeds)
+    prompts = test_prompts(best, evolution.seeds, picked)
     scores = score_test_set(tester, prompts)
     log.test(prompts, scores)
     print("\ntest set (partial credit):")
@@ -118,6 +138,9 @@ if __name__ == "__main__":
     best = population[0]
     print(f"\nbest prompt (train score {best.evaluation.score:.3f}):")
     print(best.prompt)
+    picked = None
+    if args.validation:
+        picked = _validation(args, solver_model, evolution, population, log)
     if args.held_out:
-        _held_out(args, solver_model, evolution, best, log)
+        _held_out(args, solver_model, evolution, best, picked, log)
     print(f"log: {log_path}")
