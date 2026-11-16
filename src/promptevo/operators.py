@@ -5,9 +5,9 @@ from abc import ABC, abstractmethod
 from enum import StrEnum
 
 from promptevo.models import OllamaModel
-from promptevo.types import Evaluation
+from promptevo.types import Evaluation, Individual
 
-_MUTATE = """\
+MUTATE = """\
 You are mutating a system prompt for a coding assistant.
 
 Make EXACTLY one change that will improve the assistant's performance on the
@@ -43,6 +43,10 @@ class Operators(ABC):
     @abstractmethod
     def crossover(self, a: str, b: str) -> str: ...
 
+    def observe(self, population: list[Individual]):
+        """sees the survivors after every generation. most operators don't
+        care."""
+
 
 # what the mutator sees
 class Feedback(StrEnum):
@@ -68,7 +72,7 @@ class LLMOperators(Operators):
 
     def mutate(self, prompt, evaluation):
         shown = _describe(evaluation, self.feedback)
-        return self._ask(_MUTATE.format(prompt=prompt, feedback=shown))
+        return self._ask(MUTATE.format(prompt=prompt, feedback=shown))
 
     def crossover(self, a, b):
         return self._ask(_CROSSOVER.format(a=a, b=b))

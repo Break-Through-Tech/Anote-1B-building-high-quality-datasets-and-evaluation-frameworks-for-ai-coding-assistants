@@ -32,17 +32,23 @@ def test_prompts(
     best: Individual,
     seeds: list[Individual],
     picked: str | None = None,
+    validation: dict[str, float] | None = None,
 ) -> dict[str, str]:
     """{name: prompt} to score on the test set. evolved vs the best seed
-    shows what the generations added on top of picking a seed."""
-    # highest train score, ties go to the earlier seed
-    best_seed = max(seeds, key=lambda ind: ind.evaluation.score)
+    shows what the generations added on top of picking a seed. with
+    validation ({prompt: score}) the best seed is picked by it, so every
+    method's baseline is chosen the same way."""
+    # ties go to the earlier seed
+    if validation is not None:
+        best_seed = max(seeds, key=lambda ind: validation[ind.prompt])
+    else:
+        best_seed = max(seeds, key=lambda ind: ind.evaluation.score)
     prompts = {"evolved": best.prompt}
     if picked is not None:
         prompts["val pick"] = picked
     prompts |= {
         "best seed": best_seed.prompt,
-        # empty system message, ollama then adds no default one either
+        # empty system message, the chat template then adds no default one
         "no prompt": "",
     }
     for i, seed in enumerate(seeds):

@@ -9,6 +9,10 @@ class Evaluation(NamedTuple):
     cases:    dict[str, float]
     feedback: str = ""      # shown to the mutator
     crashed:  bool = False  # evaluate threw
+    # {item: score}, for pareto selection and screening
+    items:    dict[str, float] | None = None
+    # {item: ItemResult} with the solver's replies. not logged, too big
+    results:  dict | None = None
 
 
 class Individual(NamedTuple):

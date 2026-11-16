@@ -32,7 +32,7 @@ from promptevo.datasets.terminal_bench.problems import (
     Status,
     format_problems,
 )
-from promptevo.models import OllamaModel
+from promptevo.models import ChatModel
 
 # "do not train on this" marker, stripped before the model sees it
 CANARY_RE = re.compile(r"<!--[^>]*harbor-canary[^>]*-->\s*", re.IGNORECASE)
@@ -113,7 +113,7 @@ class Task:
         self,
         mode: Mode = Mode.NORMAL,
         prompt: str = "",
-        solver: OllamaModel | None = None,
+        solver: ChatModel | None = None,
     ) -> RunResult:
         """gets the code into the state mode says, runs the tests."""
         self.build_images()

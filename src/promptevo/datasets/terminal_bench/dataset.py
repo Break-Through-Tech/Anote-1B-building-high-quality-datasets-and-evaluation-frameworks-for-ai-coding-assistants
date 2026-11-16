@@ -7,7 +7,7 @@ from pathlib import Path
 from promptevo.datasets.base import Dataset, ItemResult, RepairResult
 from promptevo.datasets.terminal_bench.problems import format_problems
 from promptevo.datasets.terminal_bench.task import Mode, Task
-from promptevo.models import OllamaModel
+from promptevo.models import ChatModel
 
 DEFAULT_TASKS_DIR = Path(__file__).parents[4] / "data/raw/terminal-bench/tasks"
 
@@ -25,9 +25,19 @@ class TerminalBench(Dataset):
         self.tasks = [Task(tasks_dir / item) for item in items]
         self.mode = mode  # not NORMAL = calibration, the solver isn't asked
 
-    def run(self, prompt: str, solver: OllamaModel) -> dict[str, ItemResult]:
+    def __len__(self):
+        return len(self.tasks)
+
+    def run(
+        self,
+        prompt: str,
+        solver: ChatModel,
+        items: list[str] | None = None,
+    ) -> dict[str, ItemResult]:
         results = {}
         for task in self.tasks:
+            if items is not None and task.name not in items:
+                continue
             run = task.run(self.mode, prompt, solver)
             if run.problems:
                 why = format_problems(run.problems)
