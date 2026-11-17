@@ -1,0 +1,546 @@
+{
+ "log": [
+  {
+   "cases": {
+    "a::t1": 0.0,
+    "a::t2": 0.0,
+    "b::t1": 0.0,
+    "b::t2": 0.0,
+    "c::t1": 0.0,
+    "c::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: t1, t2\n- b: score 0.00, still failing: t1, t2\n- c: score 0.00, still failing: t1, t2",
+   "generation": 0,
+   "items": {
+    "a": 0.0,
+    "b": 0.0,
+    "c": 0.0
+   },
+   "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+   "score": 0.0
+  },
+  {
+   "cases": {
+    "a::t1": 0.0,
+    "a::t2": 0.0,
+    "b::t1": 1.0,
+    "b::t2": 1.0,
+    "c::t1": 0.0,
+    "c::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: t1, t2\n- b: score 1.00\n- c: score 0.00, still failing: t1, t2",
+   "generation": 0,
+   "items": {
+    "a": 0.0,
+    "b": 1.0,
+    "c": 0.0
+   },
+   "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+   "score": 0.3333333333333333
+  },
+  {
+   "cases": {
+    "a::t1": 1.0,
+    "a::t2": 0.0,
+    "b::t1": 0.0,
+    "b::t2": 0.0,
+    "c::t1": 0.0,
+    "c::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: t2\n- b: score 0.00, still failing: t1, t2\n- c: score 0.00, still failing: t1, t2",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 0.0,
+    "c": 0.0
+   },
+   "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+   "score": 0.16666666666666666
+  },
+  {
+   "cases": {
+    "a::t1": 1.0,
+    "a::t2": 0.0,
+    "b::t1": 0.0,
+    "b::t2": 0.0,
+    "c::t1": 0.0,
+    "c::t2": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: t2\n- b: score 0.00, still failing: t1, t2\n- c: score 0.50, still failing: t1",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 0.0,
+    "c": 0.5
+   },
+   "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+   "score": 0.3333333333333333
+  },
+  {
+   "event": "generation",
+   "generation": 0,
+   "mutator_calls": 0,
+   "rollouts": 12,
+   "survivors": [
+    {
+     "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+     "score": 0.3333333333333333
+    },
+    {
+     "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+     "score": 0.3333333333333333
+    },
+    {
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.16666666666666666
+    }
+   ]
+  },
+  {
+   "child": "reply 1",
+   "event": "mutation",
+   "kind": "rewrite",
+   "parent": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality."
+  },
+  {
+   "event": "screened",
+   "generation": 1,
+   "parent_score": 0.25,
+   "prompt": "reply 1",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "a::t1": 0.0,
+    "a::t2": 0.0,
+    "b::t1": 1.0,
+    "b::t2": 0.0,
+    "c::t1": 1.0,
+    "c::t2": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: t1, t2\n- b: score 0.50, still failing: t2\n- c: score 1.00",
+   "generation": 1,
+   "items": {
+    "a": 0.0,
+    "b": 0.5,
+    "c": 1.0
+   },
+   "prompt": "reply 1",
+   "score": 0.5
+  },
+  {
+   "child": "reply 2",
+   "event": "mutation",
+   "kind": "first-order",
+   "parent": "You are a coding assistant. Make sure you thoroughly analyze the question before solving."
+  },
+  {
+   "event": "screened",
+   "generation": 1,
+   "parent_score": 0.0,
+   "prompt": "reply 2",
+   "score": 0.25
+  },
+  {
+   "cases": {
+    "a::t1": 1.0,
+    "a::t2": 0.0,
+    "b::t1": 0.0,
+    "b::t2": 1.0,
+    "c::t1": 0.0,
+    "c::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: t2\n- b: score 0.50, still failing: t1\n- c: score 0.00, still failing: t1, t2",
+   "generation": 1,
+   "items": {
+    "a": 0.5,
+    "b": 0.5,
+    "c": 0.0
+   },
+   "prompt": "reply 2",
+   "score": 0.3333333333333333
+  },
+  {
+   "child": "reply 4",
+   "event": "mutation",
+   "kind": "zero-order-hyper",
+   "parent": "You are a coding assistant. Make sure you thoroughly analyze the question before solving."
+  },
+  {
+   "event": "screened",
+   "generation": 1,
+   "parent_score": 0.5,
+   "prompt": "reply 4",
+   "score": 0.75
+  },
+  {
+   "cases": {
+    "a::t1": 0.0,
+    "a::t2": 1.0,
+    "b::t1": 1.0,
+    "b::t2": 1.0,
+    "c::t1": 1.0,
+    "c::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: t1\n- b: score 1.00\n- c: score 0.50, still failing: t2",
+   "generation": 1,
+   "items": {
+    "a": 0.5,
+    "b": 1.0,
+    "c": 0.5
+   },
+   "prompt": "reply 4",
+   "score": 0.6666666666666666
+  },
+  {
+   "event": "generation",
+   "generation": 1,
+   "mutator_calls": 4,
+   "rollouts": 21,
+   "survivors": [
+    {
+     "prompt": "reply 4",
+     "score": 0.6666666666666666
+    },
+    {
+     "prompt": "reply 1",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 2",
+     "score": 0.3333333333333333
+    }
+   ]
+  },
+  {
+   "child": "reply 6",
+   "event": "mutation",
+   "kind": "rewrite",
+   "parent": "New prompt: reply 5"
+  },
+  {
+   "event": "screened",
+   "generation": 2,
+   "parent_score": 0.75,
+   "prompt": "reply 6",
+   "score": 0.25
+  },
+  {
+   "child": "reply 7",
+   "event": "mutation",
+   "kind": "eda",
+   "parent": "reply 4"
+  },
+  {
+   "event": "screened",
+   "generation": 2,
+   "parent_score": 0.75,
+   "prompt": "reply 7",
+   "score": 0.0
+  },
+  {
+   "child": "reply 10",
+   "event": "mutation",
+   "kind": "zero-order-hyper",
+   "parent": "New prompt: reply 8"
+  },
+  {
+   "event": "screened",
+   "generation": 2,
+   "parent_score": 0.5,
+   "prompt": "reply 10",
+   "score": 0.75
+  },
+  {
+   "cases": {
+    "a::t1": 1.0,
+    "a::t2": 1.0,
+    "b::t1": 0.0,
+    "b::t2": 0.0,
+    "c::t1": 0.0,
+    "c::t2": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 1.00\n- b: score 0.00, still failing: t1, t2\n- c: score 0.50, still failing: t1",
+   "generation": 2,
+   "items": {
+    "a": 1.0,
+    "b": 0.0,
+    "c": 0.5
+   },
+   "prompt": "reply 10",
+   "score": 0.5
+  },
+  {
+   "event": "generation",
+   "generation": 2,
+   "mutator_calls": 10,
+   "rollouts": 28,
+   "survivors": [
+    {
+     "prompt": "reply 4",
+     "score": 0.6666666666666666
+    },
+    {
+     "prompt": "reply 10",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 1",
+     "score": 0.5
+    }
+   ]
+  },
+  {
+   "child": "reply 11",
+   "event": "mutation",
+   "kind": "rewrite",
+   "parent": "reply 1"
+  },
+  {
+   "event": "screened",
+   "generation": 3,
+   "parent_score": 0.5,
+   "prompt": "reply 11",
+   "score": 0.5
+  },
+  {
+   "event": "screened",
+   "generation": 3,
+   "parent_score": 0.75,
+   "prompt": "New prompt: reply 12",
+   "score": 0.0
+  },
+  {
+   "event": "screened",
+   "generation": 3,
+   "parent_score": 0.5,
+   "prompt": "New prompt: reply 13",
+   "score": 0.5
+  },
+  {
+   "event": "generation",
+   "generation": 3,
+   "mutator_calls": 13,
+   "rollouts": 34,
+   "survivors": [
+    {
+     "prompt": "reply 4",
+     "score": 0.6666666666666666
+    },
+    {
+     "prompt": "reply 1",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 10",
+     "score": 0.5
+    }
+   ]
+  },
+  {
+   "event": "validation",
+   "results": [
+    {
+     "prompt": "reply 4",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 1",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 10",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.5
+    },
+    {
+     "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+     "score": 0.25
+    }
+   ]
+  },
+  {
+   "event": "test",
+   "results": {
+    "best seed": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 51",
+       "partial": 0.5
+      },
+      "t2": {
+       "binary": 0.0,
+       "naive": 0.0,
+       "output": "New prompt: reply 52",
+       "partial": 0.0
+      }
+     },
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.25
+    },
+    "evolved": {
+     "items": {
+      "t1": {
+       "binary": 1.0,
+       "naive": 1.0,
+       "output": "New prompt: reply 49",
+       "partial": 1.0
+      },
+      "t2": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 50",
+       "partial": 0.5
+      }
+     },
+     "prompt": "reply 4",
+     "score": 0.75
+    },
+    "no prompt": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.0,
+       "output": "New prompt: reply 53",
+       "partial": 0.0
+      },
+      "t2": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 54",
+       "partial": 0.5
+      }
+     },
+     "prompt": "",
+     "score": 0.25
+    },
+    "seed 0": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 55",
+       "partial": 0.5
+      },
+      "t2": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 56",
+       "partial": 0.5
+      }
+     },
+     "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+     "score": 0.5
+    },
+    "seed 1": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.0,
+       "output": "New prompt: reply 57",
+       "partial": 0.0
+      },
+      "t2": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 58",
+       "partial": 0.5
+      }
+     },
+     "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+     "score": 0.25
+    },
+    "seed 2": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 51",
+       "partial": 0.5
+      },
+      "t2": {
+       "binary": 0.0,
+       "naive": 0.0,
+       "output": "New prompt: reply 52",
+       "partial": 0.0
+      }
+     },
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.25
+    },
+    "seed 3": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.0,
+       "output": "New prompt: reply 59",
+       "partial": 0.0
+      },
+      "t2": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 60",
+       "partial": 0.5
+      }
+     },
+     "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+     "score": 0.25
+    },
+    "val pick": {
+     "items": {
+      "t1": {
+       "binary": 1.0,
+       "naive": 1.0,
+       "output": "New prompt: reply 49",
+       "partial": 1.0
+      },
+      "t2": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 50",
+       "partial": 0.5
+      }
+     },
+     "prompt": "reply 4",
+     "score": 0.75
+    }
+   }
+  },
+  {
+   "after": 0.3333333333333333,
+   "before": 0.3333333333333333,
+   "event": "drift",
+   "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving."
+  }
+ ],
+ "printed": "\nbest prompt (train score 0.667):\nreply 4\n\nvalidation pick (validation score 0.500):\nreply 4\n\ntest set (partial credit):\n  evolved    0.750\n  val pick   0.750\n  best seed  0.250\n  no prompt  0.250\n  seed 0     0.500\n  seed 1     0.250\n  seed 2     0.250\n  seed 3     0.250\n\ndrift check: best seed 0.333, now 0.333\nlog: <log>\n"
+}

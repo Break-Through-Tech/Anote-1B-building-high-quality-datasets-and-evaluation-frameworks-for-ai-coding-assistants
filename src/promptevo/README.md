@@ -9,6 +9,27 @@ item's tests.
 can be swapped without touching the loop. The `Evaluator` is a `Dataset`, a
 solver model and a `Signal`.
 
+## Layout
+
+```
+promptevo/
+  __main__.py   the CLI, python -m promptevo
+  paths.py      where the data and results folders are
+  llm/          the chat models, and the SQLite cache for replies
+  datasets/     HumanEvalFix, tested in a Docker sandbox
+  scoring/      item results to an Evaluation, the validation pick and
+                the test set
+  search/       the EA, selection, mutations, the text the mutator gets,
+                and the run log
+  study/        the paper's runs, their report, transfer to other
+                solvers and the statistics
+  unused/       built and tried but not in the paper, see the end
+```
+
+Each package only imports from the ones above it in this list, and only
+the CLI imports from `unused/`. So everything outside `unused/` is what the
+paper's runs used.
+
 ## How it works
 
 There are two models. The solver is the coding model whose system prompt we're
@@ -17,8 +38,8 @@ that writes new prompts. They can be the same Ollama model or different ones.
 
 The evolutionary run:
 
-1. Score every seed prompt (`SEED_PROMPTS` in `experiment.py`) on the train
-   items and keep the best mu of them. That's the starting population.
+1. Score every seed prompt (`SEED_PROMPTS` in `search/templates.py`) on the
+   train items and keep the best mu of them. That's the starting population.
 2. Each generation makes lambda children. For each child the `Selector` picks
    two parents, the mutator combines them (crossover), and with probability
    `--mutation-rate` the mutator also rewrites the result once (mutation).
@@ -36,18 +57,12 @@ Docker Desktop and Ollama have to be running first. Run everything from
 ```bash
 cd src
 
-# quick check that everything runs, train and test on the same task
-python -m promptevo risk-scorer-replay --held-out risk-scorer-replay
-
-# bug-injected variants (see Terminal-Bench below)
-python -m promptevo.datasets.terminal_bench.inject_bugs risk-scorer-replay
-python -m promptevo risk-scorer-replay--bug01 risk-scorer-replay--bug02 \
-    --held-out other-task--bug01 \
-    --data-dir ../data/processed/bug-injected/tasks
+# quick check that everything runs, two problems to train on and two to test
+python -m promptevo Python/0 Python/1 --held-out Python/2 Python/3
 ```
 
-Positional arguments are the train items. For Terminal-Bench those are task
-folder names under `--data-dir`.
+Positional arguments are the train items, HumanEvalFix task ids like
+`Python/0`.
 
 ### Faster solver with vLLM
 
@@ -119,12 +134,11 @@ test set (partial credit):
 `evolved` is the best train score. `best seed` is the seed with the highest
 train score, which is what you'd get with 0 generations. So `evolved` or
 `val pick` vs `best seed` is what the generations added on top of picking a
-seed. `no prompt` is the solver with no system prompt at all. The seeds and
-these comparisons are in `experiment.py`.
+seed. `no prompt` is the solver with no system prompt at all. These
+comparisons are in `scoring/experiment.py`.
 
 Validation and test are always scored with partial credit so runs trained
-with different `--signal`s are comparable. Keep the sets separate, and for
-bug-injected variants take them from different original tasks.
+with different `--signal`s are comparable. Keep the sets separate.
 
 ## Flags
 
@@ -132,7 +146,7 @@ bug-injected variants take them from different original tasks.
 |---|---|---|
 | `--validation` | none | picks the final prompt, see above |
 | `--held-out` | none | the test set, scored only at the end |
-| `--dataset` | `terminal-bench` | which entry of `DATASETS` to use |
+| `--dataset` | `humaneval` | which entry of `DATASETS` (in `__main__.py`) to use |
 | `--data-dir` | the dataset's own | folder with the items |
 | `--solver` | `qwen2.5-coder:7b` | model that attempts the items, Ollama's name or vLLM's `--served-model-name` |
 | `--mutator` | `qwen2.5-coder:7b` | Ollama model that writes new prompts |
@@ -148,7 +162,7 @@ bug-injected variants take them from different original tasks.
 | `--crossover-rate` | 1.0 | chance a child starts with crossover, otherwise it's a mutated copy of one parent |
 | `--mutations` | `rewrite` | which mutations to use, one is picked at random each time, see Mutations |
 | `--screen` | 0 | score children on this many train items first, see Mutations |
-| `--search` | `ea` | `ea` is the loop above, `gepa` is GEPA's loop, see GEPA |
+| `--search` | `ea` | `ea` is the loop above, `gepa` is GEPA's loop, see the end |
 | `--budget` | 0 | stop after this many solver calls, 0 = no limit |
 | `--comma` | off | survivors come from the children only, needs lambda >= mu |
 | `--seed` | 0 | random seed for selection, ties and mutation |
@@ -187,9 +201,10 @@ A prompt's score is the average over the train items. Partial gives the EA
 something to climb when the solver fixes some tests but not all of them,
 binary is closer to how benchmarks usually report results.
 
-`--selection` decides how parents are picked.
+`--selection` decides how parents are picked. The study used `uniform`,
+which picks two different prompts at random. The others came from
+recreating EvoPrompt and GEPA, and are in `unused/selection.py`.
 
-- `uniform` picks two different prompts at random
 - `lexicase` looks at individual tests instead of the average. It shuffles
   all the tests, keeps only the prompts that do best on the first one, then
   the next, until one prompt is left. That lets a prompt that's the only one
@@ -216,8 +231,10 @@ scores.
 ## Mutations
 
 `--mutations` takes any of these, and every mutation picks one at random.
-They're in `mutations.py`, with the papers' wording where the papers give
-it.
+They're in `search/mutations.py`, and the text they send is in
+`search/templates.py`, with the papers' wording where the papers give it.
+The study's arms used `rewrite`, `reflective`, `first-order`, `eda` and
+`zero-order-hyper`.
 
 | name | from | what the mutator gets |
 |---|---|---|
@@ -239,25 +256,10 @@ solves a task instead of writing a prompt.
 train items first, and only on all of them if it beats its parent on those
 3. Most children don't, so a run gets through a lot more of them.
 
-## GEPA
-
-`--search gepa` runs GEPA's own loop (`gepa.py`) instead of generations. It
-keeps a pool of prompts scored on the validation items. Every step it picks
-one with pareto selection, runs it on 3 train items, mutates it with what
-happened there, and runs the child on the same 3. A child that scores
-higher gets scored on the validation items and joins the pool. It needs
-`--validation` and `--budget`, and the budget counts train and validation
-calls together.
-
-```bash
-python -m promptevo $(cat train.txt) --validation $(cat val.txt) \
-    --held-out $(cat test.txt) --dataset humaneval \
-    --search gepa --budget 2000 --mutations reflective
-```
-
 ## The run log
 
-Every run writes a JSONL file, one JSON object per line.
+Every run writes a JSONL file, one JSON object per line
+(`search/runlog.py`, which also reads them back).
 
 ```json
 {"event": "scored", "generation": 1, "prompt": "...", "score": 0.5,
@@ -280,7 +282,7 @@ every minibatch check. `validation` and `test` come at the end. For GEPA,
 
 ## HumanEval
 
-`HumanEval` (`--dataset humaneval`) is HumanEvalFix from
+`HumanEval` (`--dataset humaneval`, the default) is HumanEvalFix from
 `bigcode/humanevalpack`, 164 Python functions with a human-written bug.
 Items are task ids like `Python/0`. The data downloads to
 `data/raw/humanevalpack` on the first run, and every assert runs in a
@@ -290,29 +292,12 @@ HumanEvalFix. The total keeps one fix that loops forever from holding up
 the whole batch.
 
 ```bash
-python -m promptevo Python/0 Python/1 --held-out Python/2 Python/3 \
-    --dataset humaneval
-```
-
-## Terminal-Bench
-
-Each `TerminalBench` item is a Terminal-Bench task
-folder (from `data/raw/terminal-bench/tasks` by default), run in Docker. It
-runs the tests once on the untouched code to find which ones the bug breaks,
-and returns a `RepairResult` per task.
-
-```bash
-# reference solution should score 1, untouched code 0
-python -m promptevo.datasets.terminal_bench risk-scorer-replay --mode perfect
-python -m promptevo.datasets.terminal_bench risk-scorer-replay --mode nothing
-
-# bug-injected variants, written to data/processed/bug-injected/tasks
-python -m promptevo.datasets.terminal_bench.inject_bugs risk-scorer-replay
+python -m promptevo Python/0 Python/1 --held-out Python/2 Python/3
 ```
 
 ## The study
 
-`study.py` runs the fitness x feedback comparison on HumanEvalFix, with the
+`study/` runs the fitness x feedback comparison on HumanEvalFix, with the
 solver on vLLM (see above). Each unit is a random split into 40 train, 30
 validation and 94 test problems, and every arm runs once per unit with the
 same split and seed:
@@ -337,14 +322,14 @@ and `mixed-no-<operator>` leaves one out.
 
 ```bash
 python -m promptevo.study --units 0 1 2 3   # runs, 4 at a time
-python -m promptevo.study_report            # tables + paired tests
+python -m promptevo.study.report            # tables + paired tests
 
 # val pick vs best seed and vs no prompt on chosen arms and units, per
 # arm and pooled
-python -m promptevo.study_report --arms naive-blind aware-blind \
+python -m promptevo.study.report --arms naive-blind aware-blind \
     --units 16 17 18 --gain
 # the other arms minus one of them
-python -m promptevo.study_report --arms aware-blind aware-mixed \
+python -m promptevo.study.report --arms aware-blind aware-mixed \
     --versus aware-blind
 ```
 
@@ -362,16 +347,16 @@ instructions (copies).
 
 ### Transfer to other solvers
 
-`transfer.py` scores the prompts the study picked with a different solver,
+`study/transfer.py` scores the prompts the study picked with a different solver,
 on the same units and test sets. Every pick stays the study solver's, so it
 checks whether those prompts help other models too. Start a vLLM server
 for the other model as in the vLLM section, with its own
 `--served-model-name`, then
 
 ```bash
-python -m promptevo.transfer --solver qwen2.5-coder:3b --units 40 41 42
+python -m promptevo.study.transfer --solver qwen2.5-coder:3b --units 40 41 42
 # the study's solver first, then each one listed
-python -m promptevo.transfer --report qwen2.5-coder:3b
+python -m promptevo.study.transfer --report qwen2.5-coder:3b
 ```
 
 Logs go to `results/transfer/<solver>/`, and finished units are skipped.
@@ -386,7 +371,7 @@ doesn't depend on who wrote the code.
 ```bash
 python -m promptevo.study --solver deepseek-coder:1.3b \
     --units 40 41 42 --arms aware-mixed aware-blind
-python -m promptevo.study_report --solver deepseek-coder:1.3b \
+python -m promptevo.study.report --solver deepseek-coder:1.3b \
     --arms aware-blind aware-mixed --gain
 ```
 
@@ -397,17 +382,77 @@ for spaces. Give vLLM `--tokenizer` a copy of the model's
 `tokenizer.json` and `tokenizer_config.json` whose `tokenizer_class` is
 `PreTrainedTokenizerFast`.
 
+## Not in the paper
+
+`unused/` has what was built and tried before the study, and still runs
+from the CLI: GEPA's loop, the selectors besides `uniform` (see
+Scoring), and Terminal-Bench. The study never used them.
+
+### GEPA's loop
+
+`--search gepa` runs GEPA's own loop (`unused/gepa.py`) instead of
+generations. It keeps a pool of prompts scored on the validation items.
+Every step it picks one with pareto selection, runs it on 3 train items,
+mutates it with what happened there, and runs the child on the same 3. A
+child that scores higher gets scored on the validation items and joins the
+pool. It needs `--validation` and `--budget`, and the budget counts train
+and validation calls together.
+
+```bash
+python -m promptevo $(cat train.txt) --validation $(cat val.txt) \
+    --held-out $(cat test.txt) --dataset humaneval \
+    --search gepa --budget 2000 --mutations reflective
+```
+
+### Terminal-Bench
+
+The project started on Terminal-Bench (`--dataset terminal-bench`). Each
+`TerminalBench` item is a Terminal-Bench task folder (from
+`data/raw/terminal-bench/tasks` by default), run in Docker. It runs the
+tests once on the untouched code to find which ones the bug breaks, and
+returns a `RepairResult` per task. Items are task folder names, and with
+bug-injected variants the train, validation and test sets should come from
+different original tasks.
+
+```bash
+# reference solution should score 1, untouched code 0
+python -m promptevo.unused.terminal_bench risk-scorer-replay --mode perfect
+python -m promptevo.unused.terminal_bench risk-scorer-replay --mode nothing
+
+# bug-injected variants, written to data/processed/bug-injected/tasks
+python -m promptevo.unused.terminal_bench.inject_bugs risk-scorer-replay
+python -m promptevo risk-scorer-replay--bug01 risk-scorer-replay--bug02 \
+    --held-out other-task--bug01 --dataset terminal-bench \
+    --data-dir ../data/processed/bug-injected/tasks
+```
+
 ## Using it from Python
 
 The CLI just puts the objects together. `notebooks/run_evolution.ipynb` does
-the same thing step by step, and it is probably easier to swap pieces in and
-out there.
+the same thing step by step on HumanEvalFix with the vLLM solver, and it is
+probably easier to swap pieces in and out there.
+
+## Tests
+
+From the repo root:
+
+```bash
+python -m pytest
+```
+
+Most tests compare against files in `tests/golden/`: the text every
+template and dataset sends to the models, the request bodies and cache keys,
+and full runs of the EA, GEPA and the CLI with a fake solver and mutator.
+The study's replies and sandbox results are cached by request, so a change
+there would change results. If a change is on purpose, rewrite the files
+with `UPDATE_GOLDEN=1 python -m pytest` and check the diff.
 
 ## Adding a dataset
 
-Subclass `Dataset` and implement `run()`. It gets the prompt and the solver
-model and returns `{item name: result}`. Pick the result type by the kind of
-item
+Subclass `Dataset` and implement `names` and `run()`. `names` lists every
+item, in the order `run()` goes through them. `run()` gets the prompt, the
+solver model and optionally which items to run, and returns
+`{item name: result}`. Pick the result type by the kind of item
 
 - `ItemResult(tests)` when the model writes code from scratch (APPS, short
   coding challenges). Every test counts, so `partial` is APPS's "test case
@@ -425,9 +470,13 @@ class Apps(Dataset):
     def __init__(self, items, data_dir=None):
         self.items = items
 
-    def run(self, prompt, solver):
+    @property
+    def names(self):
+        return self.items
+
+    def run(self, prompt, solver, items=None):
         results = {}
-        for item in self.items:
+        for item in items or self.items:
             code = solver.chat(question_for(item), system=prompt)
             # run code on the item's test cases
             results[item] = ItemResult(
@@ -447,53 +496,72 @@ RepairResult(
 )
 ```
 
-Then add it to `DATASETS` in `datasets/__init__.py`
+Then add it to `DATASETS` in `__main__.py`
 
 ```python
 DATASETS = {
-    "terminal-bench": TerminalBench,
+    "humaneval": HumanEval,
+    "terminal-bench": TerminalBench,  # not in the paper
     "apps": Apps,
 }
 ```
 
-and pass `--dataset apps`. Scoring and the lexicase stuff all work off the
-result, so you don't have to touch anything else. `HumanEval` in
+and pass `--dataset apps`. Scoring and selection all work off the result,
+so you don't have to touch anything else. `HumanEval` in
 `datasets/human_eval/dataset.py` is a short working one to look at.
 
 ## Classes
 
 Indented ones are subclasses of the one above them.
 
-- `Evolution` (`evolution.py`) runs the loop
-- `EvolutionConfig` (`evolution.py`) holds mu, lambda, generations and so on
-- `RunLog` (`evolution.py`) writes the JSONL log
-- `Evaluator` (`evaluation.py`) scores a prompt with a dataset, solver and signal
-- `Signal` (`evaluation.py`) is partial, binary or naive credit
-- `GEPA` (`gepa.py`) runs GEPA's loop instead of `Evolution`
-- `Selector` (`selection.py`) picks parents
+- `Search` (`search/base.py`) turns seed prompts into prompts ranked best
+  first
+  - `Evolution` (`search/evolution.py`) runs the EA loop
+  - `GEPA` (`unused/gepa.py`) runs GEPA's loop
+- `EvolutionConfig` (`search/evolution.py`) holds mu, lambda, generations
+  and so on
+- `Evaluator` (`scoring/evaluation.py`) scores a prompt with a dataset,
+  solver and signal
+- `Evaluation` (`scoring/evaluation.py`) is a prompt's item scores and the
+  attempts behind them. Its score and lexicase cases are worked out from
+  those
+- `Signal` (`scoring/evaluation.py`) is partial, binary or naive credit
+- `Individual` (`scoring/individual.py`) is a prompt with its evaluation
+- `Entry` (`scoring/experiment.py`) names the prompts on the test set
+- `Selector` (`search/selection.py`) picks parents
   - `UniformSelector`
-  - `LexicaseSelector`
+  - `LexicaseSelector` (`unused/selection.py`, like the rest)
     - `DownsampledLexicaseSelector`
   - `ParetoSelector`
   - `RouletteSelector`
   - `GreedySelector`
-- `Operators` (`operators.py`) makes new prompts
+- `Operators` (`search/operators.py`) makes new prompts
   - `LLMOperators` asks the mutator model to do mutate and crossover
-    - `MixedOperators` (`mutations.py`) picks one of several mutations
-- `Mutation` (`mutations.py`) is one way to mutate, one subclass per row of
-  the Mutations table
-- `Feedback` (`operators.py`) is how much the mutator is told
-- `OllamaModel` (`models.py`) is one Ollama model, used for the solver and the
-  mutator
-- `VLLMModel` (`models.py`) is a model on a vLLM server, for the solver
-- `Evaluation`, `Individual` (`types.py`) are a scored prompt and a prompt in
-  the population
+    - `MixedOperators` (`search/mutations.py`) picks one of several
+      mutations
+- `Mutation` (`search/mutations.py`) is one way to mutate, one subclass per
+  row of the Mutations table
+- `Feedback` (`search/feedback.py`) is how much the rewrite mutation is told
+- `RunLog` (`search/runlog.py`) writes the JSONL log. Without a path it
+  keeps nothing
+- `LoggedRun` (`search/runlog.py`) reads a log back, as `Tested` (a
+  test-set result) and `Mutated` (a mutation) records
+- `ChatModel` (`llm/models.py`) is a chat model, the solver or the mutator
+  - `OllamaModel` is one Ollama model, used for the solver and the mutator
+  - `VLLMModel` is a model on a vLLM server, for the solver
+- `SqliteCache` (`llm/cache.py`) is the file the reply and sandbox caches
+  keep their results in
 - `Dataset` (`datasets/base.py`) is a set of items to score prompts on
   - `HumanEval` (`datasets/human_eval/dataset.py`)
-  - `TerminalBench` (`datasets/terminal_bench/dataset.py`)
+  - `TerminalBench` (`unused/terminal_bench/dataset.py`)
 - `ItemResult` (`datasets/base.py`) is one item's tests, all of them count
   - `RepairResult` only counts the tests the bug breaks
+- `Job`, `JobResult` (`datasets/human_eval/sandbox.py`) are code with its
+  asserts, and which asserts passed
+- `Arm` (`study/design.py`) is one arm of the study
+- `Paired` (`study/stats.py`) is a paired comparison's mean, interval and
+  p-value
 
-Inside `datasets/terminal_bench/` there's also `Task` (one task folder),
+Inside `unused/terminal_bench/` there's also `Task` (one task folder),
 `Container` (a Docker container), `BugInjector`, and the small types `Mode`,
 `Status`, `Problem`, `RunResult` and `Baseline`.

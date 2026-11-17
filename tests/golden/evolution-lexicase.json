@@ -1,0 +1,649 @@
+{
+ "events": [
+  {
+   "cases": {
+    "a::a-a": 0.0,
+    "a::a-b": 0.0,
+    "b::b-a": 0.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: a-a, a-b\n- b: score 0.00, still failing: b-a, b-b\n- c: score 0.25, still failing: c-b\n- d: score 0.25, still failing: d-b\n- e: score 0.25, still failing: e-b",
+   "generation": 0,
+   "items": {
+    "a": 0.0,
+    "b": 0.0,
+    "c": 0.25,
+    "d": 0.25,
+    "e": 0.25
+   },
+   "prompt": "Seed A",
+   "score": 0.15
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 1.0,
+    "c::c-a": 0.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 1.00\n- c: score 0.00, still failing: c-a, c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 1.00",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 1.0,
+    "c": 0.0,
+    "d": 0.0,
+    "e": 1.0
+   },
+   "prompt": "Seed B",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 0.50, still failing: b-b\n- c: score 0.50, still failing: c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 0.75, still failing: e-b",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 0.5,
+    "c": 0.5,
+    "d": 0.0,
+    "e": 0.75
+   },
+   "prompt": "Seed C",
+   "score": 0.45
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 1.0,
+    "c::c-a": 0.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 1.00\n- c: score 0.00, still failing: c-a, c-b\n- d: score 1.00\n- e: score 1.00",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 1.0,
+    "c": 0.0,
+    "d": 1.0,
+    "e": 1.0
+   },
+   "prompt": "Seed D",
+   "score": 0.7
+  },
+  {
+   "event": "generation",
+   "generation": 0,
+   "mutator_calls": null,
+   "rollouts": 20,
+   "survivors": [
+    {
+     "prompt": "Seed D",
+     "score": 0.7
+    },
+    {
+     "prompt": "Seed B",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed C",
+     "score": 0.45
+    }
+   ]
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 1.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 1.00\n- c: score 0.75, still failing: c-b\n- d: score 1.00\n- e: score 0.75, still failing: e-b",
+   "generation": 1,
+   "items": {
+    "a": 0.5,
+    "b": 1.0,
+    "c": 0.75,
+    "d": 1.0,
+    "e": 0.75
+   },
+   "prompt": "Seed D m1",
+   "score": 0.8
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 1.0,
+    "b::b-a": 1.0,
+    "b::b-b": 1.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 1.00\n- b: score 1.00\n- c: score 0.75, still failing: c-b\n- d: score 0.75, still failing: d-b\n- e: score 1.00",
+   "generation": 1,
+   "items": {
+    "a": 1.0,
+    "b": 1.0,
+    "c": 0.75,
+    "d": 0.75,
+    "e": 1.0
+   },
+   "prompt": "Seed D|Seed C x2",
+   "score": 0.9
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 0.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 1.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.75, still failing: a-b\n- b: score 0.00, still failing: b-a, b-b\n- c: score 1.00\n- d: score 1.00\n- e: score 0.75, still failing: e-b",
+   "generation": 1,
+   "items": {
+    "a": 0.75,
+    "b": 0.0,
+    "c": 1.0,
+    "d": 1.0,
+    "e": 0.75
+   },
+   "prompt": "Seed D m3",
+   "score": 0.7
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.25, still failing: a-b\n- b: score 0.25, still failing: b-b\n- c: score 0.25, still failing: c-b\n- d: score 0.50, still failing: d-b\n- e: score 0.50, still failing: e-b",
+   "generation": 1,
+   "items": {
+    "a": 0.25,
+    "b": 0.25,
+    "c": 0.25,
+    "d": 0.5,
+    "e": 0.5
+   },
+   "prompt": "Seed D m4",
+   "score": 0.35
+  },
+  {
+   "event": "generation",
+   "generation": 1,
+   "mutator_calls": null,
+   "rollouts": 40,
+   "survivors": [
+    {
+     "prompt": "Seed D|Seed C x2",
+     "score": 0.9
+    },
+    {
+     "prompt": "Seed D m1",
+     "score": 0.8
+    },
+    {
+     "prompt": "Seed D m3",
+     "score": 0.7
+    }
+   ]
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 0.25, still failing: b-b\n- c: score 0.50, still failing: c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 0.50, still failing: e-b",
+   "generation": 2,
+   "items": {
+    "a": 0.5,
+    "b": 0.25,
+    "c": 0.5,
+    "d": 0.0,
+    "e": 0.5
+   },
+   "prompt": "Seed D m3|Seed D|Seed C x x5",
+   "score": 0.35
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 1.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 0.50, still failing: b-b\n- c: score 1.00\n- d: score 0.75, still failing: d-b\n- e: score 0.50, still failing: e-b",
+   "generation": 2,
+   "items": {
+    "a": 0.5,
+    "b": 0.5,
+    "c": 1.0,
+    "d": 0.75,
+    "e": 0.5
+   },
+   "prompt": "Seed D|Seed C x2 m6",
+   "score": 0.65
+  },
+  {
+   "cases": {
+    "a::a-a": 0.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 1.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: a-a, a-b\n- b: score 1.00\n- c: score 0.75, still failing: c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 0.25, still failing: e-b",
+   "generation": 2,
+   "items": {
+    "a": 0.0,
+    "b": 1.0,
+    "c": 0.75,
+    "d": 0.0,
+    "e": 0.25
+   },
+   "prompt": "Seed D|Seed C x|Seed D m1 x7",
+   "score": 0.4
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 1.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 1.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 0.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 1.00\n- b: score 0.75, still failing: b-b\n- c: score 1.00\n- d: score 1.00\n- e: score 0.00, still failing: e-a, e-b",
+   "generation": 2,
+   "items": {
+    "a": 1.0,
+    "b": 0.75,
+    "c": 1.0,
+    "d": 1.0,
+    "e": 0.0
+   },
+   "prompt": "Seed D|Seed C x2 m8",
+   "score": 0.75
+  },
+  {
+   "event": "generation",
+   "generation": 2,
+   "mutator_calls": null,
+   "rollouts": 60,
+   "survivors": [
+    {
+     "prompt": "Seed D|Seed C x2",
+     "score": 0.9
+    },
+    {
+     "prompt": "Seed D m1",
+     "score": 0.8
+    },
+    {
+     "prompt": "Seed D|Seed C x2 m8",
+     "score": 0.75
+    }
+   ]
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 1.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 1.00\n- b: score 0.25, still failing: b-b\n- c: score 0.25, still failing: c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 1.00",
+   "generation": 3,
+   "items": {
+    "a": 1.0,
+    "b": 0.25,
+    "c": 0.25,
+    "d": 0.0,
+    "e": 1.0
+   },
+   "prompt": "Seed D|Seed C x|Seed D|Seed C  m10",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 0.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 0.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.25, still failing: a-b\n- b: score 0.25, still failing: b-b\n- c: score 0.00, still failing: c-a, c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 0.00, still failing: e-a, e-b",
+   "generation": 3,
+   "items": {
+    "a": 0.25,
+    "b": 0.25,
+    "c": 0.0,
+    "d": 0.0,
+    "e": 0.0
+   },
+   "prompt": "Seed D|Seed C x2 m11",
+   "score": 0.1
+  },
+  {
+   "cases": {
+    "a::a-a": 0.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: a-a, a-b\n- b: score 0.25, still failing: b-b\n- c: score 0.25, still failing: c-b\n- d: score 0.75, still failing: d-b\n- e: score 0.25, still failing: e-b",
+   "generation": 3,
+   "items": {
+    "a": 0.0,
+    "b": 0.25,
+    "c": 0.25,
+    "d": 0.75,
+    "e": 0.25
+   },
+   "prompt": "Seed D|Seed C x2 m8 m12",
+   "score": 0.3
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 1.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 1.00\n- b: score 0.50, still failing: b-b\n- c: score 0.50, still failing: c-b\n- d: score 0.25, still failing: d-b\n- e: score 0.25, still failing: e-b",
+   "generation": 3,
+   "items": {
+    "a": 1.0,
+    "b": 0.5,
+    "c": 0.5,
+    "d": 0.25,
+    "e": 0.25
+   },
+   "prompt": "Seed D|Seed C x2 m13",
+   "score": 0.5
+  },
+  {
+   "event": "generation",
+   "generation": 3,
+   "mutator_calls": null,
+   "rollouts": 80,
+   "survivors": [
+    {
+     "prompt": "Seed D|Seed C x2",
+     "score": 0.9
+    },
+    {
+     "prompt": "Seed D m1",
+     "score": 0.8
+    },
+    {
+     "prompt": "Seed D|Seed C x2 m8",
+     "score": 0.75
+    }
+   ]
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 0.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 0.00, still failing: b-a, b-b\n- c: score 0.75, still failing: c-b\n- d: score 1.00\n- e: score 1.00",
+   "generation": 4,
+   "items": {
+    "a": 0.5,
+    "b": 0.0,
+    "c": 0.75,
+    "d": 1.0,
+    "e": 1.0
+   },
+   "prompt": "Seed D|Seed C x2 m14",
+   "score": 0.65
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 0.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.75, still failing: a-b\n- b: score 0.50, still failing: b-b\n- c: score 0.75, still failing: c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 0.00, still failing: e-a, e-b",
+   "generation": 4,
+   "items": {
+    "a": 0.75,
+    "b": 0.5,
+    "c": 0.75,
+    "d": 0.0,
+    "e": 0.0
+   },
+   "prompt": "Seed D|Seed C x2 m15",
+   "score": 0.4
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.25, still failing: a-b\n- b: score 0.75, still failing: b-b\n- c: score 0.50, still failing: c-b\n- d: score 1.00\n- e: score 0.75, still failing: e-b",
+   "generation": 4,
+   "items": {
+    "a": 0.25,
+    "b": 0.75,
+    "c": 0.5,
+    "d": 1.0,
+    "e": 0.75
+   },
+   "prompt": "Seed D|Seed C x2 m16",
+   "score": 0.65
+  },
+  {
+   "cases": {
+    "a::a-a": 0.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 1.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: a-a, a-b\n- b: score 1.00\n- c: score 0.25, still failing: c-b\n- d: score 0.25, still failing: d-b\n- e: score 0.75, still failing: e-b",
+   "generation": 4,
+   "items": {
+    "a": 0.0,
+    "b": 1.0,
+    "c": 0.25,
+    "d": 0.25,
+    "e": 0.75
+   },
+   "prompt": "Seed D|Seed C x|Seed D|Seed C x x17",
+   "score": 0.45
+  },
+  {
+   "event": "generation",
+   "generation": 4,
+   "mutator_calls": null,
+   "rollouts": 100,
+   "survivors": [
+    {
+     "prompt": "Seed D|Seed C x2",
+     "score": 0.9
+    },
+    {
+     "prompt": "Seed D m1",
+     "score": 0.8
+    },
+    {
+     "prompt": "Seed D|Seed C x2 m8",
+     "score": 0.75
+    }
+   ]
+  }
+ ],
+ "final": [
+  "Seed D|Seed C x2",
+  "Seed D m1",
+  "Seed D|Seed C x2 m8"
+ ]
+}

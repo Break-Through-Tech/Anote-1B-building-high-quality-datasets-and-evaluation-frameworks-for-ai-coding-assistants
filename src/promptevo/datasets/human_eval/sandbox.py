@@ -11,13 +11,27 @@ this only saves time.
 
 import hashlib
 import json
-import sqlite3
 import subprocess
 import tempfile
-import threading
 from pathlib import Path
+from typing import NamedTuple
+
+from promptevo.llm.cache import SqliteCache
 
 IMAGE = "python:3.12-slim"
+
+
+# json turns these into lists, which is what the harness reads and what the
+# cache keys were made from
+class Job(NamedTuple):
+    assertions:  list[str]
+    code:        str
+    entry_point: str  # the function the asserts call as candidate
+
+
+class JobResult(NamedTuple):
+    passing: dict[str, bool]  # {assertion: passed?}
+    error:   str | None       # exception name if the code itself failed
 
 # HumanEval.passing_cases plus time limits. prints {"passing", "error"}.
 # the asserts share 10 s like bigcode's humanevalfix harness, so a fix that
@@ -90,41 +104,23 @@ class ResultCache:
     changes."""
 
     def __init__(self, path: str | Path):
-        Path(path).parent.mkdir(parents=True, exist_ok=True)
-        # several processes write at once, wal lets readers carry on
-        self._db = sqlite3.connect(path, timeout=300, check_same_thread=False)
-        self._db.execute("pragma journal_mode=wal")
-        self._db.execute(
-            "create table if not exists results (key text primary key, "
-            "result text not null)"
-        )
-        self._db.commit()
-        self._lock = threading.Lock()
+        self._store = SqliteCache(path, table="results", column="result")
 
-    def get(self, key: str) -> tuple[dict, str | None] | None:
-        """(passing, error) or None if this job never ran."""
-        with self._lock:
-            row = self._db.execute(
-                "select result from results where key = ?", (key,)
-            ).fetchone()
-        return tuple(json.loads(row[0])) if row else None
+    def get(self, key: str) -> JobResult | None:
+        """the stored result, None if this job never ran."""
+        text = self._store.get(key)
+        return None if text is None else JobResult(*json.loads(text))
 
-    def put(self, results: dict[str, tuple[dict, str | None]]):
-        """stores {key: (passing, error)} in one commit. a commit per job
-        is slow enough to eat what the cache saves."""
-        with self._lock:
-            self._db.executemany(
-                "insert or ignore into results values (?, ?)",
-                [(key, json.dumps(r)) for key, r in results.items()],
-            )
-            self._db.commit()
+    def put(self, results: dict[str, JobResult]):
+        """stores {key: result}."""
+        self._store.put({key: json.dumps(r) for key, r in results.items()})
 
 
-def run_jobs(jobs, cache: ResultCache | None = None):
-    """{key: (assertions, code, entry_point)} to {key: (passing, error)}.
-    passing is {assertion: bool}, error is the exception name or None.
-    with a cache, jobs it has don't run again and identical jobs in the
-    batch run once."""
+def run_jobs(
+    jobs: dict, cache: ResultCache | None = None
+) -> dict[object, JobResult]:
+    """runs {key: Job} and returns {key: JobResult}. with a cache, jobs it
+    has don't run again and identical jobs in the batch run once."""
     if cache is None:
         return _run(jobs)[0]
     hashes = {key: _hash(job) for key, job in jobs.items()}
@@ -150,8 +146,8 @@ def _hash(job):
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-# runs the jobs in one container. returns {key: (passing, error)} and the
-# keys of jobs that died as a whole
+# runs the jobs in one container. returns {key: JobResult} and the keys of
+# jobs that died as a whole
 def _run(jobs):
     with tempfile.TemporaryDirectory() as tmp:
         names = {}
@@ -175,10 +171,11 @@ def _run(jobs):
     raw = json.loads(out.stdout)
     results, unfinished = {}, set()
     for key, name in names.items():
-        assertions = jobs[key][0]
         if raw[name]["passing"] is None:
             unfinished.add(key)
         # a job that timed out as a whole fails every assert
-        passing = raw[name]["passing"] or dict.fromkeys(assertions, False)
-        results[key] = (passing, raw[name]["error"])
+        passing = raw[name]["passing"] or dict.fromkeys(
+            jobs[key].assertions, False
+        )
+        results[key] = JobResult(passing, raw[name]["error"])
     return results, unfinished

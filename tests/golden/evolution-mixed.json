@@ -1,0 +1,546 @@
+{
+ "events": [
+  {
+   "cases": {
+    "a::a-a": 0.0,
+    "a::a-b": 0.0,
+    "b::b-a": 0.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: a-a, a-b\n- b: score 0.00, still failing: b-a, b-b\n- c: score 0.25, still failing: c-b\n- d: score 0.25, still failing: d-b\n- e: score 0.25, still failing: e-b",
+   "generation": 0,
+   "items": {
+    "a": 0.0,
+    "b": 0.0,
+    "c": 0.25,
+    "d": 0.25,
+    "e": 0.25
+   },
+   "prompt": "Seed A",
+   "score": 0.15
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 1.0,
+    "c::c-a": 0.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 1.00\n- c: score 0.00, still failing: c-a, c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 1.00",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 1.0,
+    "c": 0.0,
+    "d": 0.0,
+    "e": 1.0
+   },
+   "prompt": "Seed B",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 0.50, still failing: b-b\n- c: score 0.50, still failing: c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 0.75, still failing: e-b",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 0.5,
+    "c": 0.5,
+    "d": 0.0,
+    "e": 0.75
+   },
+   "prompt": "Seed C",
+   "score": 0.45
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 1.0,
+    "c::c-a": 0.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 1.00\n- c: score 0.00, still failing: c-a, c-b\n- d: score 1.00\n- e: score 1.00",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 1.0,
+    "c": 0.0,
+    "d": 1.0,
+    "e": 1.0
+   },
+   "prompt": "Seed D",
+   "score": 0.7
+  },
+  {
+   "event": "generation",
+   "generation": 0,
+   "mutator_calls": 0,
+   "rollouts": 20,
+   "survivors": [
+    {
+     "prompt": "Seed D",
+     "score": 0.7
+    },
+    {
+     "prompt": "Seed B",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed C",
+     "score": 0.45
+    }
+   ]
+  },
+  {
+   "child": "reply 1",
+   "event": "mutation",
+   "kind": "eda",
+   "parent": "Seed B"
+  },
+  {
+   "cases": {
+    "a::a-a": 0.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: a-a, a-b\n- b: score 0.25, still failing: b-b\n- c: score 0.50, still failing: c-b\n- d: score 0.50, still failing: d-b\n- e: score 0.75, still failing: e-b",
+   "generation": 1,
+   "items": {
+    "a": 0.0,
+    "b": 0.25,
+    "c": 0.5,
+    "d": 0.5,
+    "e": 0.75
+   },
+   "prompt": "reply 1",
+   "score": 0.4
+  },
+  {
+   "child": "reply 2",
+   "event": "mutation",
+   "kind": "rewrite",
+   "parent": "Seed D"
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 0.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.75, still failing: a-b\n- b: score 0.00, still failing: b-a, b-b\n- c: score 0.25, still failing: c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 1.00",
+   "generation": 1,
+   "items": {
+    "a": 0.75,
+    "b": 0.0,
+    "c": 0.25,
+    "d": 0.0,
+    "e": 1.0
+   },
+   "prompt": "reply 2",
+   "score": 0.4
+  },
+  {
+   "child": "reply 4",
+   "event": "mutation",
+   "kind": "zero-order-hyper",
+   "parent": "Seed C"
+  },
+  {
+   "cases": {
+    "a::a-a": 0.0,
+    "a::a-b": 0.0,
+    "b::b-a": 0.0,
+    "b::b-b": 0.0,
+    "c::c-a": 0.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: a-a, a-b\n- b: score 0.00, still failing: b-a, b-b\n- c: score 0.00, still failing: c-a, c-b\n- d: score 0.50, still failing: d-b\n- e: score 0.25, still failing: e-b",
+   "generation": 1,
+   "items": {
+    "a": 0.0,
+    "b": 0.0,
+    "c": 0.0,
+    "d": 0.5,
+    "e": 0.25
+   },
+   "prompt": "reply 4",
+   "score": 0.15
+  },
+  {
+   "event": "generation",
+   "generation": 1,
+   "mutator_calls": 4,
+   "rollouts": 35,
+   "survivors": [
+    {
+     "prompt": "Seed D",
+     "score": 0.7
+    },
+    {
+     "prompt": "Seed B",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed C",
+     "score": 0.45
+    }
+   ]
+  },
+  {
+   "child": "reply 5",
+   "event": "mutation",
+   "kind": "rewrite",
+   "parent": "Seed D"
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 1.0,
+    "b::b-a": 0.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 1.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 1.00\n- b: score 0.00, still failing: b-a, b-b\n- c: score 1.00\n- d: score 1.00\n- e: score 1.00",
+   "generation": 2,
+   "items": {
+    "a": 1.0,
+    "b": 0.0,
+    "c": 1.0,
+    "d": 1.0,
+    "e": 1.0
+   },
+   "prompt": "reply 5",
+   "score": 0.8
+  },
+  {
+   "child": "reply 6",
+   "event": "mutation",
+   "kind": "first-order",
+   "parent": "Seed B"
+  },
+  {
+   "cases": {
+    "a::a-a": 0.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: a-a, a-b\n- b: score 0.25, still failing: b-b\n- c: score 0.25, still failing: c-b\n- d: score 0.50, still failing: d-b\n- e: score 0.75, still failing: e-b",
+   "generation": 2,
+   "items": {
+    "a": 0.0,
+    "b": 0.25,
+    "c": 0.25,
+    "d": 0.5,
+    "e": 0.75
+   },
+   "prompt": "reply 6",
+   "score": 0.35
+  },
+  {
+   "child": "reply 7",
+   "event": "mutation",
+   "kind": "eda",
+   "parent": "Seed D"
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 1.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.75, still failing: a-b\n- b: score 0.25, still failing: b-b\n- c: score 1.00\n- d: score 0.00, still failing: d-a, d-b\n- e: score 0.25, still failing: e-b",
+   "generation": 2,
+   "items": {
+    "a": 0.75,
+    "b": 0.25,
+    "c": 1.0,
+    "d": 0.0,
+    "e": 0.25
+   },
+   "prompt": "reply 7",
+   "score": 0.45
+  },
+  {
+   "event": "generation",
+   "generation": 2,
+   "mutator_calls": 7,
+   "rollouts": 50,
+   "survivors": [
+    {
+     "prompt": "reply 5",
+     "score": 0.8
+    },
+    {
+     "prompt": "Seed D",
+     "score": 0.7
+    },
+    {
+     "prompt": "Seed B",
+     "score": 0.5
+    }
+   ]
+  },
+  {
+   "child": "reply 9",
+   "event": "mutation",
+   "kind": "zero-order-hyper",
+   "parent": "Seed B"
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.75, still failing: a-b\n- b: score 0.75, still failing: b-b\n- c: score 0.25, still failing: c-b\n- d: score 0.75, still failing: d-b\n- e: score 1.00",
+   "generation": 3,
+   "items": {
+    "a": 0.75,
+    "b": 0.75,
+    "c": 0.25,
+    "d": 0.75,
+    "e": 1.0
+   },
+   "prompt": "reply 9",
+   "score": 0.7
+  },
+  {
+   "child": "reply 10",
+   "event": "mutation",
+   "kind": "first-order",
+   "parent": "Seed D"
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 0.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.25, still failing: a-b\n- b: score 0.25, still failing: b-b\n- c: score 0.00, still failing: c-a, c-b\n- d: score 1.00\n- e: score 0.75, still failing: e-b",
+   "generation": 3,
+   "items": {
+    "a": 0.25,
+    "b": 0.25,
+    "c": 0.0,
+    "d": 1.0,
+    "e": 0.75
+   },
+   "prompt": "reply 10",
+   "score": 0.45
+  },
+  {
+   "child": "reply 11",
+   "event": "mutation",
+   "kind": "first-order",
+   "parent": "Seed B"
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 0.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 0.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.25, still failing: a-b\n- b: score 0.00, still failing: b-a, b-b\n- c: score 0.75, still failing: c-b\n- d: score 0.75, still failing: d-b\n- e: score 0.00, still failing: e-a, e-b",
+   "generation": 3,
+   "items": {
+    "a": 0.25,
+    "b": 0.0,
+    "c": 0.75,
+    "d": 0.75,
+    "e": 0.0
+   },
+   "prompt": "reply 11",
+   "score": 0.35
+  },
+  {
+   "event": "generation",
+   "generation": 3,
+   "mutator_calls": 11,
+   "rollouts": 65,
+   "survivors": [
+    {
+     "prompt": "reply 5",
+     "score": 0.8
+    },
+    {
+     "prompt": "Seed D",
+     "score": 0.7
+    },
+    {
+     "prompt": "reply 9",
+     "score": 0.7
+    }
+   ]
+  }
+ ],
+ "sent": [
+  {
+   "seed": 1013818839,
+   "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+   "user": "Continue this list with one new prompt.\n\n1. Seed D\n2. Seed B\n3. Seed C\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 1302657532,
+   "system": null,
+   "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed D\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 443094727,
+   "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+   "user": "Fix it. How can I break down this problem into smaller, more manageable parts?\n\nWrite one instruction for how to improve a prompt for this task. Return only the instruction."
+  },
+  {
+   "seed": 1701057193,
+   "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+   "user": "reply 3  INSTRUCTION: Seed C  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 2056767043,
+   "system": null,
+   "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed D\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 665600858,
+   "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+   "user": "How would you help an LLM to follow the instruction?  INSTRUCTION: Seed B  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 386977619,
+   "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+   "user": "Continue this list with one new prompt.\n\n1. Seed C\n2. Seed D\n3. Seed B\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 285680177,
+   "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+   "user": "Fix it. How can I simplify the problem so that it is easier to solve?\n\nWrite one instruction for how to improve a prompt for this task. Return only the instruction."
+  },
+  {
+   "seed": 85114131,
+   "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+   "user": "reply 8  INSTRUCTION: Seed B  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 1724820278,
+   "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+   "user": "Modify the following instruction creatively, giving some advice on how to solve it:  INSTRUCTION: Seed D  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 1242859370,
+   "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+   "user": "How would you help an LLM to follow the instruction?  INSTRUCTION: Seed B  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+  }
+ ]
+}

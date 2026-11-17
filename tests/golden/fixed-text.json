@@ -1,0 +1,55 @@
+{
+ "bare": "Return only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences.",
+ "crossover": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\n{a}\n\nParent B:\n{b}\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences.",
+ "dataset": "Fix the bug in the given code so its tests pass.",
+ "formats": {
+  "code": "Return only the complete corrected Python function. No explanations or markdown fences. Make sure to close proper resources.",
+  "explain": "First explain the bug in one sentence. Then give the complete corrected Python function in a ```python block.",
+  "open": "",
+  "reason": "Think step by step about what the function should do and where the bug is. Then give the complete corrected Python function in a ```python block."
+ },
+ "humaneval": "Fix the bug in a Python function. The assistant gets the function's description and its buggy code, and has to reply with the complete corrected function. Hidden unit tests check the result.",
+ "mutate": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n{feedback}\nOriginal prompt:\n{prompt}\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences.",
+ "mutation prompts": [
+  "Modify the following instruction creatively, giving some advice on how to solve it:",
+  "How would you help an LLM to follow the instruction?",
+  "Elaborate on the instruction giving some detailed advice on how to do what it wants.",
+  "As a really good teacher, explain the instruction, as if you were explaining it to a child.",
+  "Imagine you need to follow this instruction. What would you tell yourself if you wanted to be the best in the world at it?",
+  "Rephrase the instruction without using any of the same words. Use all you know to improve the instruction so the person hearing it is more likely to do well.",
+  "Say that instruction again in another way. DON'T use any of the words in the original instruction or you're fired.",
+  "Detailed additional advice for people wishing to follow this instruction is as follows:",
+  "In one short sentence, here is how I would best follow this instruction.",
+  "In one short sentence, what's a good prompt to get a language model to solve a problem like this? Notice how I don't use any of the same words as in the INSTRUCTION.",
+  "Promote breaking down problems: Instead of asking the user to solve the problem as a whole, prompt them to break it down into smaller, more manageable parts.",
+  "Ask for comprehension: Modify the prompt to ask the user to review and confirm their understanding of all aspects of the problem.",
+  "Look carefully to see what you did wrong, how could you fix the problem?"
+ ],
+ "reflect": "I provided an assistant with the following instructions to perform a task for me:\n\n```\n{prompt}\n```\n\nThe following are examples of different task inputs provided to the assistant along with the assistant's response for each of them, and some feedback on how the assistant's response could be better:\n\n```\n{examples}\n```\n\nYour task is to write a new instruction for the assistant.\n\nRead the inputs carefully and identify the input format and infer detailed task description about the task I wish to solve with the assistant.\n\nRead all the assistant responses and the corresponding feedback. Identify all niche and domain specific factual information about the task and include it in the instruction, as a lot of it may not be available to the assistant in the future. The assistant may have utilized a generalizable strategy to solve the task, if so, include that in the instruction as well.\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences.",
+ "regression": "A recent change to this code introduced a regression. Before that change the\ncode passed all of its tests; now some of them fail. Find the regression and\nfix it with the smallest change you can. Do not rewrite code that is not\nrelated to the failure.\n\nFor context, below is the original task this code was written for. The\nproblems it describes have already been fixed and are not the current bug,\nbut its rules (for example, files that must not be modified) still apply.\n\n---\n\n{original}\n",
+ "role": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+ "seeds": [
+  "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+  "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+  "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+  "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct."
+ ],
+ "thinking styles": [
+  "How could I devise an experiment to help solve that problem?",
+  "Make a list of ideas for solving this problem, and apply them one by one to the problem to see if any progress can be made.",
+  "How could I measure progress on this problem?",
+  "How can I simplify the problem so that it is easier to solve?",
+  "What are the key assumptions underlying this problem?",
+  "What are the potential risks and drawbacks of each solution?",
+  "What are the alternative perspectives or viewpoints on this problem?",
+  "How can I break down this problem into smaller, more manageable parts?",
+  "What is the core issue or problem that needs to be addressed?",
+  "What are the underlying causes or factors contributing to the problem?",
+  "What are the potential obstacles or challenges that might arise in solving this problem?",
+  "What kinds of solution typically are produced for this kind of problem specification?",
+  "Let's imagine the current best solution is totally wrong, what other ways are there to think about the problem specification?",
+  "What is the best way to modify this current best solution, given what you know about these kinds of problem specification?",
+  "Let's think step by step.",
+  "Let's make a step by step plan and implement it with good notion and explanation."
+ ]
+}

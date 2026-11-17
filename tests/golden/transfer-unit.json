@@ -1,0 +1,199 @@
+[
+ {
+  "event": "test",
+  "results": {
+   "aware-blind": {
+    "items": {
+     "t1": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 19",
+      "partial": 0.5
+     },
+     "t2": {
+      "binary": 0.0,
+      "naive": 0.0,
+      "output": "New prompt: reply 20",
+      "partial": 0.0
+     },
+     "t3": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 21",
+      "partial": 0.5
+     }
+    },
+    "prompt": "aware-blind!",
+    "score": 0.3333333333333333
+   },
+   "aware-eda": {
+    "items": {
+     "t1": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 13",
+      "partial": 0.5
+     },
+     "t2": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 14",
+      "partial": 0.5
+     },
+     "t3": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 15",
+      "partial": 0.5
+     }
+    },
+    "prompt": "aware-eda!",
+    "score": 0.5
+   },
+   "aware-mixed": {
+    "items": {
+     "t1": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 10",
+      "partial": 0.5
+     },
+     "t2": {
+      "binary": 0.0,
+      "naive": 0.0,
+      "output": "New prompt: reply 11",
+      "partial": 0.0
+     },
+     "t3": {
+      "binary": 0.0,
+      "naive": 0.0,
+      "output": "New prompt: reply 12",
+      "partial": 0.0
+     }
+    },
+    "prompt": "aware-mixed!",
+    "score": 0.16666666666666666
+   },
+   "aware-zero-order-hyper": {
+    "items": {
+     "t1": {
+      "binary": 1.0,
+      "naive": 1.0,
+      "output": "New prompt: reply 16",
+      "partial": 1.0
+     },
+     "t2": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 17",
+      "partial": 0.5
+     },
+     "t3": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 18",
+      "partial": 0.5
+     }
+    },
+    "prompt": "aware-zero-order-hyper!",
+    "score": 0.6666666666666666
+   },
+   "best seed": {
+    "items": {
+     "t1": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 1",
+      "partial": 0.5
+     },
+     "t2": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 2",
+      "partial": 0.5
+     },
+     "t3": {
+      "binary": 1.0,
+      "naive": 1.0,
+      "output": "New prompt: reply 3",
+      "partial": 1.0
+     }
+    },
+    "prompt": "Seed A",
+    "score": 0.6666666666666666
+   },
+   "no prompt": {
+    "items": {
+     "t1": {
+      "binary": 0.0,
+      "naive": 0.0,
+      "output": "New prompt: reply 4",
+      "partial": 0.0
+     },
+     "t2": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 5",
+      "partial": 0.5
+     },
+     "t3": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 6",
+      "partial": 0.5
+     }
+    },
+    "prompt": "",
+    "score": 0.3333333333333333
+   },
+   "seed 0": {
+    "items": {
+     "t1": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 1",
+      "partial": 0.5
+     },
+     "t2": {
+      "binary": 0.0,
+      "naive": 0.5,
+      "output": "New prompt: reply 2",
+      "partial": 0.5
+     },
+     "t3": {
+      "binary": 1.0,
+      "naive": 1.0,
+      "output": "New prompt: reply 3",
+      "partial": 1.0
+     }
+    },
+    "prompt": "Seed A",
+    "score": 0.6666666666666666
+   },
+   "seed 1": {
+    "items": {
+     "t1": {
+      "binary": 0.0,
+      "naive": 0.0,
+      "output": "New prompt: reply 7",
+      "partial": 0.0
+     },
+     "t2": {
+      "binary": 1.0,
+      "naive": 1.0,
+      "output": "New prompt: reply 8",
+      "partial": 1.0
+     },
+     "t3": {
+      "binary": 0.0,
+      "naive": 0.0,
+      "output": "New prompt: reply 9",
+      "partial": 0.0
+     }
+    },
+    "prompt": "Seed B",
+    "score": 0.3333333333333333
+   }
+  }
+ }
+]

@@ -1,0 +1,38 @@
+{
+ "failures": [
+  {
+   "seed": 1097127993,
+   "system": null,
+   "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nWith this prompt the assistant scored 0.43 (share of failing tests it fixed, 0 to 1).\nWhat happened per task:\n- a: score 0.60, still failing: a-b\n- b: score 0.40, still failing: b-b\n- c: score 0.30, still failing: c-b\n\nOriginal prompt:\nSeed A\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 1539898300,
+   "system": null,
+   "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nSeed A\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+  }
+ ],
+ "none": [
+  {
+   "seed": 1097127993,
+   "system": null,
+   "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed A\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 1539898300,
+   "system": null,
+   "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nSeed A\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+  }
+ ],
+ "score": [
+  {
+   "seed": 1097127993,
+   "system": null,
+   "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nWith this prompt the assistant scored 0.43 (share of failing tests it fixed, 0 to 1).\n\nOriginal prompt:\nSeed A\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+  },
+  {
+   "seed": 1539898300,
+   "system": null,
+   "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nSeed A\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+  }
+ ]
+}
