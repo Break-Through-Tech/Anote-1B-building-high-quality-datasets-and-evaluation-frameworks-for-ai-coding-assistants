@@ -16,7 +16,6 @@
 | Sabad Modi | [@SabadModi](https://github.com/SabadModi) | He/Him |
 | Sophia Zhang | [@sophia-z-23](https://github.com/sophia-z-23) | She/Her |
 | Angela Liu | [@AngelaLiu07](https://github.com/AngelaLiu07) | She/Her |
-| Phyo Thu Kha | [@levithukha](https://github.com/levithukha) | He/Him |
 
 **Challenge Advisor:** Natan Vidra, Anote ([@nv78](https://github.com/nv78))  
 **AI Studio Coach:** Bhavya Gopal ([@bhavya-gopal](https://github.com/bhavya-gopal))
