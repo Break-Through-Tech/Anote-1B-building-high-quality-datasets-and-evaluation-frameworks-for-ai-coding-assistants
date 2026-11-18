@@ -1,0 +1,612 @@
+{
+ "eda": {
+  "children": [
+   "reply 1",
+   "reply 2",
+   "reply 3",
+   "reply 4",
+   "reply 5",
+   "reply 6",
+   "New prompt: reply 7",
+   "reply 8"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Continue this list with one new prompt.\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 560161641,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Continue this list with one new prompt.\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1588945316,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Continue this list with one new prompt.\n\n1. Seed C\n2. Seed A\n3. Seed B\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2036044446,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Continue this list with one new prompt.\n\n1. Seed B\n2. Seed C\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 281444313,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Continue this list with one new prompt.\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 56556069,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Continue this list with one new prompt.\n\n1. Seed A\n2. Seed B\n3. Seed C\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2015337560,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 1\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1113916996,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Continue this list with one new prompt.\n\n1. Seed B\n2. Seed C\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   }
+  ]
+ },
+ "eda-rank": {
+  "children": [
+   "reply 1",
+   "reply 2",
+   "reply 3",
+   "reply 4",
+   "reply 5",
+   "reply 6",
+   "New prompt: reply 7",
+   "reply 8"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "INSTRUCTION: As a really good teacher, explain the instruction, as if you were explaining it to a child.\n A List of Responses in descending order of score. 4 is the best response. It resembles 3 more than it does (1)\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 560161641,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "INSTRUCTION: Imagine you need to follow this instruction. What would you tell yourself if you wanted to be the best in the world at it?\n A List of Responses in descending order of score. 4 is the best response. It resembles 3 more than it does (1)\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1588945316,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "INSTRUCTION: How would you help an LLM to follow the instruction?\n A List of Responses in descending order of score. 4 is the best response. It resembles 3 more than it does (1)\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2036044446,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "INSTRUCTION: As a really good teacher, explain the instruction, as if you were explaining it to a child.\n A List of Responses in descending order of score. 4 is the best response. It resembles 3 more than it does (1)\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 281444313,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "INSTRUCTION: Imagine you need to follow this instruction. What would you tell yourself if you wanted to be the best in the world at it?\n A List of Responses in descending order of score. 4 is the best response. It resembles 3 more than it does (1)\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 56556069,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "INSTRUCTION: How would you help an LLM to follow the instruction?\n A List of Responses in descending order of score. 4 is the best response. It resembles 3 more than it does (1)\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2015337560,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 1\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1113916996,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "INSTRUCTION: As a really good teacher, explain the instruction, as if you were explaining it to a child.\n A List of Responses in descending order of score. 4 is the best response. It resembles 3 more than it does (1)\n\n1. Seed C\n2. Seed B\n3. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   }
+  ]
+ },
+ "first-order": {
+  "children": [
+   "reply 1",
+   "reply 2",
+   "reply 3",
+   "reply 4",
+   "reply 5",
+   "reply 6",
+   "New prompt: reply 7",
+   "reply 8"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "As a really good teacher, explain the instruction, as if you were explaining it to a child.  INSTRUCTION: Seed A  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 560161641,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Imagine you need to follow this instruction. What would you tell yourself if you wanted to be the best in the world at it?  INSTRUCTION: Seed B  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1588945316,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "How would you help an LLM to follow the instruction?  INSTRUCTION: Seed C  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2036044446,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "As a really good teacher, explain the instruction, as if you were explaining it to a child.  INSTRUCTION: Seed A  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 281444313,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Imagine you need to follow this instruction. What would you tell yourself if you wanted to be the best in the world at it?  INSTRUCTION: Seed B  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 56556069,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "How would you help an LLM to follow the instruction?  INSTRUCTION: Seed C  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2015337560,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 1\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1113916996,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "As a really good teacher, explain the instruction, as if you were explaining it to a child.  INSTRUCTION: New prompt: reply 7  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   }
+  ]
+ },
+ "first-order-hyper": {
+  "children": [
+   "reply 2",
+   "reply 4",
+   "reply 6",
+   "reply 8",
+   "reply 10",
+   "reply 12",
+   "New prompt: reply 13",
+   "reply 15"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Please summarize and improve the following instruction: As a really good teacher, explain the instruction, as if you were explaining it to a child.\n\nReturn only the improved instruction."
+   },
+   {
+    "seed": 560161641,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 1  INSTRUCTION: Seed A  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1588945316,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Please summarize and improve the following instruction: Imagine you need to follow this instruction. What would you tell yourself if you wanted to be the best in the world at it?\n\nReturn only the improved instruction."
+   },
+   {
+    "seed": 2036044446,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 3  INSTRUCTION: Seed B  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 281444313,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Please summarize and improve the following instruction: How would you help an LLM to follow the instruction?\n\nReturn only the improved instruction."
+   },
+   {
+    "seed": 56556069,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 5  INSTRUCTION: Seed C  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2015337560,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Please summarize and improve the following instruction: As a really good teacher, explain the instruction, as if you were explaining it to a child.\n\nReturn only the improved instruction."
+   },
+   {
+    "seed": 1113916996,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 7  INSTRUCTION: Seed A  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1006443827,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Please summarize and improve the following instruction: Imagine you need to follow this instruction. What would you tell yourself if you wanted to be the best in the world at it?\n\nReturn only the improved instruction."
+   },
+   {
+    "seed": 823534631,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 9  INSTRUCTION: Seed B  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2019766388,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Please summarize and improve the following instruction: How would you help an LLM to follow the instruction?\n\nReturn only the improved instruction."
+   },
+   {
+    "seed": 2045921456,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 11  INSTRUCTION: Seed C  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1705680002,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 2\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 646892613,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Please summarize and improve the following instruction: reply 1\n\nReturn only the improved instruction."
+   },
+   {
+    "seed": 996097414,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 14  INSTRUCTION: New prompt: reply 13  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   }
+  ]
+ },
+ "lamarckian": {
+  "children": [
+   "reply 1",
+   "reply 2",
+   "reply 3",
+   "reply 4",
+   "reply 5",
+   "reply 6",
+   "New prompt: reply 7",
+   "reply 8"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed A\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 560161641,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed B\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1588945316,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "I gave a friend an instruction and some advice. Here are the correct examples of his workings out Input:\nfix b\n\nResponse:\ndef f():\n    return 1 The instruction was:\n\nDon't repeat the workings out. Write the general instruction the friend was given, in one or two sentences. Return only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2036044446,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed A\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 281444313,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed B\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 56556069,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "I gave a friend an instruction and some advice. Here are the correct examples of his workings out Input:\nfix b\n\nResponse:\ndef f():\n    return 1 The instruction was:\n\nDon't repeat the workings out. Write the general instruction the friend was given, in one or two sentences. Return only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2015337560,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 1\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1113916996,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nNew prompt: reply 7\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   }
+  ]
+ },
+ "lineage": {
+  "children": [
+   "reply 1",
+   "reply 2",
+   "reply 3",
+   "reply 4",
+   "reply 5",
+   "reply 6",
+   "New prompt: reply 7",
+   "reply 8"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "GENOTYPES FOUND IN ASCENDING ORDER OF QUALITY\n\n1. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 560161641,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "GENOTYPES FOUND IN ASCENDING ORDER OF QUALITY\n\n1. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1588945316,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "GENOTYPES FOUND IN ASCENDING ORDER OF QUALITY\n\n1. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2036044446,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "GENOTYPES FOUND IN ASCENDING ORDER OF QUALITY\n\n1. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 281444313,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "GENOTYPES FOUND IN ASCENDING ORDER OF QUALITY\n\n1. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 56556069,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "GENOTYPES FOUND IN ASCENDING ORDER OF QUALITY\n\n1. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2015337560,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 1\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1113916996,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "GENOTYPES FOUND IN ASCENDING ORDER OF QUALITY\n\n1. Seed A\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   }
+  ]
+ },
+ "reflective": {
+  "children": [
+   "reply 1",
+   "reply 2",
+   "reply 3",
+   "reply 4",
+   "reply 5",
+   "reply 6",
+   "New prompt: reply 7",
+   "reply 8"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "I provided an assistant with the following instructions to perform a task for me:\n\n```\nSeed A\n```\n\nThe following are examples of different task inputs provided to the assistant along with the assistant's response for each of them, and some feedback on how the assistant's response could be better:\n\n```\nInput:\nfix a\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: a-b\n\nInput:\nfix b\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: b-b\n\nInput:\nfix c\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: c-b\n```\n\nYour task is to write a new instruction for the assistant.\n\nRead the inputs carefully and identify the input format and infer detailed task description about the task I wish to solve with the assistant.\n\nRead all the assistant responses and the corresponding feedback. Identify all niche and domain specific factual information about the task and include it in the instruction, as a lot of it may not be available to the assistant in the future. The assistant may have utilized a generalizable strategy to solve the task, if so, include that in the instruction as well.\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 560161641,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "I provided an assistant with the following instructions to perform a task for me:\n\n```\nSeed B\n```\n\nThe following are examples of different task inputs provided to the assistant along with the assistant's response for each of them, and some feedback on how the assistant's response could be better:\n\n```\nInput:\nfix c\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: c-b\n\nInput:\nfix b\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: b-b\n\nInput:\nfix a\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: a-b\n```\n\nYour task is to write a new instruction for the assistant.\n\nRead the inputs carefully and identify the input format and infer detailed task description about the task I wish to solve with the assistant.\n\nRead all the assistant responses and the corresponding feedback. Identify all niche and domain specific factual information about the task and include it in the instruction, as a lot of it may not be available to the assistant in the future. The assistant may have utilized a generalizable strategy to solve the task, if so, include that in the instruction as well.\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1588945316,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "I provided an assistant with the following instructions to perform a task for me:\n\n```\nSeed C\n```\n\nThe following are examples of different task inputs provided to the assistant along with the assistant's response for each of them, and some feedback on how the assistant's response could be better:\n\n```\nInput:\nfix a\n\nResponse:\ndef f():\n    return 1\nFeedback: 2 of 2 tests failed: a-a; a-b\n\nInput:\nfix c\n\nResponse:\ndef f():\n    return 1\nFeedback: 2 of 2 tests failed: c-a; c-b\n\nInput:\nfix b\n\nResponse:\ndef f():\n    return 1\nFeedback: Every test passed.\n```\n\nYour task is to write a new instruction for the assistant.\n\nRead the inputs carefully and identify the input format and infer detailed task description about the task I wish to solve with the assistant.\n\nRead all the assistant responses and the corresponding feedback. Identify all niche and domain specific factual information about the task and include it in the instruction, as a lot of it may not be available to the assistant in the future. The assistant may have utilized a generalizable strategy to solve the task, if so, include that in the instruction as well.\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2036044446,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "I provided an assistant with the following instructions to perform a task for me:\n\n```\nSeed A\n```\n\nThe following are examples of different task inputs provided to the assistant along with the assistant's response for each of them, and some feedback on how the assistant's response could be better:\n\n```\nInput:\nfix a\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: a-b\n\nInput:\nfix b\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: b-b\n\nInput:\nfix c\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: c-b\n```\n\nYour task is to write a new instruction for the assistant.\n\nRead the inputs carefully and identify the input format and infer detailed task description about the task I wish to solve with the assistant.\n\nRead all the assistant responses and the corresponding feedback. Identify all niche and domain specific factual information about the task and include it in the instruction, as a lot of it may not be available to the assistant in the future. The assistant may have utilized a generalizable strategy to solve the task, if so, include that in the instruction as well.\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 281444313,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "I provided an assistant with the following instructions to perform a task for me:\n\n```\nSeed B\n```\n\nThe following are examples of different task inputs provided to the assistant along with the assistant's response for each of them, and some feedback on how the assistant's response could be better:\n\n```\nInput:\nfix a\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: a-b\n\nInput:\nfix c\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: c-b\n\nInput:\nfix b\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: b-b\n```\n\nYour task is to write a new instruction for the assistant.\n\nRead the inputs carefully and identify the input format and infer detailed task description about the task I wish to solve with the assistant.\n\nRead all the assistant responses and the corresponding feedback. Identify all niche and domain specific factual information about the task and include it in the instruction, as a lot of it may not be available to the assistant in the future. The assistant may have utilized a generalizable strategy to solve the task, if so, include that in the instruction as well.\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 56556069,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "I provided an assistant with the following instructions to perform a task for me:\n\n```\nSeed C\n```\n\nThe following are examples of different task inputs provided to the assistant along with the assistant's response for each of them, and some feedback on how the assistant's response could be better:\n\n```\nInput:\nfix b\n\nResponse:\ndef f():\n    return 1\nFeedback: Every test passed.\n\nInput:\nfix a\n\nResponse:\ndef f():\n    return 1\nFeedback: 2 of 2 tests failed: a-a; a-b\n\nInput:\nfix c\n\nResponse:\ndef f():\n    return 1\nFeedback: 2 of 2 tests failed: c-a; c-b\n```\n\nYour task is to write a new instruction for the assistant.\n\nRead the inputs carefully and identify the input format and infer detailed task description about the task I wish to solve with the assistant.\n\nRead all the assistant responses and the corresponding feedback. Identify all niche and domain specific factual information about the task and include it in the instruction, as a lot of it may not be available to the assistant in the future. The assistant may have utilized a generalizable strategy to solve the task, if so, include that in the instruction as well.\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2015337560,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 1\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1113916996,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "I provided an assistant with the following instructions to perform a task for me:\n\n```\nNew prompt: reply 7\n```\n\nThe following are examples of different task inputs provided to the assistant along with the assistant's response for each of them, and some feedback on how the assistant's response could be better:\n\n```\nInput:\nfix b\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: b-b\n\nInput:\nfix a\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: a-b\n\nInput:\nfix c\n\nResponse:\ndef f():\n    return 1\nFeedback: 1 of 2 tests failed: c-b\n```\n\nYour task is to write a new instruction for the assistant.\n\nRead the inputs carefully and identify the input format and infer detailed task description about the task I wish to solve with the assistant.\n\nRead all the assistant responses and the corresponding feedback. Identify all niche and domain specific factual information about the task and include it in the instruction, as a lot of it may not be available to the assistant in the future. The assistant may have utilized a generalizable strategy to solve the task, if so, include that in the instruction as well.\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   }
+  ]
+ },
+ "rewrite": {
+  "children": [
+   "reply 1",
+   "reply 2",
+   "reply 3",
+   "reply 4",
+   "reply 5",
+   "reply 6",
+   "New prompt: reply 7",
+   "reply 8"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed A\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 560161641,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed B\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1588945316,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed C\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2036044446,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed A\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 281444313,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed B\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 56556069,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nSeed C\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2015337560,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 1\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1113916996,
+    "system": null,
+    "user": "You are mutating a system prompt for a coding assistant.\n\nMake EXACTLY one change that will improve the assistant's performance on the\ntasks. Preserve the original purpose.\n\nOriginal prompt:\nNew prompt: reply 7\n\nReturn only the modified system prompt. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   }
+  ]
+ },
+ "zero-order": {
+  "children": [
+   "reply 1",
+   "reply 2",
+   "reply 3",
+   "reply 4",
+   "reply 5",
+   "reply 6",
+   "New prompt: reply 7",
+   "reply 8"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Task: Fix the bug in a Python function.\n\nWrite a list of 100 short hints that would help an AI assistant do this task well."
+   },
+   {
+    "seed": 560161641,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Task: Fix the bug in a Python function.\n\nWrite a list of 100 short hints that would help an AI assistant do this task well."
+   },
+   {
+    "seed": 1588945316,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Task: Fix the bug in a Python function.\n\nWrite a list of 100 short hints that would help an AI assistant do this task well."
+   },
+   {
+    "seed": 2036044446,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Task: Fix the bug in a Python function.\n\nWrite a list of 100 short hints that would help an AI assistant do this task well."
+   },
+   {
+    "seed": 281444313,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Task: Fix the bug in a Python function.\n\nWrite a list of 100 short hints that would help an AI assistant do this task well."
+   },
+   {
+    "seed": 56556069,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Task: Fix the bug in a Python function.\n\nWrite a list of 100 short hints that would help an AI assistant do this task well."
+   },
+   {
+    "seed": 2015337560,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 1\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1113916996,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Task: Fix the bug in a Python function.\n\nWrite a list of 100 short hints that would help an AI assistant do this task well."
+   }
+  ]
+ },
+ "zero-order-hyper": {
+  "children": [
+   "reply 2",
+   "reply 4",
+   "reply 6",
+   "reply 8",
+   "reply 10",
+   "reply 12",
+   "New prompt: reply 13",
+   "reply 15"
+  ],
+  "sent": [
+   {
+    "seed": 1022050301,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Fix the bug in a Python function. How can I break down this problem into smaller, more manageable parts?\n\nWrite one instruction for how to improve a prompt for this task. Return only the instruction."
+   },
+   {
+    "seed": 560161641,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 1  INSTRUCTION: Seed A  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1588945316,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Fix the bug in a Python function. What are the underlying causes or factors contributing to the problem?\n\nWrite one instruction for how to improve a prompt for this task. Return only the instruction."
+   },
+   {
+    "seed": 2036044446,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 3  INSTRUCTION: Seed B  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 281444313,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Fix the bug in a Python function. How can I simplify the problem so that it is easier to solve?\n\nWrite one instruction for how to improve a prompt for this task. Return only the instruction."
+   },
+   {
+    "seed": 56556069,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 5  INSTRUCTION: Seed C  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2015337560,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Fix the bug in a Python function. Let's imagine the current best solution is totally wrong, what other ways are there to think about the problem specification?\n\nWrite one instruction for how to improve a prompt for this task. Return only the instruction."
+   },
+   {
+    "seed": 1113916996,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 7  INSTRUCTION: Seed A  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1006443827,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Fix the bug in a Python function. Let's make a step by step plan and implement it with good notion and explanation.\n\nWrite one instruction for how to improve a prompt for this task. Return only the instruction."
+   },
+   {
+    "seed": 823534631,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 9  INSTRUCTION: Seed B  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 2019766388,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Fix the bug in a Python function. What are the key assumptions underlying this problem?\n\nWrite one instruction for how to improve a prompt for this task. Return only the instruction."
+   },
+   {
+    "seed": 2045921456,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 11  INSTRUCTION: Seed C  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 1705680002,
+    "system": null,
+    "user": "You are performing a crossover operation on two system prompts for a coding\nassistant. Combine the information from both parent prompts into one new\nchild prompt that keeps their original intent.\n\nParent A:\nreply 2\n\nParent B:\nSeed B\n\nReturn only the text of the new child prompt, not JSON or a diff. Do not include explanations,\nformatting instructions, or Markdown code fences."
+   },
+   {
+    "seed": 646892613,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "Fix the bug in a Python function. How could I measure progress on this problem?\n\nWrite one instruction for how to improve a prompt for this task. Return only the instruction."
+   },
+   {
+    "seed": 996097414,
+    "system": "You write and edit system prompts for an AI coding assistant. Never solve a coding task yourself and never ask for more input. Reply with exactly the text that was asked for.",
+    "user": "reply 14  INSTRUCTION: New prompt: reply 13  INSTRUCTION MUTANT:\n\nReturn only the new prompt. Do not include explanations, formatting instructions, or Markdown code fences."
+   }
+  ]
+ }
+}

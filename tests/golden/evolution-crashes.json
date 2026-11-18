@@ -1,0 +1,249 @@
+{
+ "events": [
+  {
+   "cases": {
+    "a::a-a": 0.0,
+    "a::a-b": 0.0,
+    "b::b-a": 0.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.00, still failing: a-a, a-b\n- b: score 0.00, still failing: b-a, b-b\n- c: score 0.25, still failing: c-b\n- d: score 0.25, still failing: d-b\n- e: score 0.25, still failing: e-b",
+   "generation": 0,
+   "items": {
+    "a": 0.0,
+    "b": 0.0,
+    "c": 0.25,
+    "d": 0.25,
+    "e": 0.25
+   },
+   "prompt": "Seed A",
+   "score": 0.15
+  },
+  {
+   "cases": {},
+   "crashed": true,
+   "event": "scored",
+   "feedback": "evaluation failed: RuntimeError('sandbox died on Seed B')",
+   "generation": 0,
+   "items": null,
+   "prompt": "Seed B",
+   "score": 0.0
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 0.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 0.50, still failing: b-b\n- c: score 0.50, still failing: c-b\n- d: score 0.00, still failing: d-a, d-b\n- e: score 0.75, still failing: e-b",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 0.5,
+    "c": 0.5,
+    "d": 0.0,
+    "e": 0.75
+   },
+   "prompt": "Seed C",
+   "score": 0.45
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 1.0,
+    "c::c-a": 0.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 1.0,
+    "e::e-a": 1.0,
+    "e::e-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.50, still failing: a-b\n- b: score 1.00\n- c: score 0.00, still failing: c-a, c-b\n- d: score 1.00\n- e: score 1.00",
+   "generation": 0,
+   "items": {
+    "a": 0.5,
+    "b": 1.0,
+    "c": 0.0,
+    "d": 1.0,
+    "e": 1.0
+   },
+   "prompt": "Seed D",
+   "score": 0.7
+  },
+  {
+   "event": "generation",
+   "generation": 0,
+   "mutator_calls": null,
+   "rollouts": 15,
+   "survivors": [
+    {
+     "prompt": "Seed D",
+     "score": 0.7
+    },
+    {
+     "prompt": "Seed C",
+     "score": 0.45
+    },
+    {
+     "prompt": "Seed A",
+     "score": 0.15
+    }
+   ]
+  },
+  {
+   "event": "screened",
+   "generation": 1,
+   "parent_score": 0.375,
+   "prompt": "Seed C m1",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 1.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.25, still failing: a-b\n- b: score 0.25, still failing: b-b\n- c: score 1.00\n- d: score 0.50, still failing: d-b\n- e: score 0.50, still failing: e-b",
+   "generation": 1,
+   "items": {
+    "a": 0.25,
+    "b": 0.25,
+    "c": 1.0,
+    "d": 0.5,
+    "e": 0.5
+   },
+   "prompt": "Seed C m1",
+   "score": 0.5
+  },
+  {
+   "event": "screened",
+   "generation": 1,
+   "parent_score": 0.25,
+   "prompt": "Seed C m3",
+   "score": 0.375
+  },
+  {
+   "cases": {
+    "a::a-a": 1.0,
+    "a::a-b": 0.0,
+    "b::b-a": 1.0,
+    "b::b-b": 0.0,
+    "c::c-a": 1.0,
+    "c::c-b": 0.0,
+    "d::d-a": 1.0,
+    "d::d-b": 0.0,
+    "e::e-a": 1.0,
+    "e::e-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- a: score 0.25, still failing: a-b\n- b: score 0.50, still failing: b-b\n- c: score 0.50, still failing: c-b\n- d: score 0.50, still failing: d-b\n- e: score 0.25, still failing: e-b",
+   "generation": 1,
+   "items": {
+    "a": 0.25,
+    "b": 0.5,
+    "c": 0.5,
+    "d": 0.5,
+    "e": 0.25
+   },
+   "prompt": "Seed C m3",
+   "score": 0.4
+  },
+  {
+   "event": "generation",
+   "generation": 1,
+   "mutator_calls": null,
+   "rollouts": 29,
+   "survivors": [
+    {
+     "prompt": "Seed D",
+     "score": 0.7
+    },
+    {
+     "prompt": "Seed C m1",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed C",
+     "score": 0.45
+    }
+   ]
+  },
+  {
+   "event": "screened",
+   "generation": 2,
+   "parent_score": 0.25,
+   "prompt": "Seed D m4",
+   "score": 0.25
+  },
+  {
+   "event": "screened",
+   "generation": 2,
+   "parent_score": 0.625,
+   "prompt": "Seed C m5",
+   "score": 0.5
+  },
+  {
+   "event": "screened",
+   "generation": 2,
+   "parent_score": 0.375,
+   "prompt": "Seed C m1 m6",
+   "score": 0.25
+  },
+  {
+   "event": "generation",
+   "generation": 2,
+   "mutator_calls": null,
+   "rollouts": 35,
+   "survivors": [
+    {
+     "prompt": "Seed D",
+     "score": 0.7
+    },
+    {
+     "prompt": "Seed C m1",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed C",
+     "score": 0.45
+    }
+   ]
+  }
+ ],
+ "final": [
+  "Seed D",
+  "Seed C m1",
+  "Seed C"
+ ]
+}

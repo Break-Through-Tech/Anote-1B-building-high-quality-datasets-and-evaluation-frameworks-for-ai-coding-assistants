@@ -1,0 +1,42 @@
+{
+ "bodies": [
+  {
+   "max_tokens": 1024,
+   "messages": [
+    {
+     "content": "Be careful.",
+     "role": "system"
+    },
+    {
+     "content": "fix a",
+     "role": "user"
+    }
+   ],
+   "model": "qwen2.5-coder:1.5b",
+   "repetition_penalty": 1.0,
+   "seed": 0,
+   "temperature": 0
+  },
+  {
+   "max_tokens": 1024,
+   "messages": [
+    {
+     "content": "Be careful.",
+     "role": "system"
+    },
+    {
+     "content": "fix b",
+     "role": "user"
+    }
+   ],
+   "model": "qwen2.5-coder:1.5b",
+   "repetition_penalty": 1.0,
+   "seed": 0,
+   "temperature": 0
+  }
+ ],
+ "replies": [
+  "reply 1",
+  "reply 2"
+ ]
+}

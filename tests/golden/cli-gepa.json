@@ -1,0 +1,592 @@
+{
+ "log": [
+  {
+   "cases": {
+    "v1::t1": 0.0,
+    "v1::t2": 1.0,
+    "v2::t1": 0.0,
+    "v2::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: t1\n- v2: score 0.00, still failing: t1, t2",
+   "generation": 0,
+   "items": {
+    "v1": 0.5,
+    "v2": 0.0
+   },
+   "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+   "score": 0.25
+  },
+  {
+   "cases": {
+    "v1::t1": 1.0,
+    "v1::t2": 0.0,
+    "v2::t1": 0.0,
+    "v2::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: t2\n- v2: score 0.00, still failing: t1, t2",
+   "generation": 0,
+   "items": {
+    "v1": 0.5,
+    "v2": 0.0
+   },
+   "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+   "score": 0.25
+  },
+  {
+   "cases": {
+    "v1::t1": 1.0,
+    "v1::t2": 0.0,
+    "v2::t1": 1.0,
+    "v2::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: t2\n- v2: score 0.50, still failing: t2",
+   "generation": 0,
+   "items": {
+    "v1": 0.5,
+    "v2": 0.5
+   },
+   "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "v1::t1": 1.0,
+    "v1::t2": 0.0,
+    "v2::t1": 0.0,
+    "v2::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: t2\n- v2: score 0.00, still failing: t1, t2",
+   "generation": 0,
+   "items": {
+    "v1": 0.5,
+    "v2": 0.0
+   },
+   "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+   "score": 0.25
+  },
+  {
+   "child": "reply 1",
+   "event": "mutation",
+   "kind": "reflective",
+   "parent": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality."
+  },
+  {
+   "event": "screened",
+   "generation": 1,
+   "parent_score": 0.16666666666666666,
+   "prompt": "reply 1",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "v1::t1": 1.0,
+    "v1::t2": 0.0,
+    "v2::t1": 1.0,
+    "v2::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: t2\n- v2: score 0.50, still failing: t2",
+   "generation": 1,
+   "items": {
+    "v1": 0.5,
+    "v2": 0.5
+   },
+   "prompt": "reply 1",
+   "score": 0.5
+  },
+  {
+   "event": "generation",
+   "generation": 1,
+   "mutator_calls": 1,
+   "rollouts": 16,
+   "survivors": [
+    {
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 1",
+     "score": 0.5
+    },
+    {
+     "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+     "score": 0.25
+    }
+   ]
+  },
+  {
+   "child": "reply 2",
+   "event": "mutation",
+   "kind": "reflective",
+   "parent": "reply 1"
+  },
+  {
+   "event": "screened",
+   "generation": 2,
+   "parent_score": 0.5,
+   "prompt": "reply 2",
+   "score": 0.3333333333333333
+  },
+  {
+   "child": "reply 3",
+   "event": "mutation",
+   "kind": "lamarckian",
+   "parent": "reply 1"
+  },
+  {
+   "event": "screened",
+   "generation": 3,
+   "parent_score": 0.5,
+   "prompt": "reply 3",
+   "score": 0.16666666666666666
+  },
+  {
+   "child": "reply 4",
+   "event": "mutation",
+   "kind": "reflective",
+   "parent": "reply 1"
+  },
+  {
+   "event": "screened",
+   "generation": 4,
+   "parent_score": 0.16666666666666666,
+   "prompt": "reply 4",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "v1::t1": 1.0,
+    "v1::t2": 0.0,
+    "v2::t1": 1.0,
+    "v2::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: t2\n- v2: score 0.50, still failing: t2",
+   "generation": 4,
+   "items": {
+    "v1": 0.5,
+    "v2": 0.5
+   },
+   "prompt": "reply 4",
+   "score": 0.5
+  },
+  {
+   "event": "generation",
+   "generation": 4,
+   "mutator_calls": 4,
+   "rollouts": 28,
+   "survivors": [
+    {
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 1",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 4",
+     "score": 0.5
+    },
+    {
+     "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+     "score": 0.25
+    }
+   ]
+  },
+  {
+   "child": "reply 5",
+   "event": "mutation",
+   "kind": "lamarckian",
+   "parent": "reply 4"
+  },
+  {
+   "event": "screened",
+   "generation": 5,
+   "parent_score": 0.6666666666666666,
+   "prompt": "reply 5",
+   "score": 0.6666666666666666
+  },
+  {
+   "child": "reply 6",
+   "event": "mutation",
+   "kind": "lamarckian",
+   "parent": "reply 4"
+  },
+  {
+   "event": "screened",
+   "generation": 6,
+   "parent_score": 0.6666666666666666,
+   "prompt": "reply 6",
+   "score": 0.16666666666666666
+  },
+  {
+   "child": "reply 7",
+   "event": "mutation",
+   "kind": "reflective",
+   "parent": "reply 4"
+  },
+  {
+   "event": "screened",
+   "generation": 7,
+   "parent_score": 0.3333333333333333,
+   "prompt": "reply 7",
+   "score": 0.3333333333333333
+  },
+  {
+   "child": "reply 8",
+   "event": "mutation",
+   "kind": "reflective",
+   "parent": "reply 4"
+  },
+  {
+   "event": "screened",
+   "generation": 8,
+   "parent_score": 0.5,
+   "prompt": "reply 8",
+   "score": 0.5
+  },
+  {
+   "child": "reply 9",
+   "event": "mutation",
+   "kind": "lamarckian",
+   "parent": "reply 4"
+  },
+  {
+   "event": "screened",
+   "generation": 9,
+   "parent_score": 0.3333333333333333,
+   "prompt": "reply 9",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "v1::t1": 1.0,
+    "v1::t2": 1.0,
+    "v2::t1": 1.0,
+    "v2::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 1.00\n- v2: score 0.50, still failing: t2",
+   "generation": 9,
+   "items": {
+    "v1": 1.0,
+    "v2": 0.5
+   },
+   "prompt": "reply 9",
+   "score": 0.75
+  },
+  {
+   "event": "generation",
+   "generation": 9,
+   "mutator_calls": 9,
+   "rollouts": 46,
+   "survivors": [
+    {
+     "prompt": "reply 9",
+     "score": 0.75
+    },
+    {
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 1",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 4",
+     "score": 0.5
+    },
+    {
+     "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+     "score": 0.25
+    }
+   ]
+  },
+  {
+   "child": "reply 10",
+   "event": "mutation",
+   "kind": "reflective",
+   "parent": "reply 9"
+  },
+  {
+   "event": "screened",
+   "generation": 10,
+   "parent_score": 0.5,
+   "prompt": "reply 10",
+   "score": 0.6666666666666666
+  },
+  {
+   "cases": {
+    "v1::t1": 0.0,
+    "v1::t2": 1.0,
+    "v2::t1": 0.0,
+    "v2::t2": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: t1\n- v2: score 0.00, still failing: t1, t2",
+   "generation": 10,
+   "items": {
+    "v1": 0.5,
+    "v2": 0.0
+   },
+   "prompt": "reply 10",
+   "score": 0.25
+  },
+  {
+   "event": "generation",
+   "generation": 10,
+   "mutator_calls": 10,
+   "rollouts": 51,
+   "survivors": [
+    {
+     "prompt": "reply 9",
+     "score": 0.75
+    },
+    {
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 1",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 4",
+     "score": 0.5
+    },
+    {
+     "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+     "score": 0.25
+    },
+    {
+     "prompt": "reply 10",
+     "score": 0.25
+    }
+   ]
+  },
+  {
+   "child": "reply 11",
+   "event": "mutation",
+   "kind": "lamarckian",
+   "parent": "reply 9"
+  },
+  {
+   "event": "screened",
+   "generation": 11,
+   "parent_score": 0.5,
+   "prompt": "reply 11",
+   "score": 0.5
+  },
+  {
+   "child": "reply 12",
+   "event": "mutation",
+   "kind": "lamarckian",
+   "parent": "reply 9"
+  },
+  {
+   "event": "screened",
+   "generation": 12,
+   "parent_score": 0.3333333333333333,
+   "prompt": "reply 12",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "v1::t1": 0.0,
+    "v1::t2": 1.0,
+    "v2::t1": 1.0,
+    "v2::t2": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: t1\n- v2: score 1.00",
+   "generation": 12,
+   "items": {
+    "v1": 0.5,
+    "v2": 1.0
+   },
+   "prompt": "reply 12",
+   "score": 0.75
+  },
+  {
+   "event": "generation",
+   "generation": 12,
+   "mutator_calls": 12,
+   "rollouts": 60,
+   "survivors": [
+    {
+     "prompt": "reply 9",
+     "score": 0.75
+    },
+    {
+     "prompt": "reply 12",
+     "score": 0.75
+    },
+    {
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 1",
+     "score": 0.5
+    },
+    {
+     "prompt": "reply 4",
+     "score": 0.5
+    },
+    {
+     "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+     "score": 0.25
+    },
+    {
+     "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+     "score": 0.25
+    },
+    {
+     "prompt": "reply 10",
+     "score": 0.25
+    }
+   ]
+  },
+  {
+   "event": "test",
+   "results": {
+    "best seed": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 62",
+       "partial": 0.5
+      }
+     },
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.5
+    },
+    "evolved": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.0,
+       "output": "New prompt: reply 61",
+       "partial": 0.0
+      }
+     },
+     "prompt": "reply 9",
+     "score": 0.0
+    },
+    "no prompt": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.0,
+       "output": "New prompt: reply 63",
+       "partial": 0.0
+      }
+     },
+     "prompt": "",
+     "score": 0.0
+    },
+    "seed 0": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 64",
+       "partial": 0.5
+      }
+     },
+     "prompt": "You are an expert level software engineer. Solve the coding task carefully, following all directions.",
+     "score": 0.5
+    },
+    "seed 1": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.0,
+       "output": "New prompt: reply 65",
+       "partial": 0.0
+      }
+     },
+     "prompt": "You are a coding assistant. Make sure you thoroughly analyze the question before solving.",
+     "score": 0.0
+    },
+    "seed 2": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.5,
+       "output": "New prompt: reply 62",
+       "partial": 0.5
+      }
+     },
+     "prompt": "You are an experienced programmer. Make the least amount of changes to produce a more efficient solution, while preserving functionality.",
+     "score": 0.5
+    },
+    "seed 3": {
+     "items": {
+      "t1": {
+       "binary": 0.0,
+       "naive": 0.0,
+       "output": "New prompt: reply 66",
+       "partial": 0.0
+      }
+     },
+     "prompt": "You are a meticulous software engineer. Consider edge cases, and make sure your solution is correct.",
+     "score": 0.0
+    }
+   }
+  }
+ ],
+ "printed": "\nbest prompt (validation score 0.750):\nreply 9\n\ntest set (partial credit):\n  evolved    0.000\n  best seed  0.500\n  no prompt  0.000\n  seed 0     0.500\n  seed 1     0.000\n  seed 2     0.500\n  seed 3     0.000\nlog: <log>\n"
+}

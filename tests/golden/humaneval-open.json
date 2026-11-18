@@ -1,0 +1,167 @@
+{
+ "jobs": {
+  "Python/0 original": [
+   [
+    "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True",
+    "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False",
+    "assert has_close_elements([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True",
+    "assert has_close_elements([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False",
+    "assert has_close_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True",
+    "assert has_close_elements([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True",
+    "assert has_close_elements([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False"
+   ],
+   "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    for idx, elem in enumerate(numbers):\n        for idx2, elem2 in enumerate(numbers):\n            if idx != idx2:\n                distance = elem - elem2\n                if distance < threshold:\n                    return True\n\n    return False\n",
+   "has_close_elements"
+  ],
+  "Python/0 repaired": [
+   [
+    "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True",
+    "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False",
+    "assert has_close_elements([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True",
+    "assert has_close_elements([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False",
+    "assert has_close_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True",
+    "assert has_close_elements([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True",
+    "assert has_close_elements([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False"
+   ],
+   "from typing import List\n\ndef f():\n    return 1",
+   "has_close_elements"
+  ],
+  "Python/120 original": [
+   [
+    "assert maximum([-3, -4, 5], 3) == [-4, -3, 5]",
+    "assert maximum([4, -4, 4], 2) == [4, 4]",
+    "assert maximum([-3, 2, 1, 2, -1, -2, 1], 1) == [2]",
+    "assert maximum([123, -123, 20, 0, 1, 2, -3], 3) == [2, 20, 123]",
+    "assert maximum([-123, 20, 0, 1, 2, -3], 4) == [0, 1, 2, 20]",
+    "assert maximum([5, 15, 0, 3, -13, -8, 0], 7) == [-13, -8, 0, 0, 3, 5, 15]",
+    "assert maximum([-1, 0, 2, 5, 3, -10], 2) == [3, 5]",
+    "assert maximum([1, 0, 5, -7], 1) == [5]",
+    "assert maximum([4, -4], 2) == [-4, 4]",
+    "assert maximum([-10, 10], 2) == [-10, 10]",
+    "assert maximum([1, 2, 3, -23, 243, -400, 0], 0) == []"
+   ],
+   "\ndef maximum(arr, k):\n    \"\"\"\n    Given an array arr of integers and a positive integer k, return a sorted list \n    of length k with the maximum k numbers in arr.\n\n    Example 1:\n\n        Input: arr = [-3, -4, 5], k = 3\n        Output: [-4, -3, 5]\n\n    Example 2:\n\n        Input: arr = [4, -4, 4], k = 2\n        Output: [4, 4]\n\n    Example 3:\n\n        Input: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\n        Output: [2]\n\n    Note:\n        1. The length of the array will be in the range of [1, 1000].\n        2. The elements in the array will be in the range of [-1000, 1000].\n        3. 0 <= k <= len(arr)\n    \"\"\"\n    if k == 0:\n        return []\n    arr.sort()\n    ans = arr[-k:]\n    return ans.sort(reverse=True)\n",
+   "maximum"
+  ],
+  "Python/120 repaired": [
+   [
+    "assert maximum([-3, -4, 5], 3) == [-4, -3, 5]",
+    "assert maximum([4, -4, 4], 2) == [4, 4]",
+    "assert maximum([-3, 2, 1, 2, -1, -2, 1], 1) == [2]",
+    "assert maximum([123, -123, 20, 0, 1, 2, -3], 3) == [2, 20, 123]",
+    "assert maximum([-123, 20, 0, 1, 2, -3], 4) == [0, 1, 2, 20]",
+    "assert maximum([5, 15, 0, 3, -13, -8, 0], 7) == [-13, -8, 0, 0, 3, 5, 15]",
+    "assert maximum([-1, 0, 2, 5, 3, -10], 2) == [3, 5]",
+    "assert maximum([1, 0, 5, -7], 1) == [5]",
+    "assert maximum([4, -4], 2) == [-4, 4]",
+    "assert maximum([-10, 10], 2) == [-10, 10]",
+    "assert maximum([1, 2, 3, -23, 243, -400, 0], 0) == []"
+   ],
+   "\n\ndef maximum(arr, k):\n    return sorted(arr)[-k:]",
+   "maximum"
+  ],
+  "Python/38 original": [
+   [
+    "from random import randint, choice\nimport string\nletters = string.ascii_lowercase\nfor _ in range(100):\n    str = ''.join((choice(letters) for i in range(randint(10, 20))))\n    encoded_str = encode_cyclic(str)\n    assert decode_cyclic(encoded_str) == str"
+   ],
+   "\n\ndef encode_cyclic(s: str):\n    \"\"\"\n    returns encoded string by cycling groups of three characters.\n    \"\"\"\n    # split string to groups. Each of length 3.\n    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]\n    # cycle elements in each group. Unless group has fewer elements than 3.\n    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]\n    return \"\".join(groups)\n\n\ndef decode_cyclic(s: str):\n    \"\"\"\n    takes as input string encoded with encode_cyclic function. Returns decoded string.\n    \"\"\"\n    return encode_cyclic(s)\n",
+   "decode_cyclic"
+  ],
+  "Python/38 repaired": [
+   [
+    "from random import randint, choice\nimport string\nletters = string.ascii_lowercase\nfor _ in range(100):\n    str = ''.join((choice(letters) for i in range(randint(10, 20))))\n    encoded_str = encode_cyclic(str)\n    assert decode_cyclic(encoded_str) == str"
+   ],
+   "\n\ndef has_close_elements(n, t):\n    return True",
+   "decode_cyclic"
+  ]
+ },
+ "results": {
+  "Python/0": {
+   "inputs": "Write a Python function `has_close_elements(numbers: List[float], threshold: float) -> bool` to solve the following problem:\nCheck if in given list of numbers, are any two numbers closer to each other than\ngiven threshold.\n>>> has_close_elements([1.0, 2.0, 3.0], 0.5)\nFalse\n>>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\nTrue\n\nHere is the buggy code:\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    for idx, elem in enumerate(numbers):\n        for idx2, elem2 in enumerate(numbers):\n            if idx != idx2:\n                distance = elem - elem2\n                if distance < threshold:\n                    return True\n\n    return False\n",
+   "output": "def f():\n    return 1",
+   "passing": [
+    "assert has_close_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True",
+    "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False",
+    "assert has_close_elements([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False",
+    "assert has_close_elements([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True",
+    "assert has_close_elements([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False",
+    "assert has_close_elements([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True"
+   ],
+   "problems": [],
+   "tests": {
+    "assert has_close_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True": true,
+    "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False": true,
+    "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True": true,
+    "assert has_close_elements([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False": true,
+    "assert has_close_elements([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True": true,
+    "assert has_close_elements([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False": true,
+    "assert has_close_elements([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True": true
+   },
+   "to_fix": [
+    "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True"
+   ]
+  },
+  "Python/120": {
+   "inputs": "Write a Python function `maximum(arr, k)` to solve the following problem:\nGiven an array arr of integers and a positive integer k, return a sorted list\nof length k with the maximum k numbers in arr.\nExample 1:\nInput: arr = [-3, -4, 5], k = 3\nOutput: [-4, -3, 5]\nExample 2:\nInput: arr = [4, -4, 4], k = 2\nOutput: [4, 4]\nExample 3:\nInput: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\nOutput: [2]\nNote:\n1. The length of the array will be in the range of [1, 1000].\n2. The elements in the array will be in the range of [-1000, 1000].\n3. 0 <= k <= len(arr)\n\nHere is the buggy code:\n\ndef maximum(arr, k):\n    \"\"\"\n    Given an array arr of integers and a positive integer k, return a sorted list \n    of length k with the maximum k numbers in arr.\n\n    Example 1:\n\n        Input: arr = [-3, -4, 5], k = 3\n        Output: [-4, -3, 5]\n\n    Example 2:\n\n        Input: arr = [4, -4, 4], k = 2\n        Output: [4, 4]\n\n    Example 3:\n\n        Input: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\n        Output: [2]\n\n    Note:\n        1. The length of the array will be in the range of [1, 1000].\n        2. The elements in the array will be in the range of [-1000, 1000].\n        3. 0 <= k <= len(arr)\n    \"\"\"\n    if k == 0:\n        return []\n    arr.sort()\n    ans = arr[-k:]\n    return ans.sort(reverse=True)\n",
+   "output": "The bug is the sign.\n```python\nimport math\n```\n```python\ndef maximum(arr, k):\n    return sorted(arr)[-k:]\n```",
+   "passing": [
+    "assert maximum([-1, 0, 2, 5, 3, -10], 2) == [3, 5]",
+    "assert maximum([-10, 10], 2) == [-10, 10]",
+    "assert maximum([-123, 20, 0, 1, 2, -3], 4) == [0, 1, 2, 20]",
+    "assert maximum([-3, 2, 1, 2, -1, -2, 1], 1) == [2]",
+    "assert maximum([1, 0, 5, -7], 1) == [5]",
+    "assert maximum([1, 2, 3, -23, 243, -400, 0], 0) == []",
+    "assert maximum([123, -123, 20, 0, 1, 2, -3], 3) == [2, 20, 123]",
+    "assert maximum([4, -4, 4], 2) == [4, 4]",
+    "assert maximum([4, -4], 2) == [-4, 4]",
+    "assert maximum([5, 15, 0, 3, -13, -8, 0], 7) == [-13, -8, 0, 0, 3, 5, 15]"
+   ],
+   "problems": [],
+   "tests": {
+    "assert maximum([-1, 0, 2, 5, 3, -10], 2) == [3, 5]": true,
+    "assert maximum([-10, 10], 2) == [-10, 10]": true,
+    "assert maximum([-123, 20, 0, 1, 2, -3], 4) == [0, 1, 2, 20]": true,
+    "assert maximum([-3, -4, 5], 3) == [-4, -3, 5]": true,
+    "assert maximum([-3, 2, 1, 2, -1, -2, 1], 1) == [2]": true,
+    "assert maximum([1, 0, 5, -7], 1) == [5]": true,
+    "assert maximum([1, 2, 3, -23, 243, -400, 0], 0) == []": true,
+    "assert maximum([123, -123, 20, 0, 1, 2, -3], 3) == [2, 20, 123]": true,
+    "assert maximum([4, -4, 4], 2) == [4, 4]": true,
+    "assert maximum([4, -4], 2) == [-4, 4]": true,
+    "assert maximum([5, 15, 0, 3, -13, -8, 0], 7) == [-13, -8, 0, 0, 3, 5, 15]": true
+   },
+   "to_fix": [
+    "assert maximum([-3, -4, 5], 3) == [-4, -3, 5]"
+   ]
+  },
+  "Python/38": {
+   "inputs": "Write a Python function `decode_cyclic(s: str)` to solve the following problem:\ntakes as input string encoded with encode_cyclic function. Returns decoded string.\n\nHere is the buggy code:\n\n\ndef encode_cyclic(s: str):\n    \"\"\"\n    returns encoded string by cycling groups of three characters.\n    \"\"\"\n    # split string to groups. Each of length 3.\n    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]\n    # cycle elements in each group. Unless group has fewer elements than 3.\n    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]\n    return \"\".join(groups)\n\n\ndef decode_cyclic(s: str):\n    \"\"\"\n    takes as input string encoded with encode_cyclic function. Returns decoded string.\n    \"\"\"\n    return encode_cyclic(s)\n",
+   "output": "Here:\n```python\ndef has_close_elements(n, t):\n    return True\n```",
+   "passing": [],
+   "problems": [],
+   "tests": {
+    "from random import randint, choice\nimport string\nletters = string.ascii_lowercase\nfor _ in range(100):\n    str = ''.join((choice(letters) for i in range(randint(10, 20))))\n    encoded_str = encode_cyclic(str)\n    assert decode_cyclic(encoded_str) == str": true
+   },
+   "to_fix": [
+    "from random import randint, choice\nimport string\nletters = string.ascii_lowercase\nfor _ in range(100):\n    str = ''.join((choice(letters) for i in range(randint(10, 20))))\n    encoded_str = encode_cyclic(str)\n    assert decode_cyclic(encoded_str) == str"
+   ]
+  }
+ },
+ "sent": [
+  {
+   "seed": null,
+   "system": "Be careful.",
+   "user": "Write a Python function `has_close_elements(numbers: List[float], threshold: float) -> bool` to solve the following problem:\nCheck if in given list of numbers, are any two numbers closer to each other than\ngiven threshold.\n>>> has_close_elements([1.0, 2.0, 3.0], 0.5)\nFalse\n>>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\nTrue\n\nHere is the buggy code:\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    for idx, elem in enumerate(numbers):\n        for idx2, elem2 in enumerate(numbers):\n            if idx != idx2:\n                distance = elem - elem2\n                if distance < threshold:\n                    return True\n\n    return False\n"
+  },
+  {
+   "seed": null,
+   "system": "Be careful.",
+   "user": "Write a Python function `decode_cyclic(s: str)` to solve the following problem:\ntakes as input string encoded with encode_cyclic function. Returns decoded string.\n\nHere is the buggy code:\n\n\ndef encode_cyclic(s: str):\n    \"\"\"\n    returns encoded string by cycling groups of three characters.\n    \"\"\"\n    # split string to groups. Each of length 3.\n    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]\n    # cycle elements in each group. Unless group has fewer elements than 3.\n    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]\n    return \"\".join(groups)\n\n\ndef decode_cyclic(s: str):\n    \"\"\"\n    takes as input string encoded with encode_cyclic function. Returns decoded string.\n    \"\"\"\n    return encode_cyclic(s)\n"
+  },
+  {
+   "seed": null,
+   "system": "Be careful.",
+   "user": "Write a Python function `maximum(arr, k)` to solve the following problem:\nGiven an array arr of integers and a positive integer k, return a sorted list\nof length k with the maximum k numbers in arr.\nExample 1:\nInput: arr = [-3, -4, 5], k = 3\nOutput: [-4, -3, 5]\nExample 2:\nInput: arr = [4, -4, 4], k = 2\nOutput: [4, 4]\nExample 3:\nInput: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\nOutput: [2]\nNote:\n1. The length of the array will be in the range of [1, 1000].\n2. The elements in the array will be in the range of [-1000, 1000].\n3. 0 <= k <= len(arr)\n\nHere is the buggy code:\n\ndef maximum(arr, k):\n    \"\"\"\n    Given an array arr of integers and a positive integer k, return a sorted list \n    of length k with the maximum k numbers in arr.\n\n    Example 1:\n\n        Input: arr = [-3, -4, 5], k = 3\n        Output: [-4, -3, 5]\n\n    Example 2:\n\n        Input: arr = [4, -4, 4], k = 2\n        Output: [4, 4]\n\n    Example 3:\n\n        Input: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\n        Output: [2]\n\n    Note:\n        1. The length of the array will be in the range of [1, 1000].\n        2. The elements in the array will be in the range of [-1000, 1000].\n        3. 0 <= k <= len(arr)\n    \"\"\"\n    if k == 0:\n        return []\n    arr.sort()\n    ans = arr[-k:]\n    return ans.sort(reverse=True)\n"
+  }
+ ]
+}

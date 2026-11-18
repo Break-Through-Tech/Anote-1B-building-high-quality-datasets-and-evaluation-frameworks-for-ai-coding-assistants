@@ -1,0 +1,3 @@
+{
+ "message": "Fix the scorer.\n\nThe test suite currently reports these failures:\n\n- test_one\n  AssertionError: expected 2 got 1\n\n### /app/main.py\n```python\nx = 1\n\n```\n\n\nReply format: you may reason first. Then, for each file you change, write a line\n`### <path>` with the exact path shown above, followed by the complete new\ncontents of that file in a ```python fenced code block. Only include files you change.\n"
+}

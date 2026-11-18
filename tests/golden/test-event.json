@@ -1,0 +1,25 @@
+[
+ {
+  "event": "test",
+  "results": {
+   "best": {
+    "items": {
+     "a": {
+      "binary": 1.0,
+      "naive": 1.0,
+      "output": "def f():\n    return 1",
+      "partial": 1.0
+     },
+     "b": {
+      "binary": 0.0,
+      "naive": 0.0,
+      "output": "def f():\n    return 1",
+      "partial": 0.0
+     }
+    },
+    "prompt": "Seed A",
+    "score": 0.5
+   }
+  }
+ }
+]

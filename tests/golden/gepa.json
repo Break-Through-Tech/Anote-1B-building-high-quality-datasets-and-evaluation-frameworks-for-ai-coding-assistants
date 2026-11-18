@@ -1,0 +1,448 @@
+{
+ "events": [
+  {
+   "cases": {
+    "v1::v1-a": 1.0,
+    "v1::v1-b": 0.0,
+    "v2::v2-a": 0.0,
+    "v2::v2-b": 0.0,
+    "v3::v3-a": 1.0,
+    "v3::v3-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.75, still failing: v1-b\n- v2: score 0.00, still failing: v2-a, v2-b\n- v3: score 0.75, still failing: v3-b",
+   "generation": 0,
+   "items": {
+    "v1": 0.75,
+    "v2": 0.0,
+    "v3": 0.75
+   },
+   "prompt": "Seed A",
+   "score": 0.5
+  },
+  {
+   "cases": {
+    "v1::v1-a": 1.0,
+    "v1::v1-b": 1.0,
+    "v2::v2-a": 1.0,
+    "v2::v2-b": 0.0,
+    "v3::v3-a": 1.0,
+    "v3::v3-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 1.00\n- v2: score 0.75, still failing: v2-b\n- v3: score 0.50, still failing: v3-b",
+   "generation": 0,
+   "items": {
+    "v1": 1.0,
+    "v2": 0.75,
+    "v3": 0.5
+   },
+   "prompt": "Seed B",
+   "score": 0.75
+  },
+  {
+   "cases": {
+    "v1::v1-a": 1.0,
+    "v1::v1-b": 0.0,
+    "v2::v2-a": 1.0,
+    "v2::v2-b": 1.0,
+    "v3::v3-a": 1.0,
+    "v3::v3-b": 1.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: v1-b\n- v2: score 1.00\n- v3: score 1.00",
+   "generation": 0,
+   "items": {
+    "v1": 0.5,
+    "v2": 1.0,
+    "v3": 1.0
+   },
+   "prompt": "Seed C",
+   "score": 0.8333333333333334
+  },
+  {
+   "cases": {
+    "v1::v1-a": 1.0,
+    "v1::v1-b": 0.0,
+    "v2::v2-a": 0.0,
+    "v2::v2-b": 0.0,
+    "v3::v3-a": 1.0,
+    "v3::v3-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: v1-b\n- v2: score 0.00, still failing: v2-a, v2-b\n- v3: score 0.25, still failing: v3-b",
+   "generation": 0,
+   "items": {
+    "v1": 0.5,
+    "v2": 0.0,
+    "v3": 0.25
+   },
+   "prompt": "Seed D",
+   "score": 0.25
+  },
+  {
+   "event": "screened",
+   "generation": 1,
+   "parent_score": 0.4166666666666667,
+   "prompt": "Seed C m1",
+   "score": 0.4166666666666667
+  },
+  {
+   "event": "screened",
+   "generation": 2,
+   "parent_score": 0.4166666666666667,
+   "prompt": "Seed C m2",
+   "score": 0.6666666666666666
+  },
+  {
+   "cases": {
+    "v1::v1-a": 1.0,
+    "v1::v1-b": 0.0,
+    "v2::v2-a": 1.0,
+    "v2::v2-b": 1.0,
+    "v3::v3-a": 1.0,
+    "v3::v3-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: v1-b\n- v2: score 1.00\n- v3: score 0.25, still failing: v3-b",
+   "generation": 2,
+   "items": {
+    "v1": 0.5,
+    "v2": 1.0,
+    "v3": 0.25
+   },
+   "prompt": "Seed C m2",
+   "score": 0.5833333333333334
+  },
+  {
+   "event": "generation",
+   "generation": 2,
+   "mutator_calls": null,
+   "rollouts": 27,
+   "survivors": [
+    {
+     "prompt": "Seed C",
+     "score": 0.8333333333333334
+    },
+    {
+     "prompt": "Seed B",
+     "score": 0.75
+    },
+    {
+     "prompt": "Seed C m2",
+     "score": 0.5833333333333334
+    },
+    {
+     "prompt": "Seed A",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed D",
+     "score": 0.25
+    }
+   ]
+  },
+  {
+   "event": "screened",
+   "generation": 3,
+   "parent_score": 0.5,
+   "prompt": "Seed B m3",
+   "score": 0.5833333333333334
+  },
+  {
+   "cases": {
+    "v1::v1-a": 1.0,
+    "v1::v1-b": 0.0,
+    "v2::v2-a": 1.0,
+    "v2::v2-b": 0.0,
+    "v3::v3-a": 1.0,
+    "v3::v3-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: v1-b\n- v2: score 0.50, still failing: v2-b\n- v3: score 0.25, still failing: v3-b",
+   "generation": 3,
+   "items": {
+    "v1": 0.5,
+    "v2": 0.5,
+    "v3": 0.25
+   },
+   "prompt": "Seed B m3",
+   "score": 0.4166666666666667
+  },
+  {
+   "event": "generation",
+   "generation": 3,
+   "mutator_calls": null,
+   "rollouts": 36,
+   "survivors": [
+    {
+     "prompt": "Seed C",
+     "score": 0.8333333333333334
+    },
+    {
+     "prompt": "Seed B",
+     "score": 0.75
+    },
+    {
+     "prompt": "Seed C m2",
+     "score": 0.5833333333333334
+    },
+    {
+     "prompt": "Seed A",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed B m3",
+     "score": 0.4166666666666667
+    },
+    {
+     "prompt": "Seed D",
+     "score": 0.25
+    }
+   ]
+  },
+  {
+   "event": "screened",
+   "generation": 4,
+   "parent_score": 0.5,
+   "prompt": "Seed B m4",
+   "score": 0.5
+  },
+  {
+   "event": "screened",
+   "generation": 5,
+   "parent_score": 0.5833333333333334,
+   "prompt": "Seed C m5",
+   "score": 0.5833333333333334
+  },
+  {
+   "event": "screened",
+   "generation": 6,
+   "parent_score": 0.4166666666666667,
+   "prompt": "Seed C m6",
+   "score": 0.08333333333333333
+  },
+  {
+   "event": "screened",
+   "generation": 7,
+   "parent_score": 0.5833333333333334,
+   "prompt": "Seed C m7",
+   "score": 0.6666666666666666
+  },
+  {
+   "cases": {
+    "v1::v1-a": 1.0,
+    "v1::v1-b": 0.0,
+    "v2::v2-a": 1.0,
+    "v2::v2-b": 1.0,
+    "v3::v3-a": 1.0,
+    "v3::v3-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.50, still failing: v1-b\n- v2: score 1.00\n- v3: score 0.75, still failing: v3-b",
+   "generation": 7,
+   "items": {
+    "v1": 0.5,
+    "v2": 1.0,
+    "v3": 0.75
+   },
+   "prompt": "Seed C m7",
+   "score": 0.75
+  },
+  {
+   "event": "generation",
+   "generation": 7,
+   "mutator_calls": null,
+   "rollouts": 63,
+   "survivors": [
+    {
+     "prompt": "Seed C",
+     "score": 0.8333333333333334
+    },
+    {
+     "prompt": "Seed B",
+     "score": 0.75
+    },
+    {
+     "prompt": "Seed C m7",
+     "score": 0.75
+    },
+    {
+     "prompt": "Seed C m2",
+     "score": 0.5833333333333334
+    },
+    {
+     "prompt": "Seed A",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed B m3",
+     "score": 0.4166666666666667
+    },
+    {
+     "prompt": "Seed D",
+     "score": 0.25
+    }
+   ]
+  },
+  {
+   "event": "screened",
+   "generation": 8,
+   "parent_score": 0.3333333333333333,
+   "prompt": "Seed B m8",
+   "score": 0.4166666666666667
+  },
+  {
+   "cases": {
+    "v1::v1-a": 1.0,
+    "v1::v1-b": 0.0,
+    "v2::v2-a": 0.0,
+    "v2::v2-b": 0.0,
+    "v3::v3-a": 0.0,
+    "v3::v3-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.25, still failing: v1-b\n- v2: score 0.00, still failing: v2-a, v2-b\n- v3: score 0.00, still failing: v3-a, v3-b",
+   "generation": 8,
+   "items": {
+    "v1": 0.25,
+    "v2": 0.0,
+    "v3": 0.0
+   },
+   "prompt": "Seed B m8",
+   "score": 0.08333333333333333
+  },
+  {
+   "event": "generation",
+   "generation": 8,
+   "mutator_calls": null,
+   "rollouts": 72,
+   "survivors": [
+    {
+     "prompt": "Seed C",
+     "score": 0.8333333333333334
+    },
+    {
+     "prompt": "Seed B",
+     "score": 0.75
+    },
+    {
+     "prompt": "Seed C m7",
+     "score": 0.75
+    },
+    {
+     "prompt": "Seed C m2",
+     "score": 0.5833333333333334
+    },
+    {
+     "prompt": "Seed A",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed B m3",
+     "score": 0.4166666666666667
+    },
+    {
+     "prompt": "Seed D",
+     "score": 0.25
+    },
+    {
+     "prompt": "Seed B m8",
+     "score": 0.08333333333333333
+    }
+   ]
+  },
+  {
+   "event": "screened",
+   "generation": 9,
+   "parent_score": 0.4166666666666667,
+   "prompt": "Seed C m9",
+   "score": 0.6666666666666666
+  },
+  {
+   "cases": {
+    "v1::v1-a": 1.0,
+    "v1::v1-b": 0.0,
+    "v2::v2-a": 1.0,
+    "v2::v2-b": 0.0,
+    "v3::v3-a": 0.0,
+    "v3::v3-b": 0.0
+   },
+   "crashed": false,
+   "event": "scored",
+   "feedback": "- v1: score 0.25, still failing: v1-b\n- v2: score 0.75, still failing: v2-b\n- v3: score 0.00, still failing: v3-a, v3-b",
+   "generation": 9,
+   "items": {
+    "v1": 0.25,
+    "v2": 0.75,
+    "v3": 0.0
+   },
+   "prompt": "Seed C m9",
+   "score": 0.3333333333333333
+  },
+  {
+   "event": "generation",
+   "generation": 9,
+   "mutator_calls": null,
+   "rollouts": 81,
+   "survivors": [
+    {
+     "prompt": "Seed C",
+     "score": 0.8333333333333334
+    },
+    {
+     "prompt": "Seed B",
+     "score": 0.75
+    },
+    {
+     "prompt": "Seed C m7",
+     "score": 0.75
+    },
+    {
+     "prompt": "Seed C m2",
+     "score": 0.5833333333333334
+    },
+    {
+     "prompt": "Seed A",
+     "score": 0.5
+    },
+    {
+     "prompt": "Seed B m3",
+     "score": 0.4166666666666667
+    },
+    {
+     "prompt": "Seed C m9",
+     "score": 0.3333333333333333
+    },
+    {
+     "prompt": "Seed D",
+     "score": 0.25
+    },
+    {
+     "prompt": "Seed B m8",
+     "score": 0.08333333333333333
+    }
+   ]
+  }
+ ],
+ "pool": [
+  "Seed C",
+  "Seed B",
+  "Seed C m7",
+  "Seed C m2",
+  "Seed A",
+  "Seed B m3",
+  "Seed C m9",
+  "Seed D",
+  "Seed B m8"
+ ],
+ "rollouts": 81
+}

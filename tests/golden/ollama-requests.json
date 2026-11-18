@@ -1,0 +1,41 @@
+[
+ {
+  "timeout": 1200
+ },
+ {
+  "messages": [
+   {
+    "content": "Be careful.",
+    "role": "system"
+   },
+   {
+    "content": "fix",
+    "role": "user"
+   }
+  ],
+  "model": "qwen2.5-coder:7b",
+  "options": {
+   "num_ctx": 8192,
+   "num_predict": 4096,
+   "seed": 0,
+   "temperature": 0
+  }
+ },
+ {
+  "timeout": 1200
+ },
+ {
+  "messages": [
+   {
+    "content": "mutate",
+    "role": "user"
+   }
+  ],
+  "model": "qwen2.5-coder:7b",
+  "options": {
+   "num_ctx": 8192,
+   "seed": 11,
+   "temperature": 0.8
+  }
+ }
+]
