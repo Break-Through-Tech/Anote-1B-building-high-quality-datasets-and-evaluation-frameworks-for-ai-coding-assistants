@@ -1,0 +1,187 @@
+% =====================================================================
+% Report template: Break Through Tech AI Studio x Anote (Fall 2026)
+% Section layout follows Setty et al., "Improving Retrieval for RAG based
+% Question Answering Models on Financial Documents" (arXiv:2404.07221):
+%   Abstract / 1 Introduction / 2 Techniques / 3 Evaluation / 4 Results /
+%   5 Impact / 6 Conclusion and Next Steps / References
+% Subsection titles are placeholders: rename them to fit our project.
+% Build:  pdflatex main.tex  (run twice so references resolve)
+% =====================================================================
+\documentclass[11pt]{article}
+
+% ---- Packages ----
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+
+\graphicspath{{figures/}}
+
+% Red placeholder text; search for "TODO" to find what is left to write
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+% For prompts and code snippets
+\lstset{basicstyle=\ttfamily\small, breaklines=true, frame=single,
+        columns=fullflexible}
+
+% ---- Title block ----
+\title{\todo{Paper Title}}
+\author{
+  Luke Wang \and Brandon Romero \and Sabad Modi \and Sophia Zhang \and
+  Angela Liu \and Natan Vidra
+}
+\date{}   % leave empty for no date, or \today
+
+\begin{document}
+\maketitle
+
+% =====================================================================
+\begin{abstract}
+\todo{150--250 words: the problem, what we did, the main result (with numbers),
+and why it matters.}
+\end{abstract}
+
+% =====================================================================
+\section{Introduction}
+\label{sec:intro}
+
+\todo{Motivate the problem: why evaluating and improving AI coding assistants
+matters, and what is hard about it. End with a short list of our contributions.}
+
+\subsection{Background Topic 1}
+\label{sec:intro-bg1}
+\todo{e.g.\ Large language models for code generation and repair.}
+
+\subsection{Background Topic 2}
+\label{sec:intro-bg2}
+\todo{e.g.\ Prompt optimization / evolutionary prompt search.}
+
+% Example figure: an overview of the pipeline
+\begin{figure}[ht]
+  \centering
+  % Replace the box with: \includegraphics[width=0.8\linewidth]{pipeline.pdf}
+  \fbox{\parbox[c][4cm][c]{0.8\linewidth}{\centering Figure placeholder}}
+  \caption{\todo{Overview of the pipeline.}}
+  \label{fig:pipeline}
+\end{figure}
+
+\subsection{Limitations of Current Approaches}
+\label{sec:intro-limits}
+\todo{What existing methods or benchmarks miss, which motivates our work.}
+
+% =====================================================================
+\section{Techniques}
+\label{sec:techniques}
+
+\todo{Introduce the techniques we built or compared. Rename this section if a
+more specific title fits (the source paper uses ``Techniques to Improve
+Retrieval'').}
+
+\subsection{Technique 1}
+\label{sec:tech1}
+\todo{Describe it. Cite related work like this~\cite{chen2021codex}.}
+
+\subsection{Technique 2}
+\label{sec:tech2}
+\todo{Describe it.}
+
+\subsection{Technique 3}
+\label{sec:tech3}
+\todo{Describe it.}
+
+\subsection{Technique 4}
+\label{sec:tech4}
+\todo{Describe it. Delete unused subsections.}
+
+% Example of a prompt shown verbatim
+\begin{lstlisting}[caption={\todo{Example prompt.}},label={lst:prompt}]
+You are an expert Python programmer. Fix the bug in the function below.
+\end{lstlisting}
+
+% =====================================================================
+\section{Evaluation}
+\label{sec:evaluation}
+
+\todo{Dataset(s), models, and how we measure performance.}
+
+\subsection{Metric 1}
+\label{sec:eval-metric1}
+\todo{e.g.\ functional correctness, Pass@1~\cite{chen2021codex}:}
+\begin{equation}
+  \text{pass@}k = \mathbb{E}\left[1 - \frac{\binom{n-c}{k}}{\binom{n}{k}}\right]
+  \label{eq:passk}
+\end{equation}
+
+\subsection{Metric 2}
+\label{sec:eval-metric2}
+\todo{e.g.\ structural similarity such as CodeBLEU~\cite{ren2020codebleu}.}
+
+% =====================================================================
+\section{Results}
+\label{sec:results}
+
+\todo{Main findings. Refer to the figure and table:
+Figure~\ref{fig:results} and Table~\ref{tab:results}.}
+
+\begin{figure}[ht]
+  \centering
+  % \includegraphics[width=0.8\linewidth]{results.pdf}
+  \fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering Results plot placeholder}}
+  \caption{\todo{Aggregate results across methods.}}
+  \label{fig:results}
+\end{figure}
+
+\begin{table}[ht]
+  \centering
+  \caption{\todo{Aggregate results (mean $\pm$ standard deviation).}}
+  \label{tab:results}
+  \begin{tabular}{lccc}
+    \toprule
+    Method     & Metric 1        & Metric 2        & Metric 3        \\
+    \midrule
+    Baseline   & 0.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 \\
+    Method A   & 0.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 \\
+    Method B   & 0.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% =====================================================================
+\section{Impact}
+\label{sec:impact}
+
+\todo{Who benefits and how: e.g.\ what this means for Anote's coding
+assistant and for developers using it.}
+
+% =====================================================================
+\section{Conclusion and Next Steps}
+\label{sec:conclusion}
+
+\todo{Summarize the findings in a few sentences, then list next steps.}
+
+% =====================================================================
+% References. Numbered, in order of first citation. Add entries as needed.
+% (To switch to a .bib file: replace this block with
+%  \bibliographystyle{unsrt} and \bibliography{references}.)
+\begin{thebibliography}{9}
+
+\bibitem{chen2021codex}
+M.~Chen et~al.
+\newblock Evaluating large language models trained on code.
+\newblock \emph{arXiv preprint arXiv:2107.03374}, 2021.
+
+\bibitem{ren2020codebleu}
+S.~Ren et~al.
+\newblock CodeBLEU: a method for automatic evaluation of code synthesis.
+\newblock \emph{arXiv preprint arXiv:2009.10297}, 2020.
+
+\end{thebibliography}
+
+\end{document}
